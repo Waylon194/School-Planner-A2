@@ -1,3 +1,7 @@
+package Data;
+
+import Data.Person;
+
 import java.util.ArrayList;
 
 public class Teacher extends Person {

@@ -1,3 +1,5 @@
+package Data;
+
 public class Room {
     private int seats;
     private int number;
