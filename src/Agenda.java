@@ -13,7 +13,6 @@ public class Agenda{
         this.lessons = new ArrayList<>();
     }
 
-
     public void addLesson(Lesson lesson){
         this.lessons.add(lesson);
     }
@@ -22,7 +21,25 @@ public class Agenda{
        return this.lessons.size()
     }
 
+    public void saveFile(){
 
+        //Saves the schedule to a binary file.
+
+    }
+
+    public void openFile(){
+
+        //loads a binary file into a schedule.
+
+    }
+
+    public void printSchedule(){
+
+        for (Lesson lesson : lessons) {
+            System.out.println(lesson);
+        }
+
+    }
 
 
 

@@ -53,6 +53,12 @@ public class Lesson {
       this.studentClass = studentClass;
    }
 
-
-
+   @Override
+   public String toString() {
+      return "Lesson{" +
+              "teachers=" + teachers +
+              ", classroom=" + classroom +
+              ", studentClass=" + studentClass +
+              '}';
+   }
 }
