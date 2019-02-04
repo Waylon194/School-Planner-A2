@@ -16,4 +16,34 @@ public class Room {
             p.move();
         }
     }
+
+    public Room(int seats, int number, String location) {
+        this.seats = seats;
+        this.number = number;
+        this.location = location;
+    }
+
+    public int getSeats() {
+        return seats;
+    }
+
+    public int getNumber() {
+        return number;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setSeats(int seats) {
+        this.seats = seats;
+    }
+
+    public void setNumber(int number) {
+        this.number = number;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
 }

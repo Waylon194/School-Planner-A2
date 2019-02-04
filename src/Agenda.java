@@ -1,3 +1,4 @@
-public class Agenda {
+import Data.Lesson;
 
+    private
 }
