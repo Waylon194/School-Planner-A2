@@ -21,6 +21,7 @@ public class GUIMain extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        //opens add lesson window
         createWindow.initModality(Modality.APPLICATION_MODAL);
         gui.getButton().setOnAction(event -> {
 
@@ -28,8 +29,12 @@ public class GUIMain extends Application {
             createWindow.setTitle("Create a new Lesson");
             createWindow.show();
         });
+       //closes add lesson window
         create.getButton1().setOnAction(event -> createWindow.close());
-
+       //saves lesson and closes window WIP!
+        create.getButton0().setOnAction(event -> System.out.println("SAVE WIP"));
+       //opens window to add groups WIP!
+        create.getButton().setOnAction(event -> System.out.println("GROUP WIP"));
 
         primaryStage.setScene(new Scene(gui));
         primaryStage.setTitle("School Planner");
