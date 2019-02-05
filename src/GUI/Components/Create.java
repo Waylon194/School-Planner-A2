@@ -1,4 +1,4 @@
-package Gui;
+package GUI.Components;
 
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -9,7 +9,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.RowConstraints;
 
-public class newLesson extends GridPane {
+public class Create extends GridPane {
 
     private final GridPane gridPane;
     private final ColumnConstraints columnConstraints;
@@ -36,7 +36,39 @@ public class newLesson extends GridPane {
     private final Label label4;
     private final ComboBox comboBox1;
 
-    public newLesson() {
+    public Button getButton() {
+        return button;
+    }
+
+    public Button getButton0() {
+        return button0;
+    }
+
+    public Button getButton1() {
+        return button1;
+    }
+
+    public TextField getTextField() {
+        return textField;
+    }
+
+    public TextField getTextField0() {
+        return textField0;
+    }
+
+    public ComboBox getComboBox() {
+        return comboBox;
+    }
+
+    public ComboBox getComboBox0() {
+        return comboBox0;
+    }
+
+    public ComboBox getComboBox1() {
+        return comboBox1;
+    }
+
+    public Create() {
 
         gridPane = new GridPane();
         columnConstraints = new ColumnConstraints();

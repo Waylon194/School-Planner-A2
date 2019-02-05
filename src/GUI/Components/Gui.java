@@ -1,4 +1,4 @@
-package Gui;
+package GUI.Components;
 
 import javafx.geometry.*;
 import javafx.scene.Scene;
@@ -53,16 +53,28 @@ public class Gui extends TabPane {
     private final Rectangle rectangle;
     private final Label label17;
     private final Tab tab0;
+    private final Tab tab1;
     private final AnchorPane anchorPane0;
     private final VBox vBox;
     private final Button button;
     private final Button button0;
     private final Button button1;
-    private newLesson newLesson;
+
+    public Button getButton() {
+        return button;
+    }
+
+    public Button getButton0() {
+        return button0;
+    }
+
+    public Button getButton1() {
+        return button1;
+    }
 
     public Gui() {
-        newLesson = new newLesson();
         tab = new Tab();
+        tab1 = new Tab();
         anchorPane = new AnchorPane();
         gridPane = new GridPane();
         columnConstraints = new ColumnConstraints();
@@ -409,12 +421,8 @@ public class Gui extends TabPane {
         anchorPane0.getChildren().add(vBox);
         getTabs().add(tab0);
 
-       button.setOnAction(event -> {
-           Stage stage = new Stage();
-           stage.initModality(Modality.APPLICATION_MODAL);
-           stage.setScene(new Scene(newLesson));
-           stage.setTitle("Create a new Lesson");
-           stage.show();
-       });
+        tab1.setText("Simulate");
+        getTabs().add(tab1);
+
     }
 }
