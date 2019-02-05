@@ -1,8 +1,9 @@
 package Data;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Lesson {
+public class Lesson implements Serializable {
 
    private ArrayList<Teacher> teachers;
    private Classroom classroom;
