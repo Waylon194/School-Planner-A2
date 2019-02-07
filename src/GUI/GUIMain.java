@@ -9,19 +9,27 @@ import javafx.stage.Stage;
 
 public class GUIMain extends Application {
 
-    Gui gui = new Gui();
-    Create create = new Create();
+
+    private Gui gui = new Gui();
+    private Create create = new Create();
     private Stage createWindow = new Stage();
     private Scene createWindowScene = new Scene(create);
-
+    private Scene mainWindow = new Scene(gui);
 
     public static void main(String[] args) {
         launch("Gui.java");
+
     }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        //opens add lesson window
+        primaryStage.setScene(mainWindow);
+        primaryStage.setTitle("School Planner");
+        buttonhandler();
+        primaryStage.show();
+    }
+
+    public void buttonhandler() {
         createWindow.initModality(Modality.APPLICATION_MODAL);
         gui.getButton().setOnAction(event -> {
 
@@ -29,15 +37,23 @@ public class GUIMain extends Application {
             createWindow.setTitle("Create a new Lesson");
             createWindow.show();
         });
-       //closes add lesson window
+        //closes add lesson window
         create.getButton1().setOnAction(event -> createWindow.close());
-       //saves lesson and closes window WIP!
-        create.getButton0().setOnAction(event -> System.out.println("SAVE WIP"));
-       //opens window to add groups WIP!
+        //saves lesson to a object and closes window WIP!
+        create.getButton0().setOnAction(event -> createWindow.close());
+        //opens window to add groups WIP!
         create.getButton().setOnAction(event -> System.out.println("GROUP WIP"));
+        //will open windows explorer to save object to file.
+        gui.getButton2().setOnAction(event -> {
 
-        primaryStage.setScene(new Scene(gui));
-        primaryStage.setTitle("School Planner");
-        primaryStage.show();
+        });
+        //will open windows explorer to open a file with object.
+        gui.getButton2().setOnAction(event -> {
+
+        });
+        // will let you select a lesson to view/change, will load in all information.
+        gui.getButton0().setOnAction(event -> {
+
+        });
     }
 }

@@ -59,6 +59,8 @@ public class Gui extends TabPane {
     private final Button button;
     private final Button button0;
     private final Button button1;
+    private final Button button2;
+
 
     public Button getButton() {
         return button;
@@ -71,6 +73,11 @@ public class Gui extends TabPane {
     public Button getButton1() {
         return button1;
     }
+
+    public Button getButton2() {
+        return button2;
+    }
+
 
     public Gui() {
         tab = new Tab();
@@ -121,7 +128,8 @@ public class Gui extends TabPane {
         vBox = new VBox();
         button = new Button();
         button0 = new Button();
-        button1 = new Button();
+        button1 = new Button("Save Schedule");
+        button2 = new Button("Open Schedule");
 
         setMaxHeight(USE_PREF_SIZE);
         setMaxWidth(USE_PREF_SIZE);
@@ -364,14 +372,17 @@ public class Gui extends TabPane {
         button.setPadding(new Insets(10.0));
 
         button0.setMnemonicParsing(false);
-        button0.setText("Change Lesson");
+        button0.setText("Change/View Lesson");
         VBox.setMargin(button0, new Insets(0.0, 0.0, 0.0, 10.0));
         button0.setPadding(new Insets(10.0));
 
         button1.setMnemonicParsing(false);
-        button1.setText("View Lesson");
         VBox.setMargin(button1, new Insets(0.0, 0.0, 0.0, 10.0));
         button1.setPadding(new Insets(10.0));
+
+        button2.setMnemonicParsing(false);
+        VBox.setMargin(button1, new Insets(0.0, 0.0, 0.0, 10.0));
+        button2.setPadding(new Insets(10.0));
         tab0.setContent(anchorPane0);
 
         gridPane.getColumnConstraints().add(columnConstraints);
@@ -411,13 +422,14 @@ public class Gui extends TabPane {
         gridPane.getChildren().add(label14);
         gridPane.getChildren().add(label15);
         gridPane.getChildren().add(label16);
-        gridPane.getChildren().add(rectangle);
+        //gridPane.getChildren().add(rectangle);
         gridPane.getChildren().add(label17);
         anchorPane.getChildren().add(gridPane);
         getTabs().add(tab);
         vBox.getChildren().add(button);
         vBox.getChildren().add(button0);
         vBox.getChildren().add(button1);
+        vBox.getChildren().add(button2);
         anchorPane0.getChildren().add(vBox);
         getTabs().add(tab0);
 
