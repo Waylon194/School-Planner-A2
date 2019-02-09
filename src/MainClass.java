@@ -1,5 +1,4 @@
-import Data.Student;
-import Data.Teacher;
+import Data.*;
 
 import javax.crypto.Mac;
 import java.util.ArrayList;

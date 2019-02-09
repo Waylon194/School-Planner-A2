@@ -8,7 +8,20 @@ public class Person {
     private int xLocation;
     private int yLocation;
 
-    public Person(int age, String firstName, String additive, String lastName, int xLocation, int yLocation) {
+    public Person ( String firstName, String additive, String lastName, int age, int xLocation, int yLocation) {
+        this.age = age;
+        this.firstName = firstName;
+        this.additive = additive;
+        this.lastName = lastName;
+        this.xLocation = xLocation;
+        this.yLocation = yLocation;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
         this.age = age;
         this.firstName = firstName;
         this.additive = additive;
