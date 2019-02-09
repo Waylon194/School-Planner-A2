@@ -1,15 +1,14 @@
 package Data;
 
-import Data.Person;
-
 public class Student extends Person {
     private int studentNumber;
 
-    public int getStudentNumber() {
-        return studentNumber;
+    public Student(int age, String firstName, String additive, String lastName, int xLocation, int yLocation, int studentNumber) {
+        super(age, firstName, additive, lastName, xLocation, yLocation);
+        this.studentNumber = studentNumber;
     }
 
-    public void setStudentNumber(int studentNumber) {
-        this.studentNumber = studentNumber;
+    public int getStudentNumber() {
+        return studentNumber;
     }
 }
