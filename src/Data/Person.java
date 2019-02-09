@@ -8,7 +8,7 @@ public class Person {
     private int xLocation;
     private int yLocation;
 
-    public Person ( String firstName, String additive, String lastName, int age, int xLocation, int yLocation) {
+    public Person ( String firstName, String additive, String lastName, int age, int xLocation, int yLocation ) {
         this.age = age;
         this.firstName = firstName;
         this.additive = additive;
@@ -41,7 +41,7 @@ public class Person {
         return yLocation;
     }
 
-    public void move(int x, int y){
+    public void move(int x, int y) {
         xLocation = x;
         yLocation = y;
     }

@@ -11,4 +11,10 @@ public class Student extends Person {
     public int getStudentNumber() {
         return studentNumber;
     }
+
+    @Override
+    public String toString () {
+        return "Student: " + getFirstName() +" "+ getAdditive() +" "+ getLastName() +
+                ", StudentNumber: " + studentNumber;
+    }
 }

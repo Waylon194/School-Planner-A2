@@ -20,4 +20,11 @@ public class Group {
     public void addStudent(Student s){
         students.add(s);
     }
+
+    @Override
+    public String toString () {
+        return  "\n Students: " + students +
+                "\n Group name: " + groupName +
+                "\n Mentor: " + mentor;
+    }
 }
