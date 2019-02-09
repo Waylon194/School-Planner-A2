@@ -3,8 +3,8 @@ package Data;
 public class Student extends Person {
     private int studentNumber;
 
-    public Student(int age, String firstName, String additive, String lastName, int xLocation, int yLocation, int studentNumber) {
-        super(age, firstName, additive, lastName, xLocation, yLocation);
+    public Student(String firstName, String additive, String lastName, int age, int xLocation, int yLocation, int studentNumber) {
+        super(firstName, additive, lastName, age, xLocation, yLocation);
         this.studentNumber = studentNumber;
     }
 

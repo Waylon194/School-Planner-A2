@@ -11,8 +11,25 @@ public class Room {
         this.location = location;
     }
 
-    public void empty(){
+    public int getNumber() {
+        return number;
+    }
 
+    public int getAmountOfSeats() {
+        return amountOfSeats;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public boolean empty(){
+        if (true){
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
     public boolean isEmpty(){

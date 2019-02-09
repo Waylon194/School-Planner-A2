@@ -1,8 +1,3 @@
-import Data.*;
-
-import javax.crypto.Mac;
-import java.util.ArrayList;
-
 public class MainClass {
     public static void main(String[] args) throws InterruptedException {
         //Delete the code below, it is only a check.

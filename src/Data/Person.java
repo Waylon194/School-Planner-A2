@@ -21,13 +21,24 @@ public class Person {
         return age;
     }
 
-    public void setAge(int age) {
-        this.age = age;
-        this.firstName = firstName;
-        this.additive = additive;
-        this.lastName = lastName;
-        this.xLocation = xLocation;
-        this.yLocation = yLocation;
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getAdditive() {
+        return additive;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public int getxLocation() {
+        return xLocation;
+    }
+
+    public int getyLocation() {
+        return yLocation;
     }
 
     public void move(int x, int y){

@@ -18,10 +18,10 @@ public class Lesson {
 
    @Override
    public String toString () {
-      return "Lesson: " + this.subject +
-              "teachers: " + teachers +
-              ", classroom: " + classroom +
-              ", studentClass: " + studentClass;
+      return this.subject +
+              "\n teachers: " + teachers +
+              "\n Classroom: " + classroom +
+              "\n Class: " + studentClass;
    }
 
    public ArrayList<Teacher> getTeachers () {
@@ -35,7 +35,4 @@ public class Lesson {
    public Subject getSubject () {
       return subject;
    }
-
-
-
 }
