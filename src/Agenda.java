@@ -1,4 +1,0 @@
-import Data.Lesson;
-
-    private
-}
