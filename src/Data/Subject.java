@@ -1,4 +1,10 @@
 package Data;
 
-public class Subject {
+public enum Subject {
+   MATH,
+   PRORAMMING,
+   WORKSHOP,
+   HWI,
+   GRAPHICS3D,
+   GRAPHICS2D
 }
