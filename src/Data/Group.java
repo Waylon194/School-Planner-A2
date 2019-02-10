@@ -23,7 +23,7 @@ public class Group {
 
     @Override
     public String toString () {
-        return  "\n Students: " + students +
+        return  "Students: " + students +
                 "\n Group name: " + groupName +
                 "\n Mentor: " + mentor;
     }

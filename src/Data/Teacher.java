@@ -14,10 +14,6 @@ public class Teacher extends Person {
         return teacherNumber;
     }
 
-    public void setTeacherNumber (int teacherNumber) {
-        this.teacherNumber = teacherNumber;
-    }
-
     @Override
     public String toString () {
         return  getFirstName() + " " + getAdditive() + " " + getLastName() +

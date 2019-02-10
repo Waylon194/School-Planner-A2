@@ -1,6 +1,5 @@
 package Data;
 
-
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -38,7 +37,7 @@ public class Lesson {
    @Override
    public String toString () {
       return this.subject +
-              "\n teachers: " + teachers +
+              "\n Teachers: " + teachers +
               "\n Classroom: " + classroom +
               "\n Class: " + studentClass +
               "\n Time" + getTime();
