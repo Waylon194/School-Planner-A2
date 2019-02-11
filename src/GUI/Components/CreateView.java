@@ -1,20 +1,97 @@
 package GUI.Components;
 
+import Data.*;
+import Data.Class;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 
-import java.awt.*;
 import java.util.ArrayList;
 
 public class CreateView extends GridPane {
-    ArrayList<String> lessons = new ArrayList();
+    ArrayList<Teacher> teachers = new ArrayList<>();
+    ArrayList<Class> classes = new ArrayList<>();
+
+    ArrayList<Student> students = new ArrayList<>();
+    ArrayList<Student> students1 = new ArrayList<>();
+    ArrayList<Student> students2 = new ArrayList<>();
+    ArrayList<Student> students3 = new ArrayList<>();
+
+    ArrayList<Group> groups = new ArrayList<>();
+    ArrayList<Group> groups1 = new ArrayList<>();
+    ArrayList<Group> groups2 = new ArrayList<>();
+    ArrayList<Group> groups3 = new ArrayList<>();
+
+    ArrayList<Lesson> lessons = new ArrayList<>();
+
+    Classroom classroom = new Classroom(true, true);
+    Classroom classroom1 = new Classroom(true, true);
+    Classroom classroom2 = new Classroom(true, true);
+    Classroom classroom3 = new Classroom(true, true);
+
+    Lesson math = new Lesson(teachers, classroom, classes, Subject.MATH);
+    Lesson graphics2d = new Lesson(teachers, classroom1, classes, Subject.GRAPHICS2D);
+    Lesson graphics3d = new Lesson(teachers, classroom2, classes, Subject.GRAPHICS3D);
+    Lesson programming = new Lesson(teachers, classroom3, classes, Subject.PRORAMMING);
+
+    Student kees = new Student("Kees" , "de" , "Bruin", 19, 0,0,108);
+    Student sjakie = new Student("Sjakie" , "" , "Pompel", 18, 0,0,109);
+    Student ronald = new Student("Ronald" , "" , "Tompel", 20, 0,0,110);
+    Student corrie = new Student("Corrie" , "" , "Lompel", 17, 0,0,111);
+
+    Group a2 = new Group(students, "A2", new Teacher("Maurice", "", "Snoeren", 45, 0,0,100));
+    Group a3 = new Group(students, "A3", new Teacher("Johan", "", "Snoeren", 45, 0,0,101));
+    Group a4 = new Group(students, "A4", new Teacher("Etienne", "", "Snoeren", 45, 0,0,102));
+    Group a5 = new Group(students, "A5", new Teacher("Paul", "", "Snoeren", 45, 0,0,103));
+
+    Class class1 = new Class(groups, "555");
+    Class class2 = new Class(groups1, "556");
+    Class class3 = new Class(groups2, "557");
+    Class class4 = new Class(groups3, "558");
+
+    Agenda agenda = new Agenda(lessons);
+
     GridPane gridPane = new GridPane();
 
     public CreateView(){
-        for(int amountLessons = 0; amountLessons< lessons.size(); amountLessons++){
-            Label label = new Label(lessons.get(amountLessons));
+        students.add(kees);
+        students1.add(sjakie);
+        students2.add(ronald);
+        students3.add(corrie);
+
+        groups.add(a2);
+        groups1.add(a3);
+        groups2.add(a4);
+        groups3.add(a5);
+
+        lessons.add(math);
+        lessons.add(graphics2d);
+        lessons.add(graphics3d);
+        lessons.add(programming);
+
+        classes.add(class1);
+        classes.add(class2);
+        classes.add(class3);
+        classes.add(class4);
+
+        for(int amountLessons = 0; amountLessons< agenda.amountOfLessons(); amountLessons++){
+            Label label = new Label(lessons.get(amountLessons).getSubject().toString() + lessons.get(amountLessons).getClassroom().toString());
+            Button button = new Button("Change");
+            Button button1 = new Button("View");
+
+            button.setOnAction(event -> {
+                
+            });
+
             gridPane.addRow(amountLessons);
-            //gridPane.add(lessons.getTime(), 1, amountLessons);
+            gridPane.add(label, 0, amountLessons);
+            gridPane.add(button, 1, amountLessons);
+            gridPane.add(button1, 2, amountLessons);
         }
+
+        gridPane.setVgap(10);
+        gridPane.setHgap(10);
+        getChildren().add(gridPane);
 
     }
 }
