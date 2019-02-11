@@ -1,8 +1,7 @@
+import Data.*;
 import Data.Class;
-import Data.Group;
-import Data.Student;
-import Data.Teacher;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class MainClass {
@@ -13,16 +12,29 @@ public class MainClass {
             System.out.print(text.charAt(i));
             Thread.sleep(100);
         }
+
         Student kees = new Student("Kees" , "de" , "Bruin", 19, 0,0,108);
         ArrayList<Student> students = new ArrayList<>();
         students.add(kees);
-        Group A2 = new Group(students, "A2", new Teacher("Maurice", "", "Snoeren", 45, 0,0,100));
+
+        Group A2 = new Group(students, "A2", new Teacher("Maurice", "", "Snoeren", 45, 0,0,100, Subject.PRORAMMING));
         ArrayList<Group> groups = new ArrayList<>();
         groups.add(A2);
 
         Class classe = new Class(groups, "12Tiav");
 
-        System.out.println(classe.toString());
+        ArrayList<Class> classes = new ArrayList<>();
+        classes.add(classe);
+
+        ArrayList<Teacher> teachers = new ArrayList<>();
+        teachers.add(new Teacher("Maurice", "", "Snoeren", 45, 0,0,100, Subject.PRORAMMING));
+
+        //System.out.println(classe.toString());
+        Lesson les = new Lesson(teachers, new Classroom(8,8,"Cantene",false, false), classes, Subject.MATH, LocalDateTime.now());
+        System.out.println(les.toString());
+
+
+
 
     }
 }

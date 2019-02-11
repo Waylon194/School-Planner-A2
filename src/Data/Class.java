@@ -21,6 +21,6 @@ public class Class {
 
    @Override
    public String toString () {
-      return "Class: " + getClassCode() + "\n Contains groups: " + group;
+      return ("\n Class: " + getClassCode() + "\n Contains groups: " + group).replace('[',' ').replace(']',' ');
    }
 }

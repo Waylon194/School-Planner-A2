@@ -9,7 +9,7 @@ public class Agenda {
         this.lessons = lessons;
     }
 
-    public void printLessons(){
+    public void printLessons() {
         for (Lesson l: lessons) {
             System.out.println(l);
         }

@@ -36,10 +36,10 @@ public class Lesson {
 
    @Override
    public String toString () {
-      return this.subject +
+      return  ("\n Subject: " + this.subject +
               "\n Teachers: " + teachers +
-              "\n Classroom: " + classroom +
-              "\n Class: " + studentClass +
-              "\n Time" + getTime();
+              "\n Classroom: " + classroom + studentClass +
+              "\n Time" + getTime()).replace('[',' ').replace(']',' ');
+
    }
 }

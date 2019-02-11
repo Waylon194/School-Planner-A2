@@ -40,4 +40,11 @@ public class Room {
             return false;
         }
     }
+
+    @Override
+    public String toString () {
+        return ("number: " + number +
+               ", amountOfSeats: " + amountOfSeats +
+               ", location: '" + location + '\'').replace('[',' ').replace(']',' ');
+    }
 }

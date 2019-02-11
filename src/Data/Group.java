@@ -23,8 +23,8 @@ public class Group {
 
     @Override
     public String toString () {
-        return  "Students: " + students +
-                "\n Group name: " + groupName +
-                "\n Mentor: " + mentor;
+        return  ("\n Group name: " + groupName +
+                "\n Students: " + students +
+                "\n Mentor: " + mentor).replace('[',' ').replace(']',' ');
     }
 }

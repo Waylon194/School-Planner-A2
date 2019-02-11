@@ -14,7 +14,7 @@ public class Student extends Person {
 
     @Override
     public String toString () {
-        return "Student: " + getFirstName() + " " + getAdditive() + " " + getLastName() +
-                "\n Student Number: " + studentNumber;
+        return  (getFirstName() + " " + getAdditive() + " " + getLastName() +
+                ", Student Number: " + studentNumber).replace('[',' ').replace(']',' ');
     }
 }
