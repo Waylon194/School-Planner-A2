@@ -1,11 +1,10 @@
 package GUI;
 
+import GUI.Components.CreateGroupWindow;
 import GUI.Components.CreateLesson;
 import GUI.Components.Gui;
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.layout.Background;
-import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -13,9 +12,12 @@ public class GUIMain extends Application {
 
     private Gui gui = new Gui();
     private CreateLesson createLesson = new CreateLesson();
-    private Stage createWindow = new Stage();
+    private CreateGroupWindow createGroupWindow = new CreateGroupWindow();
+    private Stage createLessonWindow = new Stage();
+    private Stage createGroupWindow2 = new Stage();
     private Scene createWindowScene = new Scene(createLesson);
     private Scene mainWindow = new Scene(gui);
+    private Scene groupWindow = new Scene(createGroupWindow);
 
     public static void main(String[] args) {
         launch("Gui.java");
@@ -31,19 +33,25 @@ public class GUIMain extends Application {
     }
 
     public void buttonhandler() {
-        createWindow.initModality(Modality.APPLICATION_MODAL);
+        createLessonWindow.initModality(Modality.APPLICATION_MODAL);
+        createGroupWindow2.initModality(Modality.APPLICATION_MODAL);
         gui.getButton().setOnAction(event -> {
 
-            createWindow.setScene(createWindowScene);
-            createWindow.setTitle("CreateLesson a new Lesson");
-            createWindow.show();
+            createLessonWindow.setScene(createWindowScene);
+            createLessonWindow.setTitle("CreateLesson a new Lesson");
+            createLessonWindow.show();
         });
         //closes add lesson window
-        createLesson.getButton1().setOnAction(event -> createWindow.close());
+        createLesson.getButton1().setOnAction(event -> createLessonWindow.close());
         //saves lesson to a object and closes window WIP!
-        createLesson.getButton0().setOnAction(event -> createWindow.close());
+        createLesson.getButton0().setOnAction(event -> createLessonWindow.close());
         //opens window to add groups WIP!
-        createLesson.getButton().setOnAction(event -> System.out.println("GROUP WIP"));
+        createLesson.getButton().setOnAction(event -> {
+            createGroupWindow2.setScene(groupWindow);
+            createGroupWindow2.setTitle("Select groups:");
+            createGroupWindow2.show();
+
+        });
         //will open windows explorer to save object to file.
         gui.getButton2().setOnAction(event -> {
 
