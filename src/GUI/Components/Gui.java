@@ -381,7 +381,7 @@ public class Gui extends TabPane {
         button1.setPadding(new Insets(10.0));
 
         button2.setMnemonicParsing(false);
-        VBox.setMargin(button1, new Insets(0.0, 0.0, 0.0, 10.0));
+        VBox.setMargin(button2, new Insets(0.0, 0.0, 0.0, 10.0));
         button2.setPadding(new Insets(10.0));
         tab0.setContent(anchorPane0);
 
