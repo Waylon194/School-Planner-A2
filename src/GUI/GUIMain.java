@@ -35,6 +35,7 @@ public class GUIMain extends Application {
     public void buttonhandler() {
         createLessonWindow.initModality(Modality.APPLICATION_MODAL);
         createGroupWindow2.initModality(Modality.APPLICATION_MODAL);
+
         gui.getButton().setOnAction(event -> {
 
             createLessonWindow.setScene(createWindowScene);
@@ -42,11 +43,14 @@ public class GUIMain extends Application {
             createLessonWindow.show();
         });
         //closes add lesson window
-        createLesson.getButton1().setOnAction(event -> createLessonWindow.close());
+        createLesson.getButtonCancelLesson().setOnAction(event -> createLessonWindow.close());
         //saves lesson to a object and closes window WIP!
-        createLesson.getButton0().setOnAction(event -> createLessonWindow.close());
+        createLesson.getButtonSaveLesson().setOnAction(event -> {
+
+            createLessonWindow.close();
+        });
         //opens window to add groups WIP!
-        createLesson.getButton().setOnAction(event -> {
+        createLesson.getButtonGroup().setOnAction(event -> {
             createGroupWindow2.setScene(groupWindow);
             createGroupWindow2.setTitle("Select groups:");
             createGroupWindow2.show();
