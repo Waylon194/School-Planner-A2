@@ -3,7 +3,6 @@ package Data;
 import java.util.ArrayList;
 
 public class Class {
-
    private ArrayList<Group> group;
    private String classCode;
 
@@ -22,7 +21,6 @@ public class Class {
 
    @Override
    public String toString () {
-      return "\n Class: " + getClassCode() + "\n" +
-              " Contains groups: " + group;
+      return ("\n Class: " + getClassCode() + "\n Contains groups: " + group).replace('[',' ').replace(']',' ');
    }
 }

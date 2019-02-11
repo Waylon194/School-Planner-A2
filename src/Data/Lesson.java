@@ -1,27 +1,25 @@
 package Data;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class Lesson {
-
    private ArrayList<Teacher> teachers;
    private Classroom classroom;
    private ArrayList <Class> studentClass;
    private Subject subject;
+   private LocalDateTime time;
 
-   public Lesson (ArrayList<Teacher> teachers, Classroom classroom, ArrayList<Class> studentClass, Subject subject) {
+   public Lesson (ArrayList<Teacher> teachers, Classroom classroom, ArrayList<Class> studentClass, Subject subject, LocalDateTime time) {
       this.teachers = teachers;
       this.classroom = classroom;
       this.studentClass = studentClass;
       this.subject = subject;
+      this.time = time;
    }
 
-   @Override
-   public String toString () {
-      return this.subject +
-              "\n teachers: " + teachers +
-              "\n Classroom: " + classroom +
-              "\n Class: " + studentClass;
+   public LocalDateTime getTime () {
+      return time;
    }
 
    public ArrayList<Teacher> getTeachers () {
@@ -34,5 +32,14 @@ public class Lesson {
 
    public Subject getSubject () {
       return subject;
+   }
+
+   @Override
+   public String toString () {
+      return  ("\n Subject: " + this.subject +
+              "\n Teachers: " + teachers +
+              "\n Classroom: " + classroom + studentClass +
+              "\n Time" + getTime()).replace('[',' ').replace(']',' ');
+
    }
 }
