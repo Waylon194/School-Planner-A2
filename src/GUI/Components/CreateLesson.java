@@ -6,7 +6,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.RowConstraints;
 
 public class CreateLesson extends GridPane {
@@ -31,10 +30,10 @@ public class CreateLesson extends GridPane {
     private final Button button1;
     private final TextField textField;
     private final TextField textField0;
-    private final ComboBox comboBox;
-    private final ComboBox comboBox0;
+    private final ComboBox classroomComboBox;
+    private final ComboBox teacherComboBox;
     private final Label label4;
-    private final ComboBox comboBox1;
+    private final ComboBox subjectComboBox;
 
     public Button getButton() {
         return button;
@@ -56,16 +55,16 @@ public class CreateLesson extends GridPane {
         return textField0;
     }
 
-    public ComboBox getComboBox() {
-        return comboBox;
+    public ComboBox getClassroomComboBox() {
+        return classroomComboBox;
     }
 
-    public ComboBox getComboBox0() {
-        return comboBox0;
+    public ComboBox getTeacherComboBox() {
+        return teacherComboBox;
     }
 
-    public ComboBox getComboBox1() {
-        return comboBox1;
+    public ComboBox getSubjectComboBox() {
+        return subjectComboBox;
     }
 
     public CreateLesson() {
@@ -90,10 +89,10 @@ public class CreateLesson extends GridPane {
         button1 = new Button();
         textField = new TextField();
         textField0 = new TextField();
-        comboBox = new ComboBox();
-        comboBox0 = new ComboBox();
+        classroomComboBox = new ComboBox();
+        teacherComboBox = new ComboBox();
         label4 = new Label();
-        comboBox1 = new ComboBox();
+        subjectComboBox = new ComboBox();
 
         setMaxHeight(USE_PREF_SIZE);
         setMaxWidth(USE_PREF_SIZE);
@@ -191,23 +190,23 @@ public class CreateLesson extends GridPane {
         GridPane.setColumnIndex(textField0, 1);
         GridPane.setRowIndex(textField0, 4);
 
-        GridPane.setColumnIndex(comboBox, 1);
-        comboBox.setPrefHeight(25.0);
-        comboBox.setPrefWidth(514.0);
+        GridPane.setColumnIndex(classroomComboBox, 1);
+        classroomComboBox.setPrefHeight(25.0);
+        classroomComboBox.setPrefWidth(514.0);
 
-        GridPane.setColumnIndex(comboBox0, 1);
-        GridPane.setRowIndex(comboBox0, 1);
-        comboBox0.setPrefHeight(25.0);
-        comboBox0.setPrefWidth(552.0);
+        GridPane.setColumnIndex(teacherComboBox, 1);
+        GridPane.setRowIndex(teacherComboBox, 1);
+        teacherComboBox.setPrefHeight(25.0);
+        teacherComboBox.setPrefWidth(552.0);
 
         GridPane.setHalignment(label4, javafx.geometry.HPos.CENTER);
         GridPane.setRowIndex(label4, 5);
         label4.setText("Subject:");
 
-        GridPane.setColumnIndex(comboBox1, 1);
-        GridPane.setRowIndex(comboBox1, 5);
-        comboBox1.setPrefHeight(25.0);
-        comboBox1.setPrefWidth(705.0);
+        GridPane.setColumnIndex(subjectComboBox, 1);
+        GridPane.setRowIndex(subjectComboBox, 5);
+        subjectComboBox.setPrefHeight(25.0);
+        subjectComboBox.setPrefWidth(705.0);
 
         gridPane.getColumnConstraints().add(columnConstraints);
         gridPane.getColumnConstraints().add(columnConstraints0);
@@ -228,10 +227,10 @@ public class CreateLesson extends GridPane {
         gridPane.getChildren().add(button1);
         gridPane.getChildren().add(textField);
         gridPane.getChildren().add(textField0);
-        gridPane.getChildren().add(comboBox);
-        gridPane.getChildren().add(comboBox0);
+        gridPane.getChildren().add(classroomComboBox);
+        gridPane.getChildren().add(teacherComboBox);
         gridPane.getChildren().add(label4);
-        gridPane.getChildren().add(comboBox1);
+        gridPane.getChildren().add(subjectComboBox);
         getChildren().add(gridPane);
 
     }
