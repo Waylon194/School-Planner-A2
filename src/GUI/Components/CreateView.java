@@ -6,6 +6,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class CreateView extends GridPane {
@@ -24,25 +26,25 @@ public class CreateView extends GridPane {
 
     ArrayList<Lesson> lessons = new ArrayList<>();
 
-    Classroom classroom = new Classroom(true, true);
-    Classroom classroom1 = new Classroom(true, true);
-    Classroom classroom2 = new Classroom(true, true);
-    Classroom classroom3 = new Classroom(true, true);
+    Classroom classroom = new Classroom(112, 30, "LA", true, true);
+    Classroom classroom1 = new Classroom(113, 32, "LA", true, true);
+    Classroom classroom2 = new Classroom(114, 25, "LA", true, true);
+    Classroom classroom3 = new Classroom(115, 28, "LA", true, true);
 
-    Lesson math = new Lesson(teachers, classroom, classes, Subject.MATH);
-    Lesson graphics2d = new Lesson(teachers, classroom1, classes, Subject.GRAPHICS2D);
-    Lesson graphics3d = new Lesson(teachers, classroom2, classes, Subject.GRAPHICS3D);
-    Lesson programming = new Lesson(teachers, classroom3, classes, Subject.PRORAMMING);
+    Lesson math = new Lesson(teachers, classroom, classes, Subject.MATH, LocalDateTime.now());
+    Lesson graphics2d = new Lesson(teachers, classroom1, classes, Subject.GRAPHICS2D, LocalDateTime.now());
+    Lesson graphics3d = new Lesson(teachers, classroom2, classes, Subject.GRAPHICS3D, LocalDateTime.now());
+    Lesson programming = new Lesson(teachers, classroom3, classes, Subject.PRORAMMING, LocalDateTime.now());
 
     Student kees = new Student("Kees" , "de" , "Bruin", 19, 0,0,108);
     Student sjakie = new Student("Sjakie" , "" , "Pompel", 18, 0,0,109);
     Student ronald = new Student("Ronald" , "" , "Tompel", 20, 0,0,110);
     Student corrie = new Student("Corrie" , "" , "Lompel", 17, 0,0,111);
 
-    Group a2 = new Group(students, "A2", new Teacher("Maurice", "", "Snoeren", 45, 0,0,100));
-    Group a3 = new Group(students, "A3", new Teacher("Johan", "", "Snoeren", 45, 0,0,101));
-    Group a4 = new Group(students, "A4", new Teacher("Etienne", "", "Snoeren", 45, 0,0,102));
-    Group a5 = new Group(students, "A5", new Teacher("Paul", "", "Snoeren", 45, 0,0,103));
+    Group a2 = new Group(students, "A2", new Teacher("Maurice", "", "Snoeren", 45, 0,0,100, Subject.PRORAMMING));
+    Group a3 = new Group(students, "A3", new Teacher("Johan", "", "Snoeren", 45, 0,0,101, Subject.GRAPHICS3D));
+    Group a4 = new Group(students, "A4", new Teacher("Etienne", "", "Snoeren", 45, 0,0,102, Subject.MATH));
+    Group a5 = new Group(students, "A5", new Teacher("Paul", "", "Snoeren", 45, 0,0,103, Subject.WORKSHOP));
 
     Class class1 = new Class(groups, "555");
     Class class2 = new Class(groups1, "556");
