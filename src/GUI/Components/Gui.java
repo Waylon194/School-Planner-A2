@@ -1,12 +1,20 @@
 package GUI.Components;
 
 import javafx.geometry.*;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Gui extends TabPane {
 
@@ -50,7 +58,6 @@ public class Gui extends TabPane {
     private final Label label14;
     private final Label label15;
     private final Label label16;
-    private final Rectangle rectangle;
     private final Label label17;
     private final Tab tab0;
     private final Tab tab1;
@@ -78,8 +85,35 @@ public class Gui extends TabPane {
         return button2;
     }
 
+    public void drawLesson(int lesson, int classRoom) {
+        Rectangle rectangle = new Rectangle();
+        GridPane.setColumnIndex(rectangle, classRoom);
+        GridPane.setRowIndex(rectangle, lesson);
+        rectangle.setSmooth(true);
+        rectangle.setFill(javafx.scene.paint.Color.DODGERBLUE);
+        rectangle.setHeight(gridPane.getRowConstraints().get(classRoom).getPrefHeight() - 12.5);
+        rectangle.setStroke(javafx.scene.paint.Color.BLACK);
+        rectangle.setStrokeType(javafx.scene.shape.StrokeType.INSIDE);
+        rectangle.setWidth(gridPane.getColumnConstraints().get(classRoom).getPrefWidth());
+        gridPane.getChildren().add(rectangle);
+    }
+
+    public void drawLessonBlock(int startTime, int classRoom, int duration) {
+        Label label = new Label("Lesson");
+
+        for (int i = startTime; i <= startTime+duration; i++) {
+            if (duration < 1 || duration > 9 || startTime < 1 || startTime > 9 || classRoom < 1 || classRoom > 8 || i < 1 || i > 9) throw new IllegalArgumentException("More hours than there are in a schoolday!");
+            drawLesson(i, classRoom);
+        }
+        GridPane.setColumnIndex(label, classRoom);
+        GridPane.setRowIndex(label, (startTime + duration) / 2);
+        GridPane.setHalignment(label, javafx.geometry.HPos.CENTER);
+        GridPane.setValignment(label, javafx.geometry.VPos.CENTER);
+        gridPane.getChildren().add(label);
+    }
 
     public Gui() {
+
         tab = new Tab();
         tab1 = new Tab();
         anchorPane = new AnchorPane();
@@ -121,7 +155,6 @@ public class Gui extends TabPane {
         label14 = new Label();
         label15 = new Label();
         label16 = new Label();
-        rectangle = new Rectangle();
         label17 = new Label();
         tab0 = new Tab();
         anchorPane0 = new AnchorPane();
@@ -200,14 +233,14 @@ public class Gui extends TabPane {
         rowConstraints.setPrefHeight(31.0);
         rowConstraints.setVgrow(javafx.scene.layout.Priority.SOMETIMES);
 
-        rowConstraints0.setMaxHeight(89.0);
+        rowConstraints0.setMaxHeight(75.0);
         rowConstraints0.setMinHeight(10.0);
         rowConstraints0.setPrefHeight(75.0);
         rowConstraints0.setVgrow(javafx.scene.layout.Priority.SOMETIMES);
 
-        rowConstraints1.setMaxHeight(87.0);
+        rowConstraints1.setMaxHeight(75.0);
         rowConstraints1.setMinHeight(10.0);
-        rowConstraints1.setPrefHeight(81.0);
+        rowConstraints1.setPrefHeight(75.0);
         rowConstraints1.setVgrow(javafx.scene.layout.Priority.SOMETIMES);
 
         rowConstraints2.setMaxHeight(75.0);
@@ -332,24 +365,6 @@ public class Gui extends TabPane {
         GridPane.setHalignment(label16, javafx.geometry.HPos.CENTER);
         GridPane.setValignment(label16, javafx.geometry.VPos.CENTER);
         label16.setText("LA236");
-
-//        GridPane.setColumnIndex(rectangle, 1);
-//        GridPane.setHalignment(rectangle, javafx.geometry.HPos.CENTER);
-//        GridPane.setRowIndex(rectangle, 4);
-//        GridPane.setValignment(rectangle, javafx.geometry.VPos.CENTER);
-//        rectangle.setArcHeight(5.0);
-//        rectangle.setArcWidth(5.0);
-//        rectangle.setFill(javafx.scene.paint.Color.DODGERBLUE);
-//        rectangle.setHeight(295.0);
-//        rectangle.setStroke(javafx.scene.paint.Color.BLACK);
-//        rectangle.setStrokeType(javafx.scene.shape.StrokeType.INSIDE);
-//        rectangle.setWidth(79.0);
-//
-//        GridPane.setColumnIndex(label17, 1);
-//        GridPane.setHalignment(label17, javafx.geometry.HPos.CENTER);
-//        GridPane.setRowIndex(label17, 4);
-//        GridPane.setValignment(label17, javafx.geometry.VPos.CENTER);
-//        label17.setText("Les 1+Details ");
         tab.setContent(anchorPane);
 
         tab0.setText("View/Edit");
@@ -422,7 +437,6 @@ public class Gui extends TabPane {
         gridPane.getChildren().add(label14);
         gridPane.getChildren().add(label15);
         gridPane.getChildren().add(label16);
-        //gridPane.getChildren().add(rectangle);
         gridPane.getChildren().add(label17);
         anchorPane.getChildren().add(gridPane);
         getTabs().add(tab);
@@ -432,6 +446,7 @@ public class Gui extends TabPane {
         vBox.getChildren().add(button2);
         anchorPane0.getChildren().add(vBox);
         getTabs().add(tab0);
+
 
         tab1.setText("Simulate");
         getTabs().add(tab1);
