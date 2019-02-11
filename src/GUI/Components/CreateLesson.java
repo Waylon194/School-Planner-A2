@@ -9,7 +9,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.RowConstraints;
 
-public class Create extends GridPane {
+public class CreateLesson extends GridPane {
 
     private final GridPane gridPane;
     private final ColumnConstraints columnConstraints;
@@ -68,7 +68,7 @@ public class Create extends GridPane {
         return comboBox1;
     }
 
-    public Create() {
+    public CreateLesson() {
 
         gridPane = new GridPane();
         columnConstraints = new ColumnConstraints();
@@ -235,4 +235,5 @@ public class Create extends GridPane {
         getChildren().add(gridPane);
 
     }
+
 }
