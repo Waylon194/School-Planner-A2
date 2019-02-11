@@ -4,11 +4,12 @@ import GUI.Components.CreateLesson;
 import GUI.Components.Gui;
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.layout.Background;
+import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class GUIMain extends Application {
-
 
     private Gui gui = new Gui();
     private CreateLesson createLesson = new CreateLesson();
