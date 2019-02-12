@@ -79,6 +79,8 @@ public class GUIMain extends Application {
         //will open windows explorer to open a file with object.
         gui.getButton2().setOnAction(event -> {
 
+            fileController.openFile(createViewWindow);
+
 
 
 
