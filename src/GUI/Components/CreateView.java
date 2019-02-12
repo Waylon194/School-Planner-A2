@@ -30,6 +30,8 @@ public class CreateView extends GridPane {
     Classroom classroom2 = new Classroom(114, 25, "LA", true, true);
     Classroom classroom3 = new Classroom(115, 28, "LA", true, true);
 
+    Teacher teacher = new Teacher("Johan", "", "Talboom", 32, 0, 0, 420, Subject.PRORAMMING);
+
     Lesson math = new Lesson(teachers, classroom, classes, Subject.MATH, LocalDateTime.now());
     Lesson graphics2d = new Lesson(teachers, classroom1, classes, Subject.GRAPHICS2D, LocalDateTime.now());
     Lesson graphics3d = new Lesson(teachers, classroom2, classes, Subject.GRAPHICS3D, LocalDateTime.now());
@@ -75,8 +77,10 @@ public class CreateView extends GridPane {
         classes.add(class3);
         classes.add(class4);
 
+        teachers.add(teacher);
+
         for(int amountLessons = 0; amountLessons< agenda.amountOfLessons(); amountLessons++){
-            Label label = new Label(lessons.get(amountLessons).getSubject().toString() + lessons.get(amountLessons).getClassroom().toString());
+            Label label = new Label("Subject: " + lessons.get(amountLessons).getSubject() + "\nClassroom: " + lessons.get(amountLessons).getClassroom().getLocation() + lessons.get(amountLessons).getClassroom().getNumber() + "\nTeacher(s): " + lessons.get(amountLessons).getTeachers() + "\nTime: " + lessons.get(amountLessons).getTime());
             Button button = new Button("Change");
             Button button1 = new Button("View");
 
