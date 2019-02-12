@@ -101,4 +101,7 @@ public class CreateView extends GridPane {
     public Agenda returnAgenda(){
         return this.agenda;
     }
+    public void setAgenda(Agenda agenda){
+        this.agenda = agenda;
+    }
 }
