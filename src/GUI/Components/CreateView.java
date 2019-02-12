@@ -81,17 +81,15 @@ public class CreateView extends GridPane {
 
         for(int amountLessons = 0; amountLessons< agenda.amountOfLessons(); amountLessons++){
             Label label = new Label("Subject: " + lessons.get(amountLessons).getSubject() + "\nClassroom: " + lessons.get(amountLessons).getClassroom().getLocation() + lessons.get(amountLessons).getClassroom().getNumber() + "\nTeacher(s): " + lessons.get(amountLessons).getTeachers() + "\nTime: " + lessons.get(amountLessons).getTime());
-            Button button = new Button("Change");
-            Button button1 = new Button("View");
+            Button buttonChange = new Button("Change");
 
-            button.setOnAction(event -> {
+            buttonChange.setOnAction(event -> {
                 
             });
 
             gridPane.addRow(amountLessons);
             gridPane.add(label, 0, amountLessons);
-            gridPane.add(button, 1, amountLessons);
-            gridPane.add(button1, 2, amountLessons);
+            gridPane.add(buttonChange, 1, amountLessons);
         }
 
         gridPane.setVgap(10);
