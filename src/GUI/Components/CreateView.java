@@ -5,6 +5,8 @@ import Data.Class;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
+import org.joda.time.DateTime;
+import org.joda.time.Interval;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -32,10 +34,13 @@ public class CreateView extends GridPane {
     Classroom classroom2 = new Classroom(114, 25, "LA", true, true);
     Classroom classroom3 = new Classroom(115, 28, "LA", true, true);
 
-    Lesson math = new Lesson(teachers, classroom, classes, Subject.MATH, LocalDateTime.now());
-    Lesson graphics2d = new Lesson(teachers, classroom1, classes, Subject.GRAPHICS2D, LocalDateTime.now());
-    Lesson graphics3d = new Lesson(teachers, classroom2, classes, Subject.GRAPHICS3D, LocalDateTime.now());
-    Lesson programming = new Lesson(teachers, classroom3, classes, Subject.PRORAMMING, LocalDateTime.now());
+    Interval interval1 = new Interval(new DateTime(25,06,2019,10,00));
+   
+
+    Lesson math = new Lesson(teachers, classroom, classes, Subject.MATH, interval1);
+    Lesson graphics2d = new Lesson(teachers, classroom1, classes, Subject.GRAPHICS2D, interval2);
+    Lesson graphics3d = new Lesson(teachers, classroom2, classes, Subject.GRAPHICS3D, interval3);
+    Lesson programming = new Lesson(teachers, classroom3, classes, Subject.PRORAMMING, interval4);
 
     Student kees = new Student("Kees" , "de" , "Bruin", 19, 0,0,108);
     Student sjakie = new Student("Sjakie" , "" , "Pompel", 18, 0,0,109);

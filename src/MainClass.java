@@ -1,19 +1,31 @@
 import Data.*;
 import Data.Class;
+import org.joda.time.DateTime;
+import org.joda.time.Interval;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class MainClass {
     public static void main(String[] args) throws InterruptedException {
-        //Delete the code below, it is only a check.
+     /*   //Delete the code below, it is only a check.
         String text = "Sucessfully cloned :D";
         for (int i = 0; i < text.length(); i++) {
             System.out.print(text.charAt(i));
             Thread.sleep(100);
-        }
+        }*/
 
-        Student kees = new Student("Kees" , "de" , "Bruin", 19, 0,0,108);
+
+
+        Interval interval = new Interval(new DateTime(25,2,2019,14,0), new DateTime(25,2,2019,15,0));
+        System.out.println(interval.toInterval());
+
+
+
+
+
+
+        /*Student kees = new Student("Kees" , "de" , "Bruin", 19, 0,0,108);
         ArrayList<Student> students = new ArrayList<>();
         students.add(kees);
 
@@ -31,7 +43,7 @@ public class MainClass {
 
         //System.out.println(classe.toString());
         Lesson les = new Lesson(teachers, new Classroom(8,8,"Cantene",false, false), classes, Subject.MATH, LocalDateTime.now());
-        System.out.println(les.toString());
+        System.out.println(les.toString());*/
 
 
 
