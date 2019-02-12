@@ -1,6 +1,8 @@
 package Data;
 
-public enum Subject {
+import java.io.Serializable;
+
+public enum Subject implements Serializable {
    MATH,
    PRORAMMING,
    WORKSHOP,

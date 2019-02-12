@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class CreateView extends GridPane {
+
     ArrayList<Teacher> teachers = new ArrayList<>();
     ArrayList<Class> classes = new ArrayList<>();
 
@@ -95,5 +96,9 @@ public class CreateView extends GridPane {
         gridPane.setHgap(10);
         getChildren().add(gridPane);
 
+    }
+
+    public Agenda returnAgenda(){
+        return this.agenda;
     }
 }

@@ -1,6 +1,8 @@
 package Data;
 
-public class Classroom extends Room {
+import java.io.Serializable;
+
+public class Classroom extends Room implements Serializable {
     private boolean smartBoard;
     private boolean whiteBoard;
 

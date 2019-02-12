@@ -1,6 +1,8 @@
 package Data;
 
-public class Student extends Person {
+import java.io.Serializable;
+
+public class Student extends Person implements Serializable {
     private int studentNumber;
 
     public Student(String firstName, String additive, String lastName, int age, int xLocation, int yLocation, int studentNumber) {
