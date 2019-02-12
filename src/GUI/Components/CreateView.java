@@ -34,10 +34,14 @@ public class CreateView extends GridPane {
     Classroom classroom2 = new Classroom(114, 25, "LA", true, true);
     Classroom classroom3 = new Classroom(115, 28, "LA", true, true);
 
-    Interval interval1 = new Interval(new DateTime(25,06,2019,10,00));
-   
+    Interval interval = new Interval(new DateTime(2013, 10, 25, 8, 0, 0, 0), new DateTime(2013, 10, 25, 9, 0, 0, 0));
+    Interval interval2 = new Interval(new DateTime(2013, 10, 25, 9, 0, 0, 0), new DateTime(2013, 10, 25, 10, 0, 0, 0));
+    Interval interval3 = new Interval(new DateTime(2013, 10, 25, 10, 0, 0, 0), new DateTime(2013, 10, 25, 11, 0, 0, 0));
+    Interval interval4 = new Interval(new DateTime(2013, 10, 25, 11, 0, 0, 0), new DateTime(2013, 10, 25, 12, 0, 0, 0));
 
-    Lesson math = new Lesson(teachers, classroom, classes, Subject.MATH, interval1);
+
+
+    Lesson math = new Lesson(teachers, classroom, classes, Subject.MATH, interval);
     Lesson graphics2d = new Lesson(teachers, classroom1, classes, Subject.GRAPHICS2D, interval2);
     Lesson graphics3d = new Lesson(teachers, classroom2, classes, Subject.GRAPHICS3D, interval3);
     Lesson programming = new Lesson(teachers, classroom3, classes, Subject.PRORAMMING, interval4);

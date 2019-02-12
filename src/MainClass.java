@@ -17,8 +17,7 @@ public class MainClass {
 
 
 
-        Interval interval = new Interval(new DateTime(25,2,2019,14,0), new DateTime(25,2,2019,15,0));
-        System.out.println(interval.toInterval());
+
 
 
 
