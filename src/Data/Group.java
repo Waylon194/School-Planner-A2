@@ -1,8 +1,9 @@
 package Data;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Group {
+public class Group implements Serializable {
     private ArrayList<Student> students;
     private String groupName;
     private Teacher mentor;

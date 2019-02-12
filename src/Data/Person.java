@@ -1,6 +1,8 @@
 package Data;
 
-public class Person {
+import java.io.Serializable;
+
+public class Person implements Serializable {
     private int age;
     private String firstName;
     private String additive;

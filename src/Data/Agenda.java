@@ -1,8 +1,9 @@
 package Data;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Agenda {
+public class Agenda implements Serializable {
     private ArrayList<Lesson> lessons;
 
     public Agenda(ArrayList<Lesson> lessons) {

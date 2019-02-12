@@ -1,15 +1,15 @@
 package GUI;
 
-import GUI.Components.CreateGroupWindow;
-import GUI.Components.CreateLesson;
-import GUI.Components.CreateView;
-import GUI.Components.Gui;
+import GUI.Components.*;
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class GUIMain extends Application {
+
+
 
     private Gui gui = new Gui();
 
@@ -25,6 +25,9 @@ public class GUIMain extends Application {
     private Scene windowScene = new Scene(createLesson);
     private Scene mainWindow = new Scene(gui);
     private Scene groupWindow = new Scene(createGroupWindow);
+    private FileController fileController = new FileController();
+
+    FileChooser fileChooser = new FileChooser();
 
     public static void main(String[] args) {
         launch("Gui.java");
@@ -69,12 +72,18 @@ public class GUIMain extends Application {
         });
 
         //will open windows explorer to save object to file.
-        gui.getButton2().setOnAction(event -> {
-
+        gui.getButton1().setOnAction(event -> {
+            fileController.saveFile(createViewWindow, createView.returnAgenda());
         });
 
         //will open windows explorer to open a file with object.
         gui.getButton2().setOnAction(event -> {
+
+            fileController.openFile(createViewWindow);
+
+
+
+
 
         });
 
