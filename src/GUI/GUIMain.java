@@ -74,17 +74,13 @@ public class GUIMain extends Application {
         //will open windows explorer to save object to file.
         gui.getButton1().setOnAction(event -> {
             fileController.saveFile(createViewWindow, createView.returnAgenda());
+
+
         });
 
         //will open windows explorer to open a file with object.
         gui.getButton2().setOnAction(event -> {
-
-            fileController.openFile(createViewWindow);
-
-
-
-
-
+            createView.setAgenda(fileController.openFile(createViewWindow));
         });
 
         // will let you select a lesson to view/change, will load in all information.
