@@ -73,12 +73,7 @@ public class GUIMain extends Application {
 
         //will open windows explorer to save object to file.
         gui.getButton1().setOnAction(event -> {
-            System.out.println("wtf");
             fileController.saveFile(createViewWindow, createView.returnAgenda());
-
-
-
-
         });
 
         //will open windows explorer to open a file with object.
