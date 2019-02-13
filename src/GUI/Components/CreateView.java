@@ -6,7 +6,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -31,6 +30,8 @@ public class CreateView extends GridPane {
     Classroom classroom1 = new Classroom(113, 32, "LA", true, true);
     Classroom classroom2 = new Classroom(114, 25, "LA", true, true);
     Classroom classroom3 = new Classroom(115, 28, "LA", true, true);
+
+    Teacher teacher = new Teacher("Johan", "", "Talboom", 32, 0, 0, 420, Subject.PRORAMMING);
 
     Lesson math = new Lesson(teachers, classroom, classes, Subject.MATH, LocalDateTime.now());
     Lesson graphics2d = new Lesson(teachers, classroom1, classes, Subject.GRAPHICS2D, LocalDateTime.now());
@@ -77,19 +78,19 @@ public class CreateView extends GridPane {
         classes.add(class3);
         classes.add(class4);
 
-        for(int amountLessons = 0; amountLessons< agenda.amountOfLessons(); amountLessons++){
-            Label label = new Label(lessons.get(amountLessons).getSubject().toString() + lessons.get(amountLessons).getClassroom().toString());
-            Button button = new Button("Change");
-            Button button1 = new Button("View");
+        teachers.add(teacher);
 
-            button.setOnAction(event -> {
+        for(int amountLessons = 0; amountLessons< agenda.amountOfLessons(); amountLessons++){
+            Label label = new Label("Subject: " + lessons.get(amountLessons).getSubject() + "\nClassroom: " + lessons.get(amountLessons).getClassroom().getLocation() + lessons.get(amountLessons).getClassroom().getNumber() + "\nTeacher(s): " + lessons.get(amountLessons).getTeachers() + "\nTime: " + lessons.get(amountLessons).getTime());
+            Button buttonChange = new Button("Change");
+
+            buttonChange.setOnAction(event -> {
                 
             });
 
             gridPane.addRow(amountLessons);
             gridPane.add(label, 0, amountLessons);
-            gridPane.add(button, 1, amountLessons);
-            gridPane.add(button1, 2, amountLessons);
+            gridPane.add(buttonChange, 1, amountLessons);
         }
 
         gridPane.setVgap(10);
