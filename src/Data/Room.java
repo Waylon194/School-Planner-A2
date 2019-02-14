@@ -45,8 +45,8 @@ public class Room implements Serializable {
 
     @Override
     public String toString () {
-        return ("number: " + number +
-               ", amountOfSeats: " + amountOfSeats +
-               ", location: '" + location + '\'').replace('[',' ').replace(']',' ');
+        return ("Number: " + number +
+               ", Capacity: " + amountOfSeats +
+               ", Location: '" + location + '\'');
     }
 }

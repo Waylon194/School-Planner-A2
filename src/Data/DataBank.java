@@ -21,6 +21,8 @@ public class DataBank {
 
 
     public DataBank() {
+
+        Subject values[] = Subject.values();
         this.teachers = new ArrayList<>();
         this.classes = new ArrayList<>();
         this.classrooms = new ArrayList<>();
@@ -30,6 +32,12 @@ public class DataBank {
         this.groups = new ArrayList<>();
         this.subjects = new ArrayList<>();
         this.agenda = new Agenda(lessons);
+
+        for(Subject value:values)
+        {
+            this.subjects.add(value);
+        }
+
 
         Interval interval = new Interval(new DateTime(2013, 10, 25, 8, 0, 0, 0), new DateTime(2013, 10, 25, 9, 0, 0, 0));
         Student kees = new Student("Kees" , "de" , "Bruin", 19, 0,0,108);
@@ -47,6 +55,7 @@ public class DataBank {
         this.students.add(niffauw);
         this.groups.add(a2);
         this.classes.add(classe);
+        this.classrooms.add(classroom);
 
         Lesson les = new Lesson(this.teachers,classroom,classes,Subject.PRORAMMING,interval);
         this.lessons.add(les);

@@ -41,4 +41,6 @@ public class Classroom extends Room implements Serializable, Available {
     public void makeUnavailable(DateTime from, DateTime at) {
         this.unavailable.add(new Interval(from,at));
     }
+
+
 }
