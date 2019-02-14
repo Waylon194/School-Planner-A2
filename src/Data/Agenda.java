@@ -1,5 +1,8 @@
 package Data;
 
+import org.joda.time.DateTime;
+import org.joda.time.Interval;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -19,4 +22,8 @@ public class Agenda implements Serializable {
     public int amountOfLessons(){
         return lessons.size();
     }
+
+
+    
+
 }
