@@ -23,7 +23,7 @@ public class CreateView extends GridPane {
 
 
         for(int amountLessons = 0; amountLessons< dataBank.returnAgenda().amountOfLessons(); amountLessons++){
-            Label label = new Label(dataBank.returnLessons().get(0).getSubject().toString() + dataBank.returnLessons().get(amountLessons).getClassroom().toString());
+            Label label = new Label(dataBank.returnLessons().get(amountLessons).getSubject().toString() + dataBank.returnLessons().get(amountLessons).getClassroom().toString());
             Button button = new Button("Change");
             Button button1 = new Button("View");
 

@@ -43,6 +43,12 @@ public class Room implements Serializable {
         }
     }
 
+    public String getAbbreviation(){
+       return ((this.location.substring(0,2)).toUpperCase()+ String.valueOf(this.number));
+
+
+    }
+
     @Override
     public String toString () {
         return ("Number: " + number +

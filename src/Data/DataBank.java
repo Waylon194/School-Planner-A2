@@ -56,6 +56,7 @@ public class DataBank {
         this.groups.add(a2);
         this.classes.add(classe);
         this.classrooms.add(classroom);
+        this.classrooms.add(classroom);
 
         Lesson les = new Lesson(this.teachers,classroom,classes,Subject.PRORAMMING,interval);
         this.lessons.add(les);

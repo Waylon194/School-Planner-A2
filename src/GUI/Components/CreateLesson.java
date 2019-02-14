@@ -206,7 +206,7 @@ public class CreateLesson extends GridPane {
         classroomComboBox.setPrefWidth(514.0);
 
         for(Classroom classroom: dataBank.getClassrooms()){
-            classroomComboBox.getItems().add(classroom.toString());
+            classroomComboBox.getItems().add((classroom.toString()+" "+classroom.getAbbreviation()));
         }
 
 
