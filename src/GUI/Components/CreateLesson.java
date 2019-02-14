@@ -1,6 +1,9 @@
 package GUI.Components;
 
+import Data.Classroom;
 import Data.DataBank;
+import Data.Subject;
+import Data.Teacher;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -201,14 +204,23 @@ public class CreateLesson extends GridPane {
         GridPane.setColumnIndex(classroomComboBox, 1);
         classroomComboBox.setPrefHeight(25.0);
         classroomComboBox.setPrefWidth(514.0);
-        classroomComboBox.getItems().addAll("LA201", "LA302", "LA115", "LX401b", "LD221", "LD406", "LA226", "LA236");
+
+        for(Classroom classroom: dataBank.getClassrooms()){
+            classroomComboBox.getItems().add(classroom.toString());
+        }
+
 
 
         GridPane.setColumnIndex(teacherComboBox, 1);
         GridPane.setRowIndex(teacherComboBox, 1);
         teacherComboBox.setPrefHeight(25.0);
         teacherComboBox.setPrefWidth(552.0);
-        teacherComboBox.getItems().addAll("Pieter Kop Jansen", "Johan Talboom", "Maurice Snoeren", "Peter Kailuhu", "Etienne Goossens", "Jessica van der Heijden");
+
+        for(Teacher teacher: dataBank.getTeachers()){
+            teacherComboBox.getItems().add(teacher.toString());
+
+        }
+
 
 
         GridPane.setHalignment(label4, javafx.geometry.HPos.CENTER);
@@ -220,7 +232,10 @@ public class CreateLesson extends GridPane {
         GridPane.setRowIndex(subjectComboBox, 5);
         subjectComboBox.setPrefHeight(25.0);
         subjectComboBox.setPrefWidth(705.0);
-        subjectComboBox.getItems().addAll("Math", "Programming", "Workshop", "HWI", "Graphics3D", "Graphics2D");
+
+        for (Subject subject: dataBank.getSubjects()){
+            subjectComboBox.getItems().add(subject);
+        }
 
         gridPane.getColumnConstraints().add(columnConstraints);
         gridPane.getColumnConstraints().add(columnConstraints0);
