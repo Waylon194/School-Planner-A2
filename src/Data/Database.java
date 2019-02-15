@@ -3,10 +3,9 @@ package Data;
 
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
-
 import java.util.ArrayList;
 
-public class DataBank {
+public class Database {
 
     private ArrayList<Teacher> teachers;
     private ArrayList<Class> classes;
@@ -20,7 +19,7 @@ public class DataBank {
     private Agenda agenda;
 
 
-    public DataBank() {
+    public Database() {
 
         Subject values[] = Subject.values();
         this.teachers = new ArrayList<>();
@@ -39,7 +38,30 @@ public class DataBank {
         }
 
 
-        Interval interval = new Interval(new DateTime(2013, 10, 25, 8, 0, 0, 0), new DateTime(2013, 10, 25, 9, 0, 0, 0));
+
+
+
+        final DateTime EIGHT = new DateTime(2019,1,1,8,0,0);
+        final DateTime NINE = new DateTime(2019,1,1,9,0,0);
+        final DateTime TEN = new DateTime(2019,1,1,10,0,0);
+        final DateTime ELEVEN = new DateTime(2019,1,1,11,0,0);
+        final DateTime TWELEVE = new DateTime(2019,1,1,12,0,0);
+        final DateTime ONE = new DateTime(2019,1,1,13,0,0);
+        final DateTime TWO  = new DateTime(2019,1,1,14,0,0);
+        final DateTime THREE = new DateTime(2019,1,1,15,0,0);
+        final DateTime FOUR = new DateTime(2019,1,1,16,0,0);
+        final DateTime FIVE = new DateTime(2019,1,1,17,0,0);
+        final DateTime SIX = new DateTime(2019,1,1,18,0,0);
+
+        final Interval FIRST_LESSON = new Interval(EIGHT,NINE);
+        final Interval SECOND_LESSON= new Interval(EIGHT,NINE);
+        final Interval THIRD_LESSON= new Interval(EIGHT,NINE);
+        final Interval FOURTH_LESSON = new Interval(EIGHT,NINE);
+        final Interval FIFTH_LESSON = new Interval(EIGHT,NINE);
+        final Interval SIXTH_LESSON = new Interval(EIGHT,NINE);
+        final Interval SEVENTH_LESSON = new Interval(EIGHT,NINE);
+
+
         Student kees = new Student("Kees" , "de" , "Bruin", 19, 0,0,108);
         Student stijn = new Student("Stijn" , "de" , "Bruin", 19, 0,0,109);
         Student niffauw = new Student("Niffauw" , "a" , "Bruin", 19, 0,0,109);
@@ -58,7 +80,7 @@ public class DataBank {
         this.classrooms.add(classroom);
         this.classrooms.add(classroom);
 
-        Lesson les = new Lesson(this.teachers,classroom,classes,Subject.PRORAMMING,interval);
+        Lesson les = new Lesson(this.teachers,classroom,classes,Subject.PRORAMMING,FIRST_LESSON);
         this.lessons.add(les);
 
 
@@ -96,9 +118,6 @@ public class DataBank {
         this.students.add(student);
     }
 
-   /* public void addIntervals(Data.Interval interval){
-            this.intervals.add(interval);
-    }*/
 
     public void addGroup(Group group){
         this.groups.add(group);
@@ -142,5 +161,15 @@ public class DataBank {
 
     public int getAmountOfGroups(){
         return this.groups.size();
+    }
+
+    public void printLessons() {
+        for (Lesson l: lessons) {
+            System.out.println(l);
+        }
+    }
+
+    public int amountOfLessons(){
+        return lessons.size();
     }
 }

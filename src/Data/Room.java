@@ -4,12 +4,12 @@ import java.io.Serializable;
 
 public class Room implements Serializable {
     private int number;
-    private int amountOfSeats;
+    private int capacity;
     private String location;
 
     public Room(int number, int amountOfSeats, String location) {
         this.number = number;
-        this.amountOfSeats = amountOfSeats;
+        this.capacity = amountOfSeats;
         this.location = location;
     }
 
@@ -17,8 +17,8 @@ public class Room implements Serializable {
         return number;
     }
 
-    public int getAmountOfSeats() {
-        return amountOfSeats;
+    public int getCapacity() {
+        return capacity;
     }
 
     public String getLocation() {
@@ -51,8 +51,6 @@ public class Room implements Serializable {
 
     @Override
     public String toString () {
-        return ("Number: " + number +
-               ", Capacity: " + amountOfSeats +
-               ", Location: '" + location + '\'');
+        return (this.location + " "+ this.capacity+ " Capacity: "+ this.capacity);
     }
 }

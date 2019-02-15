@@ -1,6 +1,6 @@
 package GUI;
 
-import Data.DataBank;
+import Data.Database;
 import GUI.Components.*;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -11,13 +11,13 @@ import javafx.stage.Stage;
 public class GUIMain extends Application {
 
 
-    DataBank dataBank = new DataBank();
+    Database database = new Database();
 
     private Gui gui = new Gui();
 
-    private CreateLesson createLesson = new CreateLesson(dataBank);
-    private CreateView createView = new CreateView(dataBank);
-    private CreateGroupWindow createGroupWindow = new CreateGroupWindow(dataBank);
+    private CreateLesson createLesson = new CreateLesson(database);
+    private CreateView createView = new CreateView(database);
+    private CreateGroupWindow createGroupWindow = new CreateGroupWindow(database);
 
     private Stage createLessonWindow = new Stage();
     private Stage createGroupWindow2 = new Stage();
@@ -75,14 +75,14 @@ public class GUIMain extends Application {
 
         //will open windows explorer to save object to file.
         gui.getButton1().setOnAction(event -> {
-            fileController.saveFile(createViewWindow, dataBank.returnAgenda());
+            fileController.saveFile(createViewWindow, database.returnAgenda());
 
 
         });
 
         //will open windows explorer to open a file with object.
         gui.getButton2().setOnAction(event -> {
-            dataBank.setAgenda(fileController.openFile(createViewWindow));
+            database.setAgenda(fileController.openFile(createViewWindow));
         });
 
         // will let you select a lesson to view/change, will load in all information.

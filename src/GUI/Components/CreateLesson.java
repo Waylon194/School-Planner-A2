@@ -1,7 +1,7 @@
 package GUI.Components;
 
 import Data.Classroom;
-import Data.DataBank;
+import Data.Database;
 import Data.Subject;
 import Data.Teacher;
 import javafx.scene.control.Button;
@@ -13,7 +13,7 @@ import javafx.scene.layout.RowConstraints;
 
 public class CreateLesson extends GridPane {
 
-    private DataBank dataBank;
+    private Database database;
     private final GridPane gridPane;
     private final ColumnConstraints columnConstraints;
     private final ColumnConstraints columnConstraints0;
@@ -71,8 +71,8 @@ public class CreateLesson extends GridPane {
         return subjectComboBox;
     }
 
-    public CreateLesson(DataBank dataBank) {
-        this.dataBank = dataBank;
+    public CreateLesson(Database database) {
+        this.database = database;
 
         gridPane = new GridPane();
         columnConstraints = new ColumnConstraints();
@@ -205,8 +205,8 @@ public class CreateLesson extends GridPane {
         classroomComboBox.setPrefHeight(25.0);
         classroomComboBox.setPrefWidth(514.0);
 
-        for(Classroom classroom: dataBank.getClassrooms()){
-            classroomComboBox.getItems().add((classroom.toString()+" "+classroom.getAbbreviation()));
+        for(Classroom classroom: database.getClassrooms()){
+            classroomComboBox.getItems().add(classroom.getAbbreviation()+" "+(classroom.toString()));
         }
 
 
@@ -216,7 +216,7 @@ public class CreateLesson extends GridPane {
         teacherComboBox.setPrefHeight(25.0);
         teacherComboBox.setPrefWidth(552.0);
 
-        for(Teacher teacher: dataBank.getTeachers()){
+        for(Teacher teacher: database.getTeachers()){
             teacherComboBox.getItems().add(teacher.toString());
 
         }
@@ -233,7 +233,7 @@ public class CreateLesson extends GridPane {
         subjectComboBox.setPrefHeight(25.0);
         subjectComboBox.setPrefWidth(705.0);
 
-        for (Subject subject: dataBank.getSubjects()){
+        for (Subject subject: database.getSubjects()){
             subjectComboBox.getItems().add(subject);
         }
 
