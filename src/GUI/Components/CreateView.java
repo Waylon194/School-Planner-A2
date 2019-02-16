@@ -20,8 +20,8 @@ public class CreateView extends GridPane {
 
             for (int amountLessons = 0; amountLessons < database.amountOfLessons(); amountLessons++) {
                 Label label = new Label(database.returnLessons().get(amountLessons).getSubject().toString() + database.returnLessons().get(amountLessons).getClassroom().toString());
-                Button button = new Button("Change");
-                Button button1 = new Button("View");
+                Button button = new Button("Delete");
+               // Button button1 = new Button("View");
                 final int i = amountLessons;
                 button.setOnAction(event -> {
 
@@ -34,15 +34,15 @@ public class CreateView extends GridPane {
 
                 });
 
-                button1.setOnAction(event -> {
+              /*  button1.setOnAction(event -> {
                     database.printLessons();
 
-                });
+                });*/
 
                 gridPane.addRow(amountLessons);
                 gridPane.add(label, 0, amountLessons);
                 gridPane.add(button, 1, amountLessons);
-                gridPane.add(button1, 2, amountLessons);
+                //gridPane.add(button1, 2, amountLessons);
             }
 
             gridPane.setVgap(10);

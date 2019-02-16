@@ -10,6 +10,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
+import org.joda.time.Interval;
 
 public class CreateLesson extends GridPane {
 
@@ -193,13 +194,40 @@ public class CreateLesson extends GridPane {
         GridPane.setRowIndex(comboStartTime, 3);
         comboStartTime.setPrefHeight(25.0);
         comboStartTime.setPrefWidth(514.0);
-        comboStartTime.getItems().addAll("09:00", "10:00","11:00","12:00","13:00","14:00","15:00","16:00","17:00");
+        for (Interval interval : database.getIntervals()) {
+            int hour = interval.toInterval().getStart().getHourOfDay();
+            int intMinute = interval.toInterval().getStart().getMinuteOfHour();
+
+            String minute = "";
+
+            if (intMinute<10){
+                minute+="0"+ String.valueOf(intMinute);
+            }else{minute = String.valueOf(intMinute);}
+
+
+            comboStartTime.getItems().add(hour+":"+minute);
+
+        }
+
+
 
         GridPane.setColumnIndex(comboEndTime, 1);
         GridPane.setRowIndex(comboEndTime, 4);
         comboEndTime.setPrefHeight(25.0);
         comboEndTime.setPrefWidth(514.0);
-        comboEndTime.getItems().addAll("09:00", "10:00","11:00","12:00","13:00","14:00","15:00","16:00","17:00");
+        for (Interval interval : database.getIntervals()) {
+            int hour = interval.toInterval().getEnd().getHourOfDay();
+            int intMinute = interval.toInterval().getEnd().getMinuteOfHour();
+
+            String minute = "";
+
+            if (intMinute<10){
+                minute+="0"+ String.valueOf(intMinute);
+            }else{minute = String.valueOf(intMinute);}
+
+
+            comboEndTime.getItems().add(hour+":"+minute);
+        }
 
         GridPane.setColumnIndex(classroomComboBox, 1);
         classroomComboBox.setPrefHeight(25.0);

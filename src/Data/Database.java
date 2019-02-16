@@ -54,12 +54,15 @@ public class Database {
         final DateTime SIX = new DateTime(2019,1,1,18,0,0);
 
         final Interval FIRST_LESSON = new Interval(EIGHT,NINE);
-        final Interval SECOND_LESSON= new Interval(EIGHT,NINE);
-        final Interval THIRD_LESSON= new Interval(EIGHT,NINE);
-        final Interval FOURTH_LESSON = new Interval(EIGHT,NINE);
-        final Interval FIFTH_LESSON = new Interval(EIGHT,NINE);
-        final Interval SIXTH_LESSON = new Interval(EIGHT,NINE);
-        final Interval SEVENTH_LESSON = new Interval(EIGHT,NINE);
+        final Interval SECOND_LESSON= new Interval(NINE,TEN);
+        final Interval THIRD_LESSON= new Interval(TEN,ELEVEN);
+        final Interval FOURTH_LESSON = new Interval(ELEVEN,TWELEVE);
+        final Interval FIFTH_LESSON = new Interval(TWELEVE,ONE);
+        final Interval SIXTH_LESSON = new Interval(ONE,TWO);
+        final Interval SEVENTH_LESSON = new Interval(TWO,THREE);
+        final Interval EIGHT_LESSON = new Interval(THREE,FOUR);
+        final Interval NINTH_LESSON = new Interval(FOUR,FIVE);
+        final Interval TENTH_LESSON = new Interval(FIVE,SIX);
 
 
         Student kees = new Student("Kees" , "de" , "Bruin", 19, 0,0,108);
@@ -86,6 +89,18 @@ public class Database {
         this.lessons.add(les1);
         this.lessons.add(les2);
         this.lessons.add(les3);
+
+        this.intervals.add(FIRST_LESSON);
+        this.intervals.add(SECOND_LESSON);
+        this.intervals.add(THIRD_LESSON);
+        this.intervals.add(FOURTH_LESSON);
+        this.intervals.add(FIFTH_LESSON);
+        this.intervals.add(SIXTH_LESSON);
+        this.intervals.add(SEVENTH_LESSON);
+        this.intervals.add(EIGHT_LESSON);
+        this.intervals.add(NINTH_LESSON);
+        this.intervals.add(TENTH_LESSON);
+
 
 
 
