@@ -78,6 +78,7 @@ public class GUIMain extends Application {
         //saves lesson to a object and closes window WIP!
         createLesson.getButtonSaveLesson().setOnAction(event -> {
 
+            database.printLessons();
             createLessonWindow.close();
         });
 
