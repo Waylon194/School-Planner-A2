@@ -16,7 +16,7 @@ public class GUIMain extends Application {
     private Gui gui = new Gui();
 
     private CreateLesson createLesson = new CreateLesson(database);
-    private CreateView createView = new CreateView(database);
+    private CreateView createView = new CreateView(database, this);
     private CreateGroupWindow createGroupWindow = new CreateGroupWindow(database);
 
     private Stage createLessonWindow = new Stage();
@@ -36,6 +36,19 @@ public class GUIMain extends Application {
 
     }
 
+
+    public void updateScene(){
+
+
+
+        createViewWindow.close();
+        this.createView = new CreateView(database,this);
+        this.viewScene = new Scene(createView);
+        createViewWindow.setScene(viewScene);
+        createViewWindow.show();
+
+
+    }
     @Override
     public void start(Stage primaryStage) throws Exception {
         primaryStage.setScene(mainWindow);

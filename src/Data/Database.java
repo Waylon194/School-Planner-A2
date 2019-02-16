@@ -80,8 +80,12 @@ public class Database {
         this.classrooms.add(classroom);
         this.classrooms.add(classroom);
 
-        Lesson les = new Lesson(this.teachers,classroom,classes,Subject.PRORAMMING,FIRST_LESSON);
-        this.lessons.add(les);
+        Lesson les1 = new Lesson(this.teachers,classroom,classes,Subject.PRORAMMING,FIRST_LESSON);
+        Lesson les2 = new Lesson(this.teachers,classroom,classes,Subject.PRORAMMING,FIRST_LESSON);
+        Lesson les3 = new Lesson(this.teachers,classroom,classes,Subject.PRORAMMING,FIRST_LESSON);
+        this.lessons.add(les1);
+        this.lessons.add(les2);
+        this.lessons.add(les3);
 
 
 
@@ -171,5 +175,9 @@ public class Database {
 
     public int amountOfLessons(){
         return lessons.size();
+    }
+
+    public void deleteLesson(int i){
+        this.lessons.remove(i);
     }
 }
