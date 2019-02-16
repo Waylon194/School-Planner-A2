@@ -29,10 +29,13 @@ public class GUIMain extends Application {
     private Scene groupWindow = new Scene(createGroupWindow);
     private FileController fileController = new FileController();
 
+
     FileChooser fileChooser = new FileChooser();
+
 
     public static void main(String[] args) {
         launch("Gui.java");
+
 
     }
 

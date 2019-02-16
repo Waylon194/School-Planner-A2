@@ -36,6 +36,7 @@ public class CreateView extends GridPane {
 
                 button1.setOnAction(event -> {
                     database.printLessons();
+
                 });
 
                 gridPane.addRow(amountLessons);
