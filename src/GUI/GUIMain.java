@@ -1,9 +1,6 @@
 package GUI;
 
-import Data.Database;
-import Data.Group;
-import Data.Lesson;
-import Data.Teacher;
+import Data.*;
 import GUI.Components.*;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -152,6 +149,22 @@ public class GUIMain extends Application {
                 }
             });
 
+            if (!(createLesson.getChosenClasroom().isAvailable(interval))){
+                this.condition = false;
+                System.out.println(createLesson.getChosenClasroom() +"is not available at "+ interval);
+            }else{
+                this.condition = true;
+            }
+
+            getSelectedGroups().forEach(group -> {
+                if (!(group.isAvailable(interval))){
+                    this.condition = false;
+                    System.out.println(group+ " is already planned at "+ interval );
+                }else {
+                    this.condition = true;
+                }
+            });
+
 
 
             if(teachers&&classroom&&groups&&subject&&beginTime&&endTime&&this.condition) {
@@ -161,6 +174,11 @@ public class GUIMain extends Application {
                 updateScene();
                 update();
                 createLessonWindow.close();
+
+                createLesson.getChosenClasroom().makeUnavailable(interval);
+                for (Group selectedGroup : getSelectedGroups()) {
+                    selectedGroup.makeUnavailable(interval);
+                }
 
 
 
@@ -184,14 +202,14 @@ public class GUIMain extends Application {
 
         //will open windows explorer to save object to file.
         gui.getButton1().setOnAction(event -> {
-            fileController.saveFile(createViewWindow, database.returnAgenda());
+            fileController.saveFile(createViewWindow, database);
             update();
 
         });
 
         //will open windows explorer to open a file with object.
         gui.getButton2().setOnAction(event -> {
-            database.setAgenda(fileController.openFile(createViewWindow));
+            database = (fileController.openFile(createViewWindow));
             update();
         });
 

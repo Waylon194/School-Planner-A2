@@ -30,7 +30,7 @@ public class Classroom extends Room implements Serializable {
 
     public boolean isAvailable(Interval at) {
         for(Interval interval: unavailable) {
-            if (interval.abuts(at)){
+            if (at.overlaps(interval)){
                 return false;
             }
             }

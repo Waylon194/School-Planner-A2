@@ -35,9 +35,9 @@ public class Group implements Serializable {
     }
 
 
-    public boolean isAvailable(DateTime at) {
+    public boolean isAvailable(Interval at) {
         for(Interval interval: unavailable) {
-            if (interval.contains(at)) {
+            if (at.overlaps(interval)) {
                 return false;
             }
         }
