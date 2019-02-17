@@ -90,18 +90,34 @@ public class Database {
         Student anna = new Student("Anna", "van", "Nert", 19, 0, 0, 119);
         Student lisane = new Student("Lisane", "van", "Boeken", 20, 0, 0, 120);
 
+        this.students.add(kees);
+        this.students.add(stijn);
+        this.students.add(niffauw);
+        this.students.add(sarah);
+        this.students.add(lydia);
+        this.students.add(hans);
+        this.students.add(ella);
+        this.students.add(john);
+        this.students.add(jan);
+        this.students.add(stan);
+        this.students.add(stanley);
+        this.students.add(anna);
+        this.students.add(lisane);
+
+
         Teacher maurice = new Teacher("Maurice", "", "Snoeren", 45, 0, 0, 100, Subject.PRORAMMING);
         Teacher johan = new Teacher("Johan", "", "Fakka", 43, 0, 0, 110, Subject.GRAPHICS2D);
-        Teacher hansen = new Teacher("hansen", "van", "Bergen", 40, 0, 0, 130, Subject.GRAPHICS3D);
+        Teacher hansen = new Teacher("Hansen", "van", "Bergen", 40, 0, 0, 130, Subject.GRAPHICS3D);
         Teacher etienne = new Teacher("Etienne", "van", "Goosens", 43, 0, 0, 140, Subject.WORKSHOP);
         Teacher pieter = new Teacher("Pieter", "Kop", "Jansen", 41, 0, 0, 150, Subject.MATH);
         Teacher jessica = new Teacher("Jessica", "van der", "Heijden", 42, 0, 0, 160, Subject.HWI);
         Teacher peter = new Teacher("Peter", "", "Kailuhu", 50, 0, 0, 170, Subject.PRORAMMING);
 
-        Group a2 = new Group(studentsa2, "A2", maurice);
-        Group b1 = new Group(studentsb1, "B1", pieter);
+        Group a2 = new Group(studentRandomizer('a'), "A2", maurice);
+        Group b1 = new Group(studentRandomizer('b'), "B1", pieter);
 
         this.groups.add(a2);
+        this.groups.add(b1);
 
         Classroom classroom = new Classroom(1, 20, "LA201", false, false);
         Classroom classroom1 = new Classroom(2, 20, "LA302", false, false);
@@ -122,30 +138,8 @@ public class Database {
         this.teachers.add(pieter);
         this.teachers.add(jessica);
 
-        //students of group a2
-        this.studentsa2.add(kees);
-        this.studentsa2.add(stijn);
-        this.studentsa2.add(sarah);
-        this.studentsa2.add(lisane);
-        this.studentsa2.add(lydia);
-        this.studentsa2.add(ella);
-
-        //students of group b1
-        this.studentsb1.add(hans);
-        this.studentsb1.add(niffauw);
-        this.studentsb1.add(jan);
-        this.studentsb1.add(john);
-        this.studentsb1.add(stan);
-        this.studentsb1.add(stanley);
-        this.studentsb1.add(anna);
-
-        //groups of
-        this.groups.add(a2);
-        this.groups.add(b1);
 
 
-        //class with 2 groups or more
-        this.classes.add(classe);
 
         // classrooms
         this.classrooms.add(classroom);
@@ -272,5 +266,34 @@ public class Database {
 
     public ArrayList<DateTime> getTimes() {
         return this.times;
+    }
+
+    public ArrayList<Student> studentRandomizer(char a){
+
+        ArrayList<Student> klass = new ArrayList<>();
+
+        if (a=='a'){
+
+            for(int i = 0;i<students.size();i++){
+                if(i%3==0)
+                klass.add(students.get(i));
+            }
+
+            return klass;
+        } else if (a=='b'){
+            for(int i = 0;i<students.size();i++){
+                if(i%2==0)
+                    klass.add(students.get(i));
+            }
+            return klass;
+        }else return klass;
+    }
+
+    public ArrayList<Group> groupRandomizer(char a){
+        ArrayList<Group> classs = new ArrayList<>();
+
+        classs.add(groups.get(0));
+        return classs;
+
     }
 }
