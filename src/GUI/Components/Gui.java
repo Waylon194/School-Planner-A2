@@ -8,6 +8,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 import java.util.ArrayList;
@@ -89,7 +90,7 @@ public class Gui extends TabPane {
         GridPane.setColumnIndex(rectangle, classRoom);
         GridPane.setRowIndex(rectangle, lesson);
         rectangle.setSmooth(true);
-        rectangle.setFill(javafx.scene.paint.Color.DODGERBLUE);
+        rectangle.setFill(Color.BEIGE);
         rectangle.setHeight(gridPane.getRowConstraints().get(classRoom).getPrefHeight() - 12.5);
         rectangle.setStroke(javafx.scene.paint.Color.BLACK);
         rectangle.setStrokeType(javafx.scene.shape.StrokeType.INSIDE);
@@ -134,7 +135,6 @@ public class Gui extends TabPane {
         nodes.add(gridPane.getChildren().get(19));
         gridPane.getChildren().clear();
         gridPane.getChildren().addAll(nodes);
-
     }
 
     public Gui() {
