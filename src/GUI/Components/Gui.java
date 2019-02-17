@@ -1,17 +1,14 @@
 package GUI.Components;
 
-import javafx.geometry.*;
+import Data.Lesson;
 import javafx.geometry.Insets;
-import javafx.scene.Scene;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.*;
-import javafx.scene.control.*;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.scene.layout.*;
 import javafx.scene.shape.Rectangle;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -69,9 +66,6 @@ public class Gui extends TabPane {
     private final Button button2;
 
 
-
-
-
     public Button getButton() {
         return button;
     }
@@ -88,8 +82,10 @@ public class Gui extends TabPane {
         return button2;
     }
 
+    Rectangle rectangle;
+
     public void drawLesson(int lesson, int classRoom) {
-        Rectangle rectangle = new Rectangle();
+        rectangle = new Rectangle();
         GridPane.setColumnIndex(rectangle, classRoom);
         GridPane.setRowIndex(rectangle, lesson);
         rectangle.setSmooth(true);
@@ -101,22 +97,47 @@ public class Gui extends TabPane {
         gridPane.getChildren().add(rectangle);
     }
 
-    public void drawLessonBlock(int startTime, int classRoom, int duration) {
-        Label label = new Label("Lesson");
+    public void drawLessonBlock(int startTime, int classRoom, int duration, Lesson lesson) {
+        Label label = new Label("" + lesson.getTeachers() + '\n' + lesson.getSubject());
 
-        for (int i = startTime; i <= startTime+duration; i++) {
-            if (duration < 1 || duration > 9 || startTime < 1 || startTime > 9 || classRoom < 1 || classRoom > 8 || i < 1 || i > 9) throw new IllegalArgumentException("More hours than there are in a schoolday!");
+        for (int i = startTime; i <= startTime + duration; i++) {
             drawLesson(i, classRoom);
         }
         GridPane.setColumnIndex(label, classRoom);
-        GridPane.setRowIndex(label, (startTime + duration) / 2);
+        GridPane.setRowIndex(label, startTime);
         GridPane.setHalignment(label, javafx.geometry.HPos.CENTER);
         GridPane.setValignment(label, javafx.geometry.VPos.CENTER);
         gridPane.getChildren().add(label);
     }
 
-    public Gui() {
+    public void clear() {
+        List<Node> nodes = new ArrayList<>();
+        nodes.add(gridPane.getChildren().get(0));
+        nodes.add(gridPane.getChildren().get(1));
+        nodes.add(gridPane.getChildren().get(2));
+        nodes.add(gridPane.getChildren().get(3));
+        nodes.add(gridPane.getChildren().get(4));
+        nodes.add(gridPane.getChildren().get(5));
+        nodes.add(gridPane.getChildren().get(6));
+        nodes.add(gridPane.getChildren().get(7));
+        nodes.add(gridPane.getChildren().get(8));
+        nodes.add(gridPane.getChildren().get(9));
+        nodes.add(gridPane.getChildren().get(10));
+        nodes.add(gridPane.getChildren().get(11));
+        nodes.add(gridPane.getChildren().get(12));
+        nodes.add(gridPane.getChildren().get(13));
+        nodes.add(gridPane.getChildren().get(14));
+        nodes.add(gridPane.getChildren().get(15));
+        nodes.add(gridPane.getChildren().get(16));
+        nodes.add(gridPane.getChildren().get(17));
+        nodes.add(gridPane.getChildren().get(18));
+        nodes.add(gridPane.getChildren().get(19));
+        gridPane.getChildren().clear();
+        gridPane.getChildren().addAll(nodes);
 
+    }
+
+    public Gui() {
         tab = new Tab();
         tab1 = new Tab();
         anchorPane = new AnchorPane();
