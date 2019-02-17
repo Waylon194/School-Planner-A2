@@ -1,14 +1,21 @@
 package GUI.Components;
 
+import Data.Classroom;
+import Data.Database;
+import Data.Subject;
+import Data.Teacher;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
+import org.joda.time.DateTime;
+import org.joda.time.Interval;
 
 public class CreateLesson extends GridPane {
 
+    private Database database;
     private final GridPane gridPane;
     private final ColumnConstraints columnConstraints;
     private final ColumnConstraints columnConstraints0;
@@ -66,7 +73,8 @@ public class CreateLesson extends GridPane {
         return subjectComboBox;
     }
 
-    public CreateLesson() {
+    public CreateLesson(Database database) {
+        this.database = database;
 
         gridPane = new GridPane();
         columnConstraints = new ColumnConstraints();
@@ -187,24 +195,66 @@ public class CreateLesson extends GridPane {
         GridPane.setRowIndex(comboStartTime, 3);
         comboStartTime.setPrefHeight(25.0);
         comboStartTime.setPrefWidth(514.0);
-        comboStartTime.getItems().addAll("09:00", "10:00","11:00","12:00","13:00","14:00","15:00","16:00","17:00");
+        for (DateTime time : database.getTimes()) {
+            int hour = time.getHourOfDay();
+            int intMinute = time.getMinuteOfHour();
+
+            String minute = "";
+
+            if (intMinute<10){
+                minute+="0"+ String.valueOf(intMinute);
+            }else{minute = String.valueOf(intMinute);}
+
+
+            //todo: change displayed time
+
+            comboStartTime.getItems().add(time);
+            //comboStartTime.(hour+":"+minute);
+
+        }
+
+
 
         GridPane.setColumnIndex(comboEndTime, 1);
         GridPane.setRowIndex(comboEndTime, 4);
         comboEndTime.setPrefHeight(25.0);
         comboEndTime.setPrefWidth(514.0);
-        comboEndTime.getItems().addAll("09:00", "10:00","11:00","12:00","13:00","14:00","15:00","16:00","17:00");
+        for (DateTime time : database.getTimes()) {
+            int hour = time.getHourOfDay();
+            int intMinute = time.getMinuteOfHour();
+
+            String minute = "";
+
+            if (intMinute<10){
+                minute+="0"+ String.valueOf(intMinute);
+            }else{minute = String.valueOf(intMinute);}
+
+
+            comboEndTime.getItems().add(time);
+
+        }
+
 
         GridPane.setColumnIndex(classroomComboBox, 1);
         classroomComboBox.setPrefHeight(25.0);
         classroomComboBox.setPrefWidth(514.0);
-        classroomComboBox.getItems().addAll("LA201", "LA302", "LA115", "LX401b", "LD221", "LD406", "LA226", "LA236");
+
+        for(Classroom classroom: database.getClassrooms()){
+            classroomComboBox.getItems().add(classroom);
+        }
+
+
 
         GridPane.setColumnIndex(teacherComboBox, 1);
         GridPane.setRowIndex(teacherComboBox, 1);
         teacherComboBox.setPrefHeight(25.0);
         teacherComboBox.setPrefWidth(552.0);
-        teacherComboBox.getItems().addAll("Pieter Kop Jansen", "Johan Talboom", "Maurice Snoeren", "Peter Kailuhu", "Etienne Goossens", "Jessica van der Heijden");
+
+        for(Teacher teacher: database.getTeachers()){
+            teacherComboBox.getItems().add(teacher);
+
+        }
+
 
 
         GridPane.setHalignment(label4, javafx.geometry.HPos.CENTER);
@@ -216,7 +266,10 @@ public class CreateLesson extends GridPane {
         GridPane.setRowIndex(subjectComboBox, 5);
         subjectComboBox.setPrefHeight(25.0);
         subjectComboBox.setPrefWidth(705.0);
-        subjectComboBox.getItems().addAll("Math", "Programming", "Workshop", "HWI", "Graphics3D", "Graphics2D");
+
+        for (Subject subject: database.getSubjects()){
+            subjectComboBox.getItems().add(subject);
+        }
 
         gridPane.getColumnConstraints().add(columnConstraints);
         gridPane.getColumnConstraints().add(columnConstraints0);
@@ -244,5 +297,23 @@ public class CreateLesson extends GridPane {
         getChildren().add(gridPane);
 
     }
+
+    public Classroom getChosenClasroom(){
+        return (Classroom) classroomComboBox.getSelectionModel().getSelectedItem();
+    }
+
+    public Teacher getChosenTeacher(){
+        return (Teacher) teacherComboBox.getSelectionModel().getSelectedItem();
+    }
+    public Subject getChosenSubject(){
+        return (Subject) subjectComboBox.getSelectionModel().getSelectedItem();
+    }
+    public DateTime getChosenStartTime(){
+        return (DateTime) comboStartTime.getSelectionModel().getSelectedItem();
+    }
+    public DateTime getChosenEndTime(){
+        return (DateTime) comboEndTime.getSelectionModel().getSelectedItem();
+    }
+
 
 }

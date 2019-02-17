@@ -71,6 +71,7 @@ public class Gui extends TabPane {
 
 
 
+
     public Button getButton() {
         return button;
     }
@@ -389,7 +390,7 @@ public class Gui extends TabPane {
         button.setPadding(new Insets(10.0));
 
         button0.setMnemonicParsing(false);
-        button0.setText("Change/View Lesson");
+        button0.setText("View Lessons");
         VBox.setMargin(button0, new Insets(0.0, 0.0, 0.0, 10.0));
         button0.setPadding(new Insets(10.0));
 

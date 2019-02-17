@@ -1,21 +1,29 @@
 package GUI;
 
+import Data.Database;
+import Data.Group;
+import Data.Lesson;
 import GUI.Components.*;
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.control.CheckBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import org.joda.time.Interval;
+
+import java.util.ArrayList;
 
 public class GUIMain extends Application {
 
 
+    Database database = new Database();
 
     private Gui gui = new Gui();
 
-    private CreateLesson createLesson = new CreateLesson();
-    private CreateView createView = new CreateView();
-    private CreateGroupWindow createGroupWindow = new CreateGroupWindow();
+    private CreateLesson createLesson = new CreateLesson(database);
+    private CreateView createView = new CreateView(database, this);
+    private CreateGroupWindow createGroupWindow = new CreateGroupWindow(database);
 
     private Stage createLessonWindow = new Stage();
     private Stage createGroupWindow2 = new Stage();
@@ -27,13 +35,29 @@ public class GUIMain extends Application {
     private Scene groupWindow = new Scene(createGroupWindow);
     private FileController fileController = new FileController();
 
+
     FileChooser fileChooser = new FileChooser();
+
 
     public static void main(String[] args) {
         launch("Gui.java");
 
+
     }
 
+
+    public void updateScene(){
+
+
+
+        createViewWindow.close();
+        this.createView = new CreateView(database,this);
+        this.viewScene = new Scene(createView);
+        createViewWindow.setScene(viewScene);
+
+
+
+    }
     @Override
     public void start(Stage primaryStage) throws Exception {
         primaryStage.setScene(mainWindow);
@@ -60,7 +84,11 @@ public class GUIMain extends Application {
         //saves lesson to a object and closes window WIP!
         createLesson.getButtonSaveLesson().setOnAction(event -> {
 
+
+           database.returnLessons().add(new Lesson(createLesson.getChosenTeacher(),createLesson.getChosenClasroom(),getSelectedGroups(),createLesson.getChosenSubject(),new Interval(createLesson.getChosenStartTime(),createLesson.getChosenEndTime())));
+            updateScene();
             createLessonWindow.close();
+
         });
 
         //opens window to add groups WIP!
@@ -73,14 +101,14 @@ public class GUIMain extends Application {
 
         //will open windows explorer to save object to file.
         gui.getButton1().setOnAction(event -> {
-            fileController.saveFile(createViewWindow, createView.returnAgenda());
+            fileController.saveFile(createViewWindow, database.returnAgenda());
 
 
         });
 
         //will open windows explorer to open a file with object.
         gui.getButton2().setOnAction(event -> {
-            createView.setAgenda(fileController.openFile(createViewWindow));
+            database.setAgenda(fileController.openFile(createViewWindow));
         });
 
         // will let you select a lesson to view/change, will load in all information.
@@ -89,5 +117,30 @@ public class GUIMain extends Application {
             createViewWindow.setTitle("Change/View");
             createViewWindow.show();
         });
+
+        createGroupWindow.getSaveGroupsButton().setOnAction(event -> {
+
+            System.out.println(getSelectedGroups());
+            createGroupWindow2.close();
+
+
+    });
     }
+
+    public ArrayList<Group> getSelectedGroups(){
+        ArrayList<Group> selected = new ArrayList<>();
+        int i = 0;
+
+        for (CheckBox checkBox : createGroupWindow.getCheckBoxes()) {
+            if(checkBox.isSelected()) {
+                selected.add(database.getGroups().get(i));
+            }
+            i++;
+
+    }
+    return selected;
+
+
+    }
+
 }

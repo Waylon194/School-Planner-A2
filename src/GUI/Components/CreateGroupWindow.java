@@ -1,34 +1,52 @@
 package GUI.Components;
 
+import Data.Database;
+import Data.Group;
+import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.layout.VBox;
 
 import java.util.ArrayList;
 
 public class CreateGroupWindow extends VBox {
+    private ArrayList<Group> selectedGroups;
 
     private VBox vBox;
     private ArrayList<String> groups;
+    private Button saveGroups;
+    private ArrayList<CheckBox> checkBoxes;
 
-    public CreateGroupWindow(){
+    public CreateGroupWindow(Database database){
         vBox = new VBox();
-        groups = new ArrayList<String>();
-        groups.add("Group1");
-        groups.add("Group2");
-        groups.add("Group3");
-        groups.add("Group4");
-        groups.add("Group5");
-        groups.add("Group6");
-        groups.add("Group7");
-        groups.add("Group8");
-        groups.add("Group9");
-        groups.add("Group10");
+        saveGroups = new Button("Save groups");
+         checkBoxes = new ArrayList<>();
+        this.selectedGroups = new ArrayList<>();
 
-        for(int i = 0; i<groups.size(); i++){
-            CheckBox checkBox = new CheckBox(groups.get(i));
+        for(int i = 0; i< database.getAmountOfGroups(); i++){
+            CheckBox checkBox = new CheckBox(database.getGroups().get(i).toString());
+            checkBoxes.add(checkBox);
             vBox.getChildren().add(checkBox);
+            System.out.println("Kappa");
         }
+        vBox.getChildren().add(saveGroups);
         vBox.setSpacing(10);
         getChildren().add(vBox);
+
+
+
     }
+
+    public ArrayList<Group> getSelectedGroups(){
+        return this.selectedGroups;
+    }
+
+    public Button getSaveGroupsButton(){
+        return this.saveGroups;
+    }
+    public ArrayList<CheckBox> getCheckBoxes(){
+        return this.checkBoxes;
+    }
+
+
+
 }
