@@ -199,10 +199,10 @@ public class Database {
     public void addLesson(Lesson lesson) {
         this.lessons.add(lesson);
     }
-
-    public void addStudents(Student student) {
-        this.students.add(student);
-    }
+    // TODO: 17-02-19 fix student array 
+//    public void addStudents(Student student) {
+//        this.students.add(student);
+//    }
 
     public void addGroup(Group group) {
         this.groups.add(group);
@@ -228,9 +228,9 @@ public class Database {
         return lessons;
     }
 
-    public ArrayList<Student> getStudents() {
-        return students;
-    }
+//    public ArrayList<Student> getStudents() {
+//        return students;
+//    }
 
     public ArrayList<Interval> getIntervals() {
         return intervals;
