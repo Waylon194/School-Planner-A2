@@ -13,6 +13,8 @@ import javafx.scene.layout.RowConstraints;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 
+import java.util.Map;
+
 public class CreateLesson extends GridPane {
 
     private Database database;
@@ -277,7 +279,9 @@ public class CreateLesson extends GridPane {
         teacherComboBox.setPrefHeight(25.0);
         teacherComboBox.setPrefWidth(552.0);
 
-        for(Teacher teacher: database.getTeachers()){
+
+
+        for(Map.Entry<String,Teacher> teacher: database.getTeachers().entrySet()){
             teacherComboBox.getItems().add(teacher);
 
         }

@@ -16,6 +16,7 @@ import org.joda.time.Hours;
 import org.joda.time.Interval;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class GUIMain extends Application {
@@ -134,13 +135,18 @@ public class GUIMain extends Application {
             }
 
 
-            if(teachers&&classroom&&groups&&subject&&beginTime&&endTime) {
 
+
+
+            if(teachers&&classroom&&groups&&subject&&beginTime&&endTime) {
 
                 database.returnLessons().add(new Lesson(getSelectedTeachers(), createLesson.getChosenClasroom(), getSelectedGroups(), createLesson.getChosenSubject(), new Interval(createLesson.getChosenStartTime(), createLesson.getChosenEndTime())));
                 updateScene();
                 update();
                 createLessonWindow.close();
+
+
+
             }
 
 
@@ -218,13 +224,17 @@ public class GUIMain extends Application {
         return selected;
     }
 
-    public ArrayList<Teacher> getSelectedTeachers() {
-        ArrayList<Teacher> selected = new ArrayList<>();
+    public HashMap<String, Teacher> getSelectedTeachers() {
+      HashMap<String,Teacher> selected = new HashMap<>();
         int i = 0;
+        String number= "";
 
         for (CheckBox checkBox : createTeacherWindow.getCheckBoxes()) {
             if (checkBox.isSelected()) {
-                selected.add(database.getTeachers().get(i));
+               number = checkBox.toString().substring(checkBox.toString().length()-4,checkBox.toString().length()-1);
+               selected.put(number,database.getTeachers().get(number));
+
+
             }
             i++;
 

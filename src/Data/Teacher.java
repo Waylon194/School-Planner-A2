@@ -7,18 +7,18 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class Teacher extends Person implements Serializable,Available{
-    private int teacherNumber;
+    private String teacherNumber;
     private Subject subject;
     private ArrayList<Interval> unavailable;
 
-    public Teacher (String firstName, String additive, String lastName, int age, int xLocation, int yLocation, int teacherNumber, Subject subject) {
+    public Teacher (String firstName, String additive, String lastName, int age, int xLocation, int yLocation, String teacherNumber, Subject subject) {
         super(firstName, additive, lastName, age, xLocation, yLocation);
         this.unavailable = new ArrayList<>();
         this.teacherNumber = teacherNumber;
         this.subject = subject;
     }
 
-    public int getTeacherNumber () {
+    public String getTeacherNumber () {
         return teacherNumber;
     }
 

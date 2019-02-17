@@ -5,10 +5,13 @@ import org.joda.time.DateTime;
 import org.joda.time.Interval;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class Database {
 
-    private ArrayList<Teacher> teachers;
+    private Map<String,Teacher> teachers;
     private ArrayList<Class> classes;
     private ArrayList<Classroom> classrooms;
     private ArrayList<Lesson> lessons;
@@ -24,7 +27,7 @@ public class Database {
     public Database() {
 
         Subject values[] = Subject.values();
-        this.teachers = new ArrayList<>();
+        this.teachers = new HashMap<String,Teacher>();
         this.classes = new ArrayList<>();
         this.classrooms = new ArrayList<>();
         this.lessons = new ArrayList<>();
@@ -103,19 +106,18 @@ public class Database {
         this.students.add(lisane);
 
 
-        Teacher maurice = new Teacher("Maurice", "", "Snoeren", 45, 0, 0, 100, Subject.PRORAMMING);
-        Teacher johan = new Teacher("Johan", "", "Fakka", 43, 0, 0, 110, Subject.GRAPHICS2D);
-        Teacher hansen = new Teacher("Hansen", "van", "Bergen", 40, 0, 0, 130, Subject.GRAPHICS3D);
-        Teacher etienne = new Teacher("Etienne", "van", "Goosens", 43, 0, 0, 140, Subject.WORKSHOP);
-        Teacher pieter = new Teacher("Pieter", "Kop", "Jansen", 41, 0, 0, 150, Subject.MATH);
-        Teacher jessica = new Teacher("Jessica", "van der", "Heijden", 42, 0, 0, 160, Subject.HWI);
-        Teacher peter = new Teacher("Peter", "", "Kailuhu", 50, 0, 0, 170, Subject.PRORAMMING);
+        Teacher maurice = new Teacher("Maurice", "", "Snoeren", 45, 0, 0, "100", Subject.PRORAMMING);
+        Teacher johan = new Teacher("Johan", "", "Fakka", 43, 0, 0, "110", Subject.GRAPHICS2D);
+        Teacher hansen = new Teacher("Hansen", "van", "Bergen", 40, 0, 0, "130", Subject.GRAPHICS3D);
+        Teacher etienne = new Teacher("Etienne", "van", "Goosens", 43, 0, 0, "140", Subject.WORKSHOP);
+        Teacher pieter = new Teacher("Pieter", "Kop", "Jansen", 41, 0, 0, "150", Subject.MATH);
+        Teacher jessica = new Teacher("Jessica", "van der", "Heijden", 42, 0, 0, "160", Subject.HWI);
+        Teacher peter = new Teacher("Peter", "", "Kailuhu", 50, 0, 0, "170", Subject.PRORAMMING);
 
         Group a2 = new Group(studentRandomizer('a'), "A2", maurice);
         Group b1 = new Group(studentRandomizer('b'), "B1", pieter);
 
-        this.groups.add(a2);
-        this.groups.add(b1);
+
 
         Classroom classroom = new Classroom(1, 20, "LA201", false, false);
         Classroom classroom1 = new Classroom(2, 20, "LA302", false, false);
@@ -129,14 +131,13 @@ public class Database {
         Data.Class classe = new Data.Class(groups, "12TIAV");
 
         //teachers
-        this.teachers.add(maurice);
-        this.teachers.add(johan);
-        this.teachers.add(hansen);
-        this.teachers.add(etienne);
-        this.teachers.add(peter);
-        this.teachers.add(pieter);
-        this.teachers.add(jessica);
-
+        this.teachers.put(maurice.getTeacherNumber(),maurice);
+        this.teachers.put(johan.getTeacherNumber(),johan);
+        this.teachers.put(hansen.getTeacherNumber(),hansen);
+        this.teachers.put(etienne.getTeacherNumber(),etienne);
+        this.teachers.put(peter.getTeacherNumber(),peter);
+        this.teachers.put(pieter.getTeacherNumber(),pieter);
+        this.teachers.put(jessica.getTeacherNumber(),jessica);
 
 
         //groups of
@@ -182,7 +183,7 @@ public class Database {
     }
 
     public void addTeacher(Teacher teacher) {
-        this.teachers.add(teacher);
+        this.teachers.put(teacher.getTeacherNumber(),teacher);
 
     }
 
@@ -198,9 +199,9 @@ public class Database {
         this.lessons.add(lesson);
     }
     // TODO: 17-02-19 fix student array 
-//    public void addStudents(Student student) {
-//        this.students.add(student);
-//    }
+   public void addStudents(Student student) {
+        this.students.add(student);
+    }
 
     public void addGroup(Group group) {
         this.groups.add(group);
@@ -210,7 +211,7 @@ public class Database {
         this.subjects.add(subject);
     }
 
-    public ArrayList<Teacher> getTeachers() {
+    public Map<String, Teacher> getTeachers() {
         return teachers;
     }
 

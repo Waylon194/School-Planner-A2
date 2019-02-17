@@ -6,17 +6,19 @@ import org.joda.time.Interval;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class Lesson implements Serializable {
     private Teacher teacher;
-    private ArrayList<Teacher> teachers;
+    private HashMap<String,Teacher> teachers;
     private Classroom classroom;
     private ArrayList <Group> studentClass;
     private Subject subject;
     private Interval interval;
 
-   public Lesson (ArrayList<Teacher> teachers, Classroom classroom, ArrayList<Group> studentClass, Subject subject, Interval interval) {
+   public Lesson (HashMap<String,Teacher> teachers, Classroom classroom, ArrayList<Group> studentClass, Subject subject, Interval interval) {
       this.teachers = teachers;
       this.classroom = classroom;
       this.studentClass = studentClass;
@@ -28,15 +30,18 @@ public class Lesson implements Serializable {
        return this.interval;
    }
 
-   public ArrayList<Teacher> getTeachers () {
+   public HashMap<String,Teacher> getTeachers () {
       return teachers;
    }
 
     public String getTeachersAsString () {
         String teachers = "";
-        for (Teacher teacher1 : this.teachers) {
-            teachers+=teacher1.getLastName()+ ",";
+
+        for(Map.Entry<String,Teacher> teacher: this.teachers.entrySet()){
+
+            teachers+= teacher.getValue().getLastName() +",";
         }
+
 
         return teachers;
     }
