@@ -1,12 +1,16 @@
 package GUI;
 
 import Data.Database;
+import Data.Group;
 import GUI.Components.*;
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.control.CheckBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+
+import java.util.ArrayList;
 
 public class GUIMain extends Application {
 
@@ -80,6 +84,10 @@ public class GUIMain extends Application {
 
             database.printLessons();
             createLessonWindow.close();
+
+            System.out.println(createLesson.getChosenClasroom()+" "+createLesson.getChosenTeacher()+" "+createLesson.getChosenSubject());
+
+
         });
 
         //opens window to add groups WIP!
@@ -108,5 +116,30 @@ public class GUIMain extends Application {
             createViewWindow.setTitle("Change/View");
             createViewWindow.show();
         });
+
+        createGroupWindow.getSaveGroupsButton().setOnAction(event -> {
+
+            System.out.println(getSelectedGroups());
+            createGroupWindow2.close();
+
+
+    });
     }
+
+    public ArrayList<Group> getSelectedGroups(){
+        ArrayList<Group> selected = new ArrayList<>();
+        int i = 0;
+
+        for (CheckBox checkBox : createGroupWindow.getCheckBoxes()) {
+            if(checkBox.isSelected()) {
+                selected.add(database.getGroups().get(i));
+            }
+            i++;
+
+    }
+    return selected;
+
+
+    }
+
 }

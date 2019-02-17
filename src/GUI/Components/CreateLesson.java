@@ -234,7 +234,7 @@ public class CreateLesson extends GridPane {
         classroomComboBox.setPrefWidth(514.0);
 
         for(Classroom classroom: database.getClassrooms()){
-            classroomComboBox.getItems().add(classroom.getAbbreviation()+" "+(classroom.toString()));
+            classroomComboBox.getItems().add(classroom);
         }
 
 
@@ -245,7 +245,7 @@ public class CreateLesson extends GridPane {
         teacherComboBox.setPrefWidth(552.0);
 
         for(Teacher teacher: database.getTeachers()){
-            teacherComboBox.getItems().add(teacher.toString());
+            teacherComboBox.getItems().add(teacher);
 
         }
 
@@ -291,5 +291,17 @@ public class CreateLesson extends GridPane {
         getChildren().add(gridPane);
 
     }
+
+    public Classroom getChosenClasroom(){
+        return (Classroom) classroomComboBox.getSelectionModel().getSelectedItem();
+    }
+
+    public Teacher getChosenTeacher(){
+        return (Teacher) teacherComboBox.getSelectionModel().getSelectedItem();
+    }
+    public Subject getChosenSubject(){
+        return (Subject) subjectComboBox.getSelectionModel().getSelectedItem();
+    }
+
 
 }

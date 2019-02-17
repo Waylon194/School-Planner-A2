@@ -70,8 +70,9 @@ public class Database {
         Student niffauw = new Student("Niffauw" , "a" , "Bruin", 19, 0,0,109);
         Teacher maurice = new Teacher("Maurice", "", "Snoeren", 45, 0,0,100, Subject.PRORAMMING);
         Group a2 = new Group(students, "A2",maurice);
-
-        Classroom classroom = new Classroom(8,8,"Cantene",false, false);
+        this.groups.add(a2);
+        Classroom classroom = new Classroom(8,8,"Canteneeeee",false, false);
+        Classroom classroom1 = new Classroom(12,400,"Hogeschoollaan",false, false);
 
         Data.Class classe = new Data.Class(groups, "12Tiav");
         this.teachers.add(maurice);
@@ -81,7 +82,7 @@ public class Database {
         this.groups.add(a2);
         this.classes.add(classe);
         this.classrooms.add(classroom);
-        this.classrooms.add(classroom);
+        this.classrooms.add(classroom1);
 
         Lesson les1 = new Lesson(this.teachers,classroom,classes,Subject.PRORAMMING,FIRST_LESSON);
         Lesson les2 = new Lesson(this.teachers,classroom,classes,Subject.PRORAMMING,FIRST_LESSON);
