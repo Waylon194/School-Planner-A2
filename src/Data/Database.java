@@ -127,6 +127,7 @@ public class Database {
         Classroom classroom7 = new Classroom(8, 20, "LA236", false, false);
 
         Data.Class classe = new Data.Class(groups, "12TIAV");
+
         //teachers
         this.teachers.add(maurice);
         this.teachers.add(johan);
@@ -138,6 +139,13 @@ public class Database {
 
 
 
+        //groups of
+        this.groups.add(a2);
+        this.groups.add(b1);
+
+
+        //class with 2 groups or more
+        this.classes.add(classe);
 
         // classrooms
         this.classrooms.add(classroom);
@@ -158,15 +166,6 @@ public class Database {
         this.intervals.add(SIXTH_LESSON);
         this.intervals.add(SEVENTH_LESSON);
         this.intervals.add(EIGHT_LESSON);
-
-
-
-
-
-
-
-
-
     }
 
 
@@ -198,11 +197,10 @@ public class Database {
     public void addLesson(Lesson lesson) {
         this.lessons.add(lesson);
     }
-
-    public void addStudents(Student student) {
-        this.students.add(student);
-    }
-
+    // TODO: 17-02-19 fix student array 
+//    public void addStudents(Student student) {
+//        this.students.add(student);
+//    }
 
     public void addGroup(Group group) {
         this.groups.add(group);
@@ -228,9 +226,9 @@ public class Database {
         return lessons;
     }
 
-    public ArrayList<Student> getStudents() {
-        return students;
-    }
+//    public ArrayList<Student> getStudents() {
+//        return students;
+//    }
 
     public ArrayList<Interval> getIntervals() {
         return intervals;
