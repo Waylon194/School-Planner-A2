@@ -1,13 +1,11 @@
 package GUI.Components;
 
-import Data.Agenda;
-import Data.Lesson;
-import javafx.application.Platform;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import Data.Database;
 
+import javax.xml.crypto.Data;
 import java.io.*;
-import java.util.ArrayList;
 
 
 public class FileController {
@@ -15,7 +13,7 @@ public class FileController {
     private FileChooser fileChooser = new FileChooser();
 
 
-    public void saveFile(Stage stage, Agenda agenda){
+    public void saveFile(Stage stage, Database database){
         System.out.println("Save File");
         File file = fileChooser.showSaveDialog(stage);
         if (file == null) {
@@ -28,7 +26,7 @@ public class FileController {
 
                 FileOutputStream fileOut = new FileOutputStream(file.getPath());
                 ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
-                objectOut.writeObject(agenda);
+                objectOut.writeObject(database);
                 objectOut.close();
                 System.out.println("The Object  was succesfully written to a file");
 
@@ -38,7 +36,7 @@ public class FileController {
         }
     }
 
-    public Agenda openFile(Stage stage){
+    public Database openFile(Stage stage){
 
 
         System.out.println("Opening file");
@@ -50,8 +48,8 @@ public class FileController {
             try{
                 FileInputStream fileIn = new FileInputStream(file.getPath());
                 ObjectInputStream objectIn = new ObjectInputStream(fileIn);
-               Agenda agenda = (Agenda)objectIn.readObject();
-                return agenda;
+                Database database = (Database) objectIn.readObject();
+                return database;
             }
             catch (IOException | ClassNotFoundException ex) {
                 ex.printStackTrace();

@@ -4,12 +4,13 @@ package Data;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Database {
+public class Database implements Serializable {
 
     private Map<String,Teacher> teachers;
     private ArrayList<Class> classes;
