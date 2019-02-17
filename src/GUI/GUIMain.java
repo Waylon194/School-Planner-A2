@@ -144,6 +144,11 @@ public class GUIMain extends Application {
                 if(!(value.isAvailable(interval))){
                     this.condition = false;
                     System.out.println("Teacher "+value+"is not available at this time");
+                    update();
+                    updateScene();
+                    createLessonWindow.close();
+                }else {
+                    this.condition = true;
                 }
             });
 
