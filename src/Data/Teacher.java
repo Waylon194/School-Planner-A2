@@ -6,7 +6,7 @@ import org.joda.time.Interval;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Teacher extends Person implements Serializable,Available{
+public class Teacher extends Person implements Serializable{
     private String teacherNumber;
     private Subject subject;
     private ArrayList<Interval> unavailable;
@@ -29,19 +29,19 @@ public class Teacher extends Person implements Serializable,Available{
     }
 
 
-    @Override
-    public boolean isAvailable(DateTime at) {
+
+    public boolean isAvailable(Interval at) {
         for(Interval interval: unavailable) {
-            if (interval.contains(at)) {
+            if (at.overlaps(interval)) {
                 return false;
             }
         }
         return true;
     }
 
-    @Override
-    public void makeUnavailable(DateTime from, DateTime at) {
-        this.unavailable.add(new Interval(from,at));
+
+    public void makeUnavailable(Interval interval) {
+        this.unavailable.add(interval);
     }
 
 }

@@ -18,6 +18,7 @@ import org.joda.time.Interval;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class GUIMain extends Application {
 
@@ -42,6 +43,7 @@ public class GUIMain extends Application {
     private Scene groupWindow = new Scene(createGroupWindow);
     private Scene teacherWindow = new Scene(createTeacherWindow);
     private FileController fileController = new FileController();
+    private boolean condition = true;
 
 
     FileChooser fileChooser = new FileChooser();
@@ -97,6 +99,7 @@ public class GUIMain extends Application {
             boolean subject = false;
             boolean beginTime = false;
             boolean endTime = false;
+            boolean available = false;
 
             if (getSelectedTeachers().size()>0){
                 teachers = true;
@@ -134,19 +137,31 @@ public class GUIMain extends Application {
                 System.out.println("Choose end time!");
             }
 
+            Interval interval = new Interval(createLesson.getChosenStartTime(), createLesson.getChosenEndTime());
+
+            getSelectedTeachers().forEach((key, value) -> {
+
+                if(!(value.isAvailable(interval))){
+                    this.condition = false;
+                    System.out.println("Teacher "+value+"is not available at this time");
+                }
+            });
 
 
 
+            if(teachers&&classroom&&groups&&subject&&beginTime&&endTime&&this.condition) {
 
-            if(teachers&&classroom&&groups&&subject&&beginTime&&endTime) {
-
-                database.returnLessons().add(new Lesson(getSelectedTeachers(), createLesson.getChosenClasroom(), getSelectedGroups(), createLesson.getChosenSubject(), new Interval(createLesson.getChosenStartTime(), createLesson.getChosenEndTime())));
+                //Interval interval = new Interval(createLesson.getChosenStartTime(), createLesson.getChosenEndTime());
+                database.returnLessons().add(new Lesson(getSelectedTeachers(), createLesson.getChosenClasroom(), getSelectedGroups(), createLesson.getChosenSubject(), interval));
                 updateScene();
                 update();
                 createLessonWindow.close();
 
 
 
+                getSelectedTeachers().forEach((key, value) -> {
+                   database.getTeachers().get(key).makeUnavailable(interval);
+                });
             }
 
 

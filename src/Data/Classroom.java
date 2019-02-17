@@ -6,7 +6,7 @@ import org.joda.time.Interval;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Classroom extends Room implements Serializable, Available {
+public class Classroom extends Room implements Serializable {
     private boolean smartBoard;
     private boolean whiteBoard;
     private ArrayList<Interval> unavailable;
@@ -27,19 +27,22 @@ public class Classroom extends Room implements Serializable, Available {
     }
 
 
-    @Override
-    public boolean isAvailable(DateTime at) {
+
+    public boolean isAvailable(Interval at) {
         for(Interval interval: unavailable) {
-            if (interval.contains(at)) {
+            if (interval.abuts(at)){
                 return false;
             }
-        }
+            }
         return true;
-    }
+        }
 
-    @Override
-    public void makeUnavailable(DateTime from, DateTime at) {
-        this.unavailable.add(new Interval(from,at));
+
+
+
+
+    public void makeUnavailable(Interval interval) {
+        this.unavailable.add(interval);
     }
 
 
