@@ -16,8 +16,8 @@ public class Lesson implements Serializable {
     private Subject subject;
     private Interval interval;
 
-   public Lesson (Teacher teachers, Classroom classroom, ArrayList<Group> studentClass, Subject subject, Interval interval) {
-      this.teacher = teachers;
+   public Lesson (ArrayList<Teacher> teachers, Classroom classroom, ArrayList<Group> studentClass, Subject subject, Interval interval) {
+      this.teachers = teachers;
       this.classroom = classroom;
       this.studentClass = studentClass;
       this.subject = subject;
@@ -32,7 +32,18 @@ public class Lesson implements Serializable {
       return teachers;
    }
 
-   public Classroom getClassroom () {
+    public String getTeachersAsString () {
+        String teachers = "";
+        for (Teacher teacher1 : this.teachers) {
+            teachers+=teacher1.getLastName()+ ",";
+        }
+
+        return teachers;
+    }
+
+
+
+    public Classroom getClassroom () {
       return classroom;
    }
 
@@ -85,9 +96,7 @@ public class Lesson implements Serializable {
        return returnBeginTimeAsString()+"-"+returnEndTimeAsString();
     }
 
-    public String getTeacher(){
-       return this.teacher.toString();
-    }
+
 
     public ArrayList<Group> getGroups(){
        return this.studentClass;

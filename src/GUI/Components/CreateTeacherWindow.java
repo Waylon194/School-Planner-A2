@@ -2,6 +2,7 @@ package GUI.Components;
 
 import Data.Database;
 import Data.Group;
+import Data.Teacher;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.layout.VBox;
@@ -9,7 +10,7 @@ import javafx.scene.layout.VBox;
 import java.util.ArrayList;
 
 public class CreateTeacherWindow extends VBox {
-    private ArrayList<Group> selectedTeachers;
+    private ArrayList<Teacher> selectedTeachers;
 
     private VBox vBox;
     private ArrayList<String> groups;
@@ -22,11 +23,10 @@ public class CreateTeacherWindow extends VBox {
         checkBoxes = new ArrayList<>();
         this.selectedTeachers = new ArrayList<>();
 
-        for(int i = 0; i< database.getAmountOfGroups(); i++){
-            CheckBox checkBox = new CheckBox(database.getGroups().get(i).toString());
+        for(int i = 0; i< database.getTeachers().size(); i++){
+            CheckBox checkBox = new CheckBox(database.getTeachers().get(i).toString());
             checkBoxes.add(checkBox);
             vBox.getChildren().add(checkBox);
-            System.out.println("Kappa");
         }
         vBox.getChildren().add(saveTeachers);
         vBox.setSpacing(10);
@@ -36,7 +36,7 @@ public class CreateTeacherWindow extends VBox {
 
     }
 
-    public ArrayList<Group> getSelectedGroups(){
+    public ArrayList<Teacher> getSelectedGroups(){
         return this.selectedTeachers;
     }
 

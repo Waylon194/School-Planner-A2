@@ -3,6 +3,7 @@ package GUI;
 import Data.Database;
 import Data.Group;
 import Data.Lesson;
+import Data.Teacher;
 import GUI.Components.*;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -90,7 +91,7 @@ public class GUIMain extends Application {
         createLesson.getButtonSaveLesson().setOnAction(event -> {
 
 
-            database.returnLessons().add(new Lesson(createLesson.getChosenTeacher(), createLesson.getChosenClasroom(), getSelectedGroups(), createLesson.getChosenSubject(), new Interval(createLesson.getChosenStartTime(), createLesson.getChosenEndTime())));
+            database.returnLessons().add(new Lesson(getSelectedTeachers(), createLesson.getChosenClasroom(), getSelectedGroups(), createLesson.getChosenSubject(), new Interval(createLesson.getChosenStartTime(), createLesson.getChosenEndTime())));
             updateScene();
             createLessonWindow.close();
             update();
@@ -127,20 +128,29 @@ public class GUIMain extends Application {
 
         createGroupWindow.getSaveGroupsButton().setOnAction(event -> {
 
-            System.out.println(getSelectedGroups());
             createGroupWindow2.close();
             update();
 
         });
 
-        createTeacherWindow.getSaveTeachersButton().setOnAction(event -> {
+        createLesson.getButtonTeachers().setOnAction(event -> {
+
             createTeacherWindowStage.setScene(teacherWindow);
+            createTeacherWindowStage.setTitle("Select Teachers:");
             createTeacherWindowStage.show();
 
 
 
+        });
+
+        createTeacherWindow.getSaveTeachersButton().setOnAction(event -> {
+
+            createTeacherWindowStage.close();
+           update();
 
         });
+
+
     }
 
     public ArrayList<Group> getSelectedGroups() {
@@ -150,6 +160,20 @@ public class GUIMain extends Application {
         for (CheckBox checkBox : createGroupWindow.getCheckBoxes()) {
             if (checkBox.isSelected()) {
                 selected.add(database.getGroups().get(i));
+            }
+            i++;
+
+        }
+        return selected;
+    }
+
+    public ArrayList<Teacher> getSelectedTeachers() {
+        ArrayList<Teacher> selected = new ArrayList<>();
+        int i = 0;
+
+        for (CheckBox checkBox : createTeacherWindow.getCheckBoxes()) {
+            if (checkBox.isSelected()) {
+                selected.add(database.getTeachers().get(i));
             }
             i++;
 

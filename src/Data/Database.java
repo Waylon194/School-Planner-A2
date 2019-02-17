@@ -78,6 +78,7 @@ public class Database {
         Student stijn = new Student("Stijn", "de", "Bruin", 19, 0, 0, 109);
         Student niffauw = new Student("Niffauw", "a", "Bruin", 19, 0, 0, 109);
         Teacher maurice = new Teacher("Maurice", "", "Snoeren", 45, 0, 0, 100, Subject.PRORAMMING);
+        Teacher maurice2 = new Teacher("Johan", "", "Fakka", 45, 0, 0, 120, Subject.PRORAMMING);
         Group a2 = new Group(students, "A2", maurice);
         this.groups.add(a2);
         Classroom classroom = new Classroom(1, 20, "LA201", false, false);
@@ -92,6 +93,8 @@ public class Database {
 
         Data.Class classe = new Data.Class(groups, "12Tiav");
         this.teachers.add(maurice);
+        this.teachers.add(maurice2);
+        this.teachers.add(maurice2);
         this.students.add(kees);
         this.students.add(stijn);
         this.students.add(niffauw);
@@ -106,7 +109,7 @@ public class Database {
         this.classrooms.add(classroom6);
         this.classrooms.add(classroom7);
 
-       Lesson les1 = new Lesson(maurice, classroom, groups, Subject.PRORAMMING, FIRST_LESSON);
+       Lesson les1 = new Lesson(this.teachers, classroom, groups, Subject.PRORAMMING, FIRST_LESSON);
 //        Lesson les2 = new Lesson(maurice, classroom1, groups, Subject.PRORAMMING, SECOND_LESSON);
 //        Lesson les3 = new Lesson(maurice, classroom2, groups, Subject.PRORAMMING, THIRD_LESSON);
        this.lessons.add(les1);
