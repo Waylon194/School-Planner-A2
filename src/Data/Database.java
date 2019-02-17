@@ -42,17 +42,17 @@ public class Database {
         }
 
 
-        final DateTime EIGHT = new DateTime(2019, 1, 1, 8, 0, 0);
-        final DateTime NINE = new DateTime(2019, 1, 1, 9, 0, 0);
-        final DateTime TEN = new DateTime(2019, 1, 1, 10, 0, 0);
-        final DateTime ELEVEN = new DateTime(2019, 1, 1, 11, 0, 0);
-        final DateTime TWELEVE = new DateTime(2019, 1, 1, 12, 0, 0);
-        final DateTime ONE = new DateTime(2019, 1, 1, 13, 0, 0);
-        final DateTime TWO = new DateTime(2019, 1, 1, 14, 0, 0);
-        final DateTime THREE = new DateTime(2019, 1, 1, 15, 0, 0);
-        final DateTime FOUR = new DateTime(2019, 1, 1, 16, 0, 0);
-        final DateTime FIVE = new DateTime(2019, 1, 1, 17, 0, 0);
-        final DateTime SIX = new DateTime(2019, 1, 1, 18, 0, 0);
+        final DateTime EIGHT = new DateTime(2019, 1, 1, 8, 0, 0);       // 8:00
+        final DateTime NINE = new DateTime(2019, 1, 1, 9, 0, 0);        // 9:00
+        final DateTime TEN = new DateTime(2019, 1, 1, 10, 0, 0);        // 10:00
+        final DateTime ELEVEN = new DateTime(2019, 1, 1, 11, 0, 0);     // 11:00
+        final DateTime TWELEVE = new DateTime(2019, 1, 1, 12, 0, 0);    // 12:00
+        final DateTime ONE = new DateTime(2019, 1, 1, 13, 0, 0);        // 13:00
+        final DateTime TWO = new DateTime(2019, 1, 1, 14, 0, 0);        // 14:00
+        final DateTime THREE = new DateTime(2019, 1, 1, 15, 0, 0);      // 15:00
+        final DateTime FOUR = new DateTime(2019, 1, 1, 16, 0, 0);       // 16:00
+        final DateTime FIVE = new DateTime(2019, 1, 1, 17, 0, 0);       // 17:00
+        final DateTime SIX = new DateTime(2019, 1, 1, 18, 0, 0);        // 18:00
 
         this.times.add(EIGHT);
         this.times.add(NINE);
@@ -102,6 +102,7 @@ public class Database {
         Group b1 = new Group(studentsb1, "B1", pieter);
 
         this.groups.add(a2);
+        this.groups.add(b1);
 
         Classroom classroom = new Classroom(1, 20, "LA201", false, false);
         Classroom classroom1 = new Classroom(2, 20, "LA302", false, false);
@@ -113,6 +114,7 @@ public class Database {
         Classroom classroom7 = new Classroom(8, 20, "LA236", false, false);
 
         Data.Class classe = new Data.Class(groups, "12TIAV");
+
         //teachers
         this.teachers.add(maurice);
         this.teachers.add(johan);
@@ -139,12 +141,12 @@ public class Database {
         this.studentsb1.add(stanley);
         this.studentsb1.add(anna);
 
-        //groups of
+        //groups of the class 12TIAV
         this.groups.add(a2);
         this.groups.add(b1);
 
 
-        //class with 2 groups or more
+        //class are with 2 groups or more
         this.classes.add(classe);
 
         // classrooms
@@ -166,15 +168,6 @@ public class Database {
         this.intervals.add(SIXTH_LESSON);
         this.intervals.add(SEVENTH_LESSON);
         this.intervals.add(EIGHT_LESSON);
-
-
-
-
-
-
-
-
-
     }
 
 
@@ -210,7 +203,6 @@ public class Database {
     public void addStudents(Student student) {
         this.students.add(student);
     }
-
 
     public void addGroup(Group group) {
         this.groups.add(group);
