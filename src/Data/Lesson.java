@@ -84,4 +84,12 @@ public class Lesson implements Serializable {
     public String returnLessonTimeAsString(){
        return returnBeginTimeAsString()+"-"+returnEndTimeAsString();
     }
+
+    public String getTeacher(){
+       return this.teacher.toString();
+    }
+
+    public ArrayList<Group> getGroups(){
+       return this.studentClass;
+    }
 }

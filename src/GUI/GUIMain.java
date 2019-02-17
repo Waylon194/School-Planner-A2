@@ -63,6 +63,7 @@ public class GUIMain extends Application {
         primaryStage.setScene(mainWindow);
         primaryStage.setTitle("School Planner");
         buttonhandler();
+        update();
         primaryStage.show();
     }
 

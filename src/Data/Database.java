@@ -106,10 +106,10 @@ public class Database {
         this.classrooms.add(classroom6);
         this.classrooms.add(classroom7);
 
-//        Lesson les1 = new Lesson(maurice, classroom, groups, Subject.PRORAMMING, FIRST_LESSON);
+       Lesson les1 = new Lesson(maurice, classroom, groups, Subject.PRORAMMING, FIRST_LESSON);
 //        Lesson les2 = new Lesson(maurice, classroom1, groups, Subject.PRORAMMING, SECOND_LESSON);
 //        Lesson les3 = new Lesson(maurice, classroom2, groups, Subject.PRORAMMING, THIRD_LESSON);
-//        this.lessons.add(les1);
+       this.lessons.add(les1);
 //        this.lessons.add(les2);
 //        this.lessons.add(les3);
 
