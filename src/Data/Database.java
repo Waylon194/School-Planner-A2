@@ -5,10 +5,13 @@ import org.joda.time.DateTime;
 import org.joda.time.Interval;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class Database {
 
-    private ArrayList<Teacher> teachers;
+    private Map<String,Teacher> teachers;
     private ArrayList<Class> classes;
     private ArrayList<Classroom> classrooms;
     private ArrayList<Lesson> lessons;
@@ -24,15 +27,15 @@ public class Database {
     public Database() {
 
         Subject values[] = Subject.values();
-        this.teachers = new ArrayList<>();
+        this.teachers = new HashMap<String,Teacher>();
         this.classes = new ArrayList<>();
         this.classrooms = new ArrayList<>();
         this.lessons = new ArrayList<>();
-        this.students = new ArrayList<>();
         this.intervals = new ArrayList<>();
         this.groups = new ArrayList<>();
         this.subjects = new ArrayList<>();
         this.times = new ArrayList<>();
+        this.students = new ArrayList<>();
         this.agenda = new Agenda(lessons);
 
         for (Subject value : values) {
@@ -40,7 +43,7 @@ public class Database {
         }
 
 
-        final DateTime EIGHT = new DateTime(2019, 1, 1, 8, 0, 0);
+
         final DateTime NINE = new DateTime(2019, 1, 1, 9, 0, 0);
         final DateTime TEN = new DateTime(2019, 1, 1, 10, 0, 0);
         final DateTime ELEVEN = new DateTime(2019, 1, 1, 11, 0, 0);
@@ -50,9 +53,9 @@ public class Database {
         final DateTime THREE = new DateTime(2019, 1, 1, 15, 0, 0);
         final DateTime FOUR = new DateTime(2019, 1, 1, 16, 0, 0);
         final DateTime FIVE = new DateTime(2019, 1, 1, 17, 0, 0);
-        final DateTime SIX = new DateTime(2019, 1, 1, 18, 0, 0);
 
-        this.times.add(EIGHT);
+
+
         this.times.add(NINE);
         this.times.add(TEN);
         this.times.add(ELEVEN);
@@ -62,7 +65,7 @@ public class Database {
         this.times.add(THREE);
         this.times.add(FOUR);
         this.times.add(FIVE);
-        this.times.add(SIX);
+
 
         final Interval FIRST_LESSON = new Interval(NINE, TEN);
         final Interval SECOND_LESSON = new Interval(TEN, ELEVEN);
@@ -76,10 +79,46 @@ public class Database {
 
         Student kees = new Student("Kees", "de", "Bruin", 19, 0, 0, 108);
         Student stijn = new Student("Stijn", "de", "Bruin", 19, 0, 0, 109);
-        Student niffauw = new Student("Niffauw", "a", "Bruin", 19, 0, 0, 109);
-        Teacher maurice = new Teacher("Maurice", "", "Snoeren", 45, 0, 0, 100, Subject.PRORAMMING);
-        Group a2 = new Group(students, "A2", maurice);
-        this.groups.add(a2);
+        Student niffauw = new Student("Niffauw", "a", "Bruin", 19, 0, 0, 110);
+        Student sarah = new Student("Sarah", "de", "Vos", 20, 0, 0, 111);
+        Student lydia = new Student("Lydia", "de", "Vos", 18, 0, 0, 112);
+        Student hans = new Student("Hans", "a", "Bruin", 21, 0, 0, 113);
+        Student ella = new Student("Ella", "van", "Roodhart", 20, 0, 0, 114);
+        Student john = new Student("John", "de", "Ree", 18, 0, 0, 115);
+        Student jan = new Student("Jan", "van", "Hoven", 17, 0, 0, 116);
+        Student stan = new Student("Stan", "de", "Vaart", 17, 0, 0, 117);
+        Student stanley = new Student("Stanley", "van", "Houten", 17, 0, 0, 118);
+        Student anna = new Student("Anna", "van", "Nert", 19, 0, 0, 119);
+        Student lisane = new Student("Lisane", "van", "Boeken", 20, 0, 0, 120);
+
+        this.students.add(kees);
+        this.students.add(stijn);
+        this.students.add(niffauw);
+        this.students.add(sarah);
+        this.students.add(lydia);
+        this.students.add(hans);
+        this.students.add(ella);
+        this.students.add(john);
+        this.students.add(jan);
+        this.students.add(stan);
+        this.students.add(stanley);
+        this.students.add(anna);
+        this.students.add(lisane);
+
+
+        Teacher maurice = new Teacher("Maurice", "", "Snoeren", 45, 0, 0, "100", Subject.PROGRAMMING);
+        Teacher johan = new Teacher("Johan", "", "Fakka", 43, 0, 0, "110", Subject.GRAPHICS2D);
+        Teacher hansen = new Teacher("Hansen", "van", "Bergen", 40, 0, 0, "130", Subject.GRAPHICS3D);
+        Teacher etienne = new Teacher("Etienne", "van", "Goosens", 43, 0, 0, "140", Subject.WORKSHOP);
+        Teacher pieter = new Teacher("Pieter", "Kop", "Jansen", 41, 0, 0, "150", Subject.MATH);
+        Teacher jessica = new Teacher("Jessica", "van der", "Heijden", 42, 0, 0, "160", Subject.HWI);
+        Teacher peter = new Teacher("Peter", "", "Kailuhu", 50, 0, 0, "170", Subject.PROGRAMMING);
+
+        Group a2 = new Group(studentRandomizer('a'), "A2", maurice);
+        Group b1 = new Group(studentRandomizer('b'), "B1", pieter);
+
+
+
         Classroom classroom = new Classroom(1, 20, "LA201", false, false);
         Classroom classroom1 = new Classroom(2, 20, "LA302", false, false);
         Classroom classroom2 = new Classroom(3, 20, "LA115", false, false);
@@ -89,14 +128,27 @@ public class Database {
         Classroom classroom6 = new Classroom(7, 20, "LA226", false, false);
         Classroom classroom7 = new Classroom(8, 20, "LA236", false, false);
 
+        Data.Class classe = new Data.Class(groups, "12TIAV");
 
-        Data.Class classe = new Data.Class(groups, "12Tiav");
-        this.teachers.add(maurice);
-        this.students.add(kees);
-        this.students.add(stijn);
-        this.students.add(niffauw);
+        //teachers
+        this.teachers.put(maurice.getTeacherNumber(),maurice);
+        this.teachers.put(johan.getTeacherNumber(),johan);
+        this.teachers.put(hansen.getTeacherNumber(),hansen);
+        this.teachers.put(etienne.getTeacherNumber(),etienne);
+        this.teachers.put(peter.getTeacherNumber(),peter);
+        this.teachers.put(pieter.getTeacherNumber(),pieter);
+        this.teachers.put(jessica.getTeacherNumber(),jessica);
+
+
+        //groups of
         this.groups.add(a2);
+        this.groups.add(b1);
+
+
+        //class with 2 groups or more
         this.classes.add(classe);
+
+        // classrooms
         this.classrooms.add(classroom);
         this.classrooms.add(classroom1);
         this.classrooms.add(classroom2);
@@ -106,13 +158,7 @@ public class Database {
         this.classrooms.add(classroom6);
         this.classrooms.add(classroom7);
 
-       Lesson les1 = new Lesson(maurice, classroom, groups, Subject.PRORAMMING, FIRST_LESSON);
-//        Lesson les2 = new Lesson(maurice, classroom1, groups, Subject.PRORAMMING, SECOND_LESSON);
-//        Lesson les3 = new Lesson(maurice, classroom2, groups, Subject.PRORAMMING, THIRD_LESSON);
-       this.lessons.add(les1);
-//        this.lessons.add(les2);
-//        this.lessons.add(les3);
-
+        //lesson times in hour intervals
         this.intervals.add(FIRST_LESSON);
         this.intervals.add(SECOND_LESSON);
         this.intervals.add(THIRD_LESSON);
@@ -121,8 +167,6 @@ public class Database {
         this.intervals.add(SIXTH_LESSON);
         this.intervals.add(SEVENTH_LESSON);
         this.intervals.add(EIGHT_LESSON);
-
-
     }
 
 
@@ -139,7 +183,7 @@ public class Database {
     }
 
     public void addTeacher(Teacher teacher) {
-        this.teachers.add(teacher);
+        this.teachers.put(teacher.getTeacherNumber(),teacher);
 
     }
 
@@ -154,11 +198,10 @@ public class Database {
     public void addLesson(Lesson lesson) {
         this.lessons.add(lesson);
     }
-
-    public void addStudents(Student student) {
+    // TODO: 17-02-19 fix student array 
+   public void addStudents(Student student) {
         this.students.add(student);
     }
-
 
     public void addGroup(Group group) {
         this.groups.add(group);
@@ -168,7 +211,7 @@ public class Database {
         this.subjects.add(subject);
     }
 
-    public ArrayList<Teacher> getTeachers() {
+    public Map<String, Teacher> getTeachers() {
         return teachers;
     }
 
@@ -184,9 +227,9 @@ public class Database {
         return lessons;
     }
 
-    public ArrayList<Student> getStudents() {
-        return students;
-    }
+//    public ArrayList<Student> getStudents() {
+//        return students;
+//    }
 
     public ArrayList<Interval> getIntervals() {
         return intervals;
@@ -220,5 +263,34 @@ public class Database {
 
     public ArrayList<DateTime> getTimes() {
         return this.times;
+    }
+
+    public ArrayList<Student> studentRandomizer(char a){
+
+        ArrayList<Student> klass = new ArrayList<>();
+
+        if (a=='a'){
+
+            for(int i = 0;i<students.size();i++){
+                if(i%3==0)
+                klass.add(students.get(i));
+            }
+
+            return klass;
+        } else if (a=='b'){
+            for(int i = 0;i<students.size();i++){
+                if(i%2==0)
+                    klass.add(students.get(i));
+            }
+            return klass;
+        }else return klass;
+    }
+
+    public ArrayList<Group> groupRandomizer(char a){
+        ArrayList<Group> classs = new ArrayList<>();
+
+        classs.add(groups.get(0));
+        return classs;
+
     }
 }

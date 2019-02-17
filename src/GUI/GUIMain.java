@@ -3,6 +3,7 @@ package GUI;
 import Data.Database;
 import Data.Group;
 import Data.Lesson;
+import Data.Teacher;
 import GUI.Components.*;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -15,7 +16,9 @@ import org.joda.time.Hours;
 import org.joda.time.Interval;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class GUIMain extends Application {
 
@@ -27,16 +30,20 @@ public class GUIMain extends Application {
     private CreateLesson createLesson = new CreateLesson(database);
     private CreateView createView = new CreateView(database, this);
     private CreateGroupWindow createGroupWindow = new CreateGroupWindow(database);
+    private CreateTeacherWindow createTeacherWindow = new CreateTeacherWindow(database);
 
     private Stage createLessonWindow = new Stage();
     private Stage createGroupWindow2 = new Stage();
     private Stage createViewWindow = new Stage();
+    private Stage createTeacherWindowStage = new Stage();
 
     private Scene viewScene = new Scene(createView);
     private Scene windowScene = new Scene(createLesson);
     private Scene mainWindow = new Scene(gui);
     private Scene groupWindow = new Scene(createGroupWindow);
+    private Scene teacherWindow = new Scene(createTeacherWindow);
     private FileController fileController = new FileController();
+    private boolean condition = true;
 
 
     FileChooser fileChooser = new FileChooser();
@@ -67,7 +74,7 @@ public class GUIMain extends Application {
         primaryStage.show();
     }
 
-    public void buttonhandler() {
+    public void buttonhandler()  {
         createLessonWindow.initModality(Modality.APPLICATION_MODAL);
         createGroupWindow2.initModality(Modality.APPLICATION_MODAL);
         createViewWindow.initModality(Modality.APPLICATION_MODAL);
@@ -86,11 +93,85 @@ public class GUIMain extends Application {
         //saves lesson to a object and closes window WIP!
         createLesson.getButtonSaveLesson().setOnAction(event -> {
 
+            boolean teachers = false;
+            boolean classroom = false;
+            boolean groups = false;
+            boolean subject = false;
+            boolean beginTime = false;
+            boolean endTime = false;
+            boolean available = false;
 
-            database.returnLessons().add(new Lesson(createLesson.getChosenTeacher(), createLesson.getChosenClasroom(), getSelectedGroups(), createLesson.getChosenSubject(), new Interval(createLesson.getChosenStartTime(), createLesson.getChosenEndTime())));
-            updateScene();
-            createLessonWindow.close();
-            update();
+            if (getSelectedTeachers().size()>0){
+                teachers = true;
+            } else{
+                System.out.println("Choose Teacher!");
+            }
+
+
+            if (!(createLesson.getClassroomComboBox().getSelectionModel().isEmpty())){
+                classroom = true;
+            }else {
+                System.out.println("Choose classroom!");
+            }
+
+            if(getSelectedGroups().size()>0){
+                groups = true;
+            }else {
+                System.out.println("Select groups!");
+            }
+
+            if (!(createLesson.getSubjectComboBox().getSelectionModel().isEmpty())){
+                subject = true;
+            }else{
+                System.out.println("Choose subject!");
+            }
+
+            if(!(createLesson.getComboStartTime().getSelectionModel().isEmpty())){
+                beginTime = true;
+            }else{
+                System.out.println("Choose begin time!");
+            }
+            if(!(createLesson.getComboEndTime().getSelectionModel().isEmpty())){
+                endTime = true;
+            }else{
+                System.out.println("Choose end time!");
+            }
+
+            Interval interval = new Interval(createLesson.getChosenStartTime(), createLesson.getChosenEndTime());
+
+            getSelectedTeachers().forEach((key, value) -> {
+
+                if(!(value.isAvailable(interval))){
+                    this.condition = false;
+                    System.out.println("Teacher "+value+"is not available at this time");
+                    update();
+                    updateScene();
+                    createLessonWindow.close();
+                }else {
+                    this.condition = true;
+                }
+            });
+
+
+
+            if(teachers&&classroom&&groups&&subject&&beginTime&&endTime&&this.condition) {
+
+                //Interval interval = new Interval(createLesson.getChosenStartTime(), createLesson.getChosenEndTime());
+                database.returnLessons().add(new Lesson(getSelectedTeachers(), createLesson.getChosenClasroom(), getSelectedGroups(), createLesson.getChosenSubject(), interval));
+                updateScene();
+                update();
+                createLessonWindow.close();
+
+
+
+                getSelectedTeachers().forEach((key, value) -> {
+                   database.getTeachers().get(key).makeUnavailable(interval);
+                });
+            }
+
+
+
+
         });
 
         //opens window to add groups WIP!
@@ -124,11 +205,29 @@ public class GUIMain extends Application {
 
         createGroupWindow.getSaveGroupsButton().setOnAction(event -> {
 
-            System.out.println(getSelectedGroups());
             createGroupWindow2.close();
             update();
 
         });
+
+        createLesson.getButtonTeachers().setOnAction(event -> {
+
+            createTeacherWindowStage.setScene(teacherWindow);
+            createTeacherWindowStage.setTitle("Select Teachers:");
+            createTeacherWindowStage.show();
+
+
+
+        });
+
+        createTeacherWindow.getSaveTeachersButton().setOnAction(event -> {
+
+            createTeacherWindowStage.close();
+           update();
+
+        });
+
+
     }
 
     public ArrayList<Group> getSelectedGroups() {
@@ -138,6 +237,24 @@ public class GUIMain extends Application {
         for (CheckBox checkBox : createGroupWindow.getCheckBoxes()) {
             if (checkBox.isSelected()) {
                 selected.add(database.getGroups().get(i));
+            }
+            i++;
+
+        }
+        return selected;
+    }
+
+    public HashMap<String, Teacher> getSelectedTeachers() {
+      HashMap<String,Teacher> selected = new HashMap<>();
+        int i = 0;
+        String number= "";
+
+        for (CheckBox checkBox : createTeacherWindow.getCheckBoxes()) {
+            if (checkBox.isSelected()) {
+               number = checkBox.toString().substring(checkBox.toString().length()-4,checkBox.toString().length()-1);
+               selected.put(number,database.getTeachers().get(number));
+
+
             }
             i++;
 

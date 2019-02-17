@@ -26,7 +26,7 @@ public class CreateGroupWindow extends VBox {
             CheckBox checkBox = new CheckBox(database.getGroups().get(i).toString());
             checkBoxes.add(checkBox);
             vBox.getChildren().add(checkBox);
-            System.out.println("Kappa");
+
         }
         vBox.getChildren().add(saveGroups);
         vBox.setSpacing(10);
@@ -46,6 +46,8 @@ public class CreateGroupWindow extends VBox {
     public ArrayList<CheckBox> getCheckBoxes(){
         return this.checkBoxes;
     }
+
+
 
 
 

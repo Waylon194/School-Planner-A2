@@ -4,9 +4,11 @@ import java.io.Serializable;
 
 public enum Subject implements Serializable {
    MATH,
-   PRORAMMING,
+   PROGRAMMING,
    WORKSHOP,
    HWI,
    GRAPHICS3D,
-   GRAPHICS2D
+   GRAPHICS2D,
+   NETWORKS,
+   OPERATINGSYSTEMS
 }

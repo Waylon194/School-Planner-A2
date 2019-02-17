@@ -106,8 +106,8 @@ public class Gui extends TabPane {
 
         }
 
-        Label label = new Label("" + lesson.getTeacher() + '\n' + lesson.getSubject()+'\n'+groups);
-        Label label1 = new Label("" + lesson.getTeacher() + '\n' + lesson.getSubject()+'\n'+groups);
+        Label label = new Label("" + lesson.getTeachersAsString() + '\n' + lesson.getSubject()+'\n'+groups);
+       // Label label1 = new Label("" + lesson.getTeachersAsString() + '\n' + lesson.getSubject()+'\n'+groups);
 
         for (int i = startTime; i <= startTime + duration; i++) {
             drawLesson(i, classRoom);
@@ -117,7 +117,7 @@ public class Gui extends TabPane {
         GridPane.setHalignment(label, javafx.geometry.HPos.CENTER);
         GridPane.setValignment(label, javafx.geometry.VPos.CENTER);
         gridPane.getChildren().add(label);
-        gridPane.getChildren().add(label1);
+      //  gridPane.getChildren().add(label1);
     }
 
     public void clear() {

@@ -9,6 +9,8 @@ import java.util.ArrayList;
 public class Agenda implements Serializable {
     private ArrayList<Lesson> lessons;
 
+
+
     public Agenda(ArrayList<Lesson> lessons) {
         this.lessons = lessons;
     }

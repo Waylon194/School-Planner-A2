@@ -6,7 +6,7 @@ import org.joda.time.Interval;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Group implements Serializable, Available {
+public class Group implements Serializable {
     private ArrayList<Student> students;
     private String groupName;
     private Teacher mentor;
@@ -34,7 +34,7 @@ public class Group implements Serializable, Available {
                 "\n Mentor: " + mentor).replace('[',' ').replace(']',' ');
     }
 
-    @Override
+
     public boolean isAvailable(DateTime at) {
         for(Interval interval: unavailable) {
             if (interval.contains(at)) {
@@ -44,8 +44,8 @@ public class Group implements Serializable, Available {
         return true;
     }
 
-    @Override
-    public void makeUnavailable(DateTime from, DateTime at) {
-        this.unavailable.add(new Interval(from,at));
+
+    public void makeUnavailable(Interval interval) {
+        this.unavailable.add(interval);
     }
 }

@@ -19,10 +19,12 @@ public class MainClass {
 
 
 
-        Interval interval = new Interval(new DateTime(2013, 10, 25, 8, 0, 0, 0), new DateTime(2013, 10, 25, 9, 0, 0, 0));
+        Interval interval = new Interval(new DateTime(2013, 10, 25, 8, 0, 0, 0), new DateTime(2013, 10, 25, 10, 0, 0, 0));
+        Interval interval2 = new Interval(new DateTime(2013, 10, 25, 9, 0, 0, 0), new DateTime(2013, 10, 25, 9, 30, 0, 0));
 
 
-        System.out.println(interval.toInterval().getStart().getHourOfDay());
+        System.out.println(interval2.overlaps(interval));
+
 
 
 
