@@ -71,7 +71,7 @@ public class GUIMain extends Application {
         primaryStage.show();
     }
 
-    public void buttonhandler() {
+    public void buttonhandler()  {
         createLessonWindow.initModality(Modality.APPLICATION_MODAL);
         createGroupWindow2.initModality(Modality.APPLICATION_MODAL);
         createViewWindow.initModality(Modality.APPLICATION_MODAL);
@@ -90,11 +90,62 @@ public class GUIMain extends Application {
         //saves lesson to a object and closes window WIP!
         createLesson.getButtonSaveLesson().setOnAction(event -> {
 
+            boolean teachers = false;
+            boolean classroom = false;
+            boolean groups = false;
+            boolean subject = false;
+            boolean beginTime = false;
+            boolean endTime = false;
 
-            database.returnLessons().add(new Lesson(getSelectedTeachers(), createLesson.getChosenClasroom(), getSelectedGroups(), createLesson.getChosenSubject(), new Interval(createLesson.getChosenStartTime(), createLesson.getChosenEndTime())));
-            updateScene();
-            createLessonWindow.close();
-            update();
+            if (getSelectedTeachers().size()>0){
+                teachers = true;
+            } else{
+                System.out.println("Choose Teacher!");
+            }
+
+
+            if (!(createLesson.getClassroomComboBox().getSelectionModel().isEmpty())){
+                classroom = true;
+            }else {
+                System.out.println("Choose classroom!");
+            }
+
+            if(getSelectedGroups().size()>0){
+                groups = true;
+            }else {
+                System.out.println("Select groups!");
+            }
+
+            if (!(createLesson.getSubjectComboBox().getSelectionModel().isEmpty())){
+                subject = true;
+            }else{
+                System.out.println("Choose subject!");
+            }
+
+            if(!(createLesson.getComboStartTime().getSelectionModel().isEmpty())){
+                beginTime = true;
+            }else{
+                System.out.println("Choose begin time!");
+            }
+            if(!(createLesson.getComboEndTime().getSelectionModel().isEmpty())){
+                endTime = true;
+            }else{
+                System.out.println("Choose end time!");
+            }
+
+
+            if(teachers&&classroom&&groups&&subject&&beginTime&&endTime) {
+
+
+                database.returnLessons().add(new Lesson(getSelectedTeachers(), createLesson.getChosenClasroom(), getSelectedGroups(), createLesson.getChosenSubject(), new Interval(createLesson.getChosenStartTime(), createLesson.getChosenEndTime())));
+                updateScene();
+                update();
+                createLessonWindow.close();
+            }
+
+
+
+
         });
 
         //opens window to add groups WIP!
