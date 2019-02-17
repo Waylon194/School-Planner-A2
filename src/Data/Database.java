@@ -12,8 +12,7 @@ public class Database {
     private ArrayList<Class> classes;
     private ArrayList<Classroom> classrooms;
     private ArrayList<Lesson> lessons;
-    private ArrayList<Student> studentsa2;
-    private ArrayList<Student> studentsb1;
+    private ArrayList<Student> students;
     private ArrayList<Interval> intervals;
     private ArrayList<Group> groups;
     private ArrayList<Subject> subjects;
@@ -29,12 +28,11 @@ public class Database {
         this.classes = new ArrayList<>();
         this.classrooms = new ArrayList<>();
         this.lessons = new ArrayList<>();
-        this.studentsa2 = new ArrayList<>();
-        this.studentsb1 = new ArrayList<>();
         this.intervals = new ArrayList<>();
         this.groups = new ArrayList<>();
         this.subjects = new ArrayList<>();
         this.times = new ArrayList<>();
+        this.students = new ArrayList<>();
         this.agenda = new Agenda(lessons);
 
         for (Subject value : values) {
@@ -42,7 +40,7 @@ public class Database {
         }
 
 
-        final DateTime EIGHT = new DateTime(2019, 1, 1, 8, 0, 0);
+
         final DateTime NINE = new DateTime(2019, 1, 1, 9, 0, 0);
         final DateTime TEN = new DateTime(2019, 1, 1, 10, 0, 0);
         final DateTime ELEVEN = new DateTime(2019, 1, 1, 11, 0, 0);
@@ -52,9 +50,9 @@ public class Database {
         final DateTime THREE = new DateTime(2019, 1, 1, 15, 0, 0);
         final DateTime FOUR = new DateTime(2019, 1, 1, 16, 0, 0);
         final DateTime FIVE = new DateTime(2019, 1, 1, 17, 0, 0);
-        final DateTime SIX = new DateTime(2019, 1, 1, 18, 0, 0);
 
-        this.times.add(EIGHT);
+
+
         this.times.add(NINE);
         this.times.add(TEN);
         this.times.add(ELEVEN);
@@ -64,7 +62,7 @@ public class Database {
         this.times.add(THREE);
         this.times.add(FOUR);
         this.times.add(FIVE);
-        this.times.add(SIX);
+
 
         final Interval FIRST_LESSON = new Interval(NINE, TEN);
         final Interval SECOND_LESSON = new Interval(TEN, ELEVEN);
