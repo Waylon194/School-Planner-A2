@@ -27,15 +27,18 @@ public class GUIMain extends Application {
     private CreateLesson createLesson = new CreateLesson(database);
     private CreateView createView = new CreateView(database, this);
     private CreateGroupWindow createGroupWindow = new CreateGroupWindow(database);
+    private CreateTeacherWindow createTeacherWindow = new CreateTeacherWindow(database);
 
     private Stage createLessonWindow = new Stage();
     private Stage createGroupWindow2 = new Stage();
     private Stage createViewWindow = new Stage();
+    private Stage createTeacherWindowStage = new Stage();
 
     private Scene viewScene = new Scene(createView);
     private Scene windowScene = new Scene(createLesson);
     private Scene mainWindow = new Scene(gui);
     private Scene groupWindow = new Scene(createGroupWindow);
+    private Scene teacherWindow = new Scene(createTeacherWindow);
     private FileController fileController = new FileController();
 
 
@@ -127,6 +130,15 @@ public class GUIMain extends Application {
             System.out.println(getSelectedGroups());
             createGroupWindow2.close();
             update();
+
+        });
+
+        createTeacherWindow.getSaveTeachersButton().setOnAction(event -> {
+            createTeacherWindowStage.setScene(teacherWindow);
+            createTeacherWindowStage.show();
+
+
+
 
         });
     }
