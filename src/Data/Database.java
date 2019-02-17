@@ -106,13 +106,13 @@ public class Database {
         this.students.add(lisane);
 
 
-        Teacher maurice = new Teacher("Maurice", "", "Snoeren", 45, 0, 0, "100", Subject.PRORAMMING);
+        Teacher maurice = new Teacher("Maurice", "", "Snoeren", 45, 0, 0, "100", Subject.PROGRAMMING);
         Teacher johan = new Teacher("Johan", "", "Fakka", 43, 0, 0, "110", Subject.GRAPHICS2D);
         Teacher hansen = new Teacher("Hansen", "van", "Bergen", 40, 0, 0, "130", Subject.GRAPHICS3D);
         Teacher etienne = new Teacher("Etienne", "van", "Goosens", 43, 0, 0, "140", Subject.WORKSHOP);
         Teacher pieter = new Teacher("Pieter", "Kop", "Jansen", 41, 0, 0, "150", Subject.MATH);
         Teacher jessica = new Teacher("Jessica", "van der", "Heijden", 42, 0, 0, "160", Subject.HWI);
-        Teacher peter = new Teacher("Peter", "", "Kailuhu", 50, 0, 0, "170", Subject.PRORAMMING);
+        Teacher peter = new Teacher("Peter", "", "Kailuhu", 50, 0, 0, "170", Subject.PROGRAMMING);
 
         Group a2 = new Group(studentRandomizer('a'), "A2", maurice);
         Group b1 = new Group(studentRandomizer('b'), "B1", pieter);
