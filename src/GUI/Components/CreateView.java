@@ -30,6 +30,7 @@ public class CreateView extends GridPane {
                     database.deleteLesson(i);
                     System.out.println(database.amountOfLessons());
                     guiMain.updateScene();
+                    guiMain.update();
 
 
                 });

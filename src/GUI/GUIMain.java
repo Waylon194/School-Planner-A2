@@ -7,12 +7,15 @@ import GUI.Components.*;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.CheckBox;
+import javafx.scene.layout.GridPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import org.joda.time.Hours;
 import org.joda.time.Interval;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class GUIMain extends Application {
 
@@ -41,23 +44,20 @@ public class GUIMain extends Application {
 
     public static void main(String[] args) {
         launch("Gui.java");
-
-
     }
 
 
-    public void updateScene(){
-
-
-
+    public void updateScene() {
         createViewWindow.close();
-        this.createView = new CreateView(database,this);
+        this.createView = new CreateView(database, this);
         this.viewScene = new Scene(createView);
         createViewWindow.setScene(viewScene);
-
-
-
     }
+
+    public void update() {
+        drawSchedule();
+    }
+
     @Override
     public void start(Stage primaryStage) throws Exception {
         primaryStage.setScene(mainWindow);
@@ -76,6 +76,7 @@ public class GUIMain extends Application {
             createLessonWindow.setScene(windowScene);
             createLessonWindow.setTitle("CreateLesson a new Lesson");
             createLessonWindow.show();
+            update();
         });
 
         //closes add lesson window
@@ -85,10 +86,10 @@ public class GUIMain extends Application {
         createLesson.getButtonSaveLesson().setOnAction(event -> {
 
 
-           database.returnLessons().add(new Lesson(createLesson.getChosenTeacher(),createLesson.getChosenClasroom(),getSelectedGroups(),createLesson.getChosenSubject(),new Interval(createLesson.getChosenStartTime(),createLesson.getChosenEndTime())));
+            database.returnLessons().add(new Lesson(createLesson.getChosenTeacher(), createLesson.getChosenClasroom(), getSelectedGroups(), createLesson.getChosenSubject(), new Interval(createLesson.getChosenStartTime(), createLesson.getChosenEndTime())));
             updateScene();
             createLessonWindow.close();
-
+            update();
         });
 
         //opens window to add groups WIP!
@@ -96,19 +97,20 @@ public class GUIMain extends Application {
             createGroupWindow2.setScene(groupWindow);
             createGroupWindow2.setTitle("Select groups:");
             createGroupWindow2.show();
-
+            update();
         });
 
         //will open windows explorer to save object to file.
         gui.getButton1().setOnAction(event -> {
             fileController.saveFile(createViewWindow, database.returnAgenda());
-
+            update();
 
         });
 
         //will open windows explorer to open a file with object.
         gui.getButton2().setOnAction(event -> {
             database.setAgenda(fileController.openFile(createViewWindow));
+            update();
         });
 
         // will let you select a lesson to view/change, will load in all information.
@@ -116,31 +118,75 @@ public class GUIMain extends Application {
             createViewWindow.setScene(viewScene);
             createViewWindow.setTitle("Change/View");
             createViewWindow.show();
+            update();
         });
 
         createGroupWindow.getSaveGroupsButton().setOnAction(event -> {
 
             System.out.println(getSelectedGroups());
             createGroupWindow2.close();
+            update();
 
-
-    });
+        });
     }
 
-    public ArrayList<Group> getSelectedGroups(){
+    public ArrayList<Group> getSelectedGroups() {
         ArrayList<Group> selected = new ArrayList<>();
         int i = 0;
 
         for (CheckBox checkBox : createGroupWindow.getCheckBoxes()) {
-            if(checkBox.isSelected()) {
+            if (checkBox.isSelected()) {
                 selected.add(database.getGroups().get(i));
             }
             i++;
 
+        }
+        return selected;
     }
-    return selected;
+
+    public void drawSchedule() {
+        gui.clear();
+        List<Lesson> lessons = database.getLessons();
+        lessons.forEach(lesson -> {
+
+            Hours hours = Hours.hoursBetween(lesson.getInterval().getStart(), lesson.getInterval().getEnd());
+            int duration = Integer.parseInt(hours.toString().substring(2, 3));
+
+            int start = lesson.getInterval().getStart().getHourOfDay();
+            System.out.println(start);
+            switch (start) {
+
+                case 9:
+                    gui.drawLessonBlock(1, lesson.getClassroom().getNumber(), duration,lesson);
+                    break;
+                case 10:
+                    gui.drawLessonBlock(2, lesson.getClassroom().getNumber(), duration,lesson);
+                    break;
+                case 11:
+                    gui.drawLessonBlock(3, lesson.getClassroom().getNumber(), duration,lesson);
+                    break;
+                case 12:
+                    gui.drawLessonBlock(4, lesson.getClassroom().getNumber(), duration,lesson);
+                    break;
+                case 13:
+                    gui.drawLessonBlock(5, lesson.getClassroom().getNumber(), duration,lesson);
+                    break;
+                case 14:
+                    gui.drawLessonBlock(6, lesson.getClassroom().getNumber(), duration,lesson);
+                    break;
+                case 15:
+                    gui.drawLessonBlock(7, lesson.getClassroom().getNumber(), duration,lesson);
+                    break;
+                case 16:
+                    gui.drawLessonBlock(8, lesson.getClassroom().getNumber(), duration,lesson);
+                    break;
+                case 17:
+                    gui.drawLessonBlock(9, lesson.getClassroom().getNumber(), duration,lesson);
+                    break;
+            }
 
 
+        });
     }
 
 }
