@@ -2,6 +2,7 @@ package GUI;
 
 import Data.Database;
 import Data.Group;
+import Data.Lesson;
 import GUI.Components.*;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -9,6 +10,7 @@ import javafx.scene.control.CheckBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import org.joda.time.Interval;
 
 import java.util.ArrayList;
 
@@ -52,7 +54,7 @@ public class GUIMain extends Application {
         this.createView = new CreateView(database,this);
         this.viewScene = new Scene(createView);
         createViewWindow.setScene(viewScene);
-        createViewWindow.show();
+
 
 
     }
@@ -82,11 +84,10 @@ public class GUIMain extends Application {
         //saves lesson to a object and closes window WIP!
         createLesson.getButtonSaveLesson().setOnAction(event -> {
 
-            database.printLessons();
+
+           database.returnLessons().add(new Lesson(createLesson.getChosenTeacher(),createLesson.getChosenClasroom(),getSelectedGroups(),createLesson.getChosenSubject(),new Interval(createLesson.getChosenStartTime(),createLesson.getChosenEndTime())));
+            updateScene();
             createLessonWindow.close();
-
-            System.out.println(createLesson.getChosenClasroom()+" "+createLesson.getChosenTeacher()+" "+createLesson.getChosenSubject());
-
 
         });
 

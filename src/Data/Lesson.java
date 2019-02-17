@@ -9,14 +9,15 @@ import java.util.ArrayList;
 
 
 public class Lesson implements Serializable {
-   private ArrayList<Teacher> teachers;
-   private Classroom classroom;
-   private ArrayList <Class> studentClass;
-   private Subject subject;
-   private Interval interval;
+    private Teacher teacher;
+    private ArrayList<Teacher> teachers;
+    private Classroom classroom;
+    private ArrayList <Group> studentClass;
+    private Subject subject;
+    private Interval interval;
 
-   public Lesson (ArrayList<Teacher> teachers, Classroom classroom, ArrayList<Class> studentClass, Subject subject, Interval interval) {
-      this.teachers = teachers;
+   public Lesson (Teacher teachers, Classroom classroom, ArrayList<Group> studentClass, Subject subject, Interval interval) {
+      this.teacher = teachers;
       this.classroom = classroom;
       this.studentClass = studentClass;
       this.subject = subject;

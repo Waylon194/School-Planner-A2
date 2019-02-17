@@ -15,6 +15,7 @@ public class Database {
     private ArrayList<Interval> intervals;
     private ArrayList<Group> groups;
     private ArrayList<Subject> subjects;
+    private ArrayList<DateTime> times;
 
     private Agenda agenda;
 
@@ -30,6 +31,7 @@ public class Database {
         this.intervals = new ArrayList<>();
         this.groups = new ArrayList<>();
         this.subjects = new ArrayList<>();
+        this.times = new ArrayList<>();
         this.agenda = new Agenda(lessons);
 
         for(Subject value:values)
@@ -52,6 +54,18 @@ public class Database {
         final DateTime FOUR = new DateTime(2019,1,1,16,0,0);
         final DateTime FIVE = new DateTime(2019,1,1,17,0,0);
         final DateTime SIX = new DateTime(2019,1,1,18,0,0);
+
+        this.times.add(EIGHT);
+        this.times.add(NINE);
+        this.times.add(TEN);
+        this.times.add(ELEVEN);
+        this.times.add(TWELEVE);
+        this.times.add(ONE);
+        this.times.add(TWO);
+        this.times.add(THREE);
+        this.times.add(FOUR);
+        this.times.add(FIVE);
+        this.times.add(SIX);
 
         final Interval FIRST_LESSON = new Interval(EIGHT,NINE);
         final Interval SECOND_LESSON= new Interval(NINE,TEN);
@@ -84,9 +98,9 @@ public class Database {
         this.classrooms.add(classroom);
         this.classrooms.add(classroom1);
 
-        Lesson les1 = new Lesson(this.teachers,classroom,classes,Subject.PRORAMMING,FIRST_LESSON);
-        Lesson les2 = new Lesson(this.teachers,classroom,classes,Subject.PRORAMMING,FIRST_LESSON);
-        Lesson les3 = new Lesson(this.teachers,classroom,classes,Subject.PRORAMMING,FIRST_LESSON);
+        Lesson les1 = new Lesson(maurice,classroom,groups,Subject.PRORAMMING,FIRST_LESSON);
+        Lesson les2 = new Lesson(maurice,classroom,groups,Subject.PRORAMMING,FIRST_LESSON);
+        Lesson les3 = new Lesson(maurice,classroom,groups,Subject.PRORAMMING,FIRST_LESSON);
         this.lessons.add(les1);
         this.lessons.add(les2);
         this.lessons.add(les3);
@@ -195,5 +209,9 @@ public class Database {
 
     public void deleteLesson(int i){
         this.lessons.remove(i);
+    }
+
+    public ArrayList<DateTime> getTimes(){
+        return this.times;
     }
 }
