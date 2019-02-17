@@ -76,8 +76,18 @@ public class Database {
 
         Student kees = new Student("Kees", "de", "Bruin", 19, 0, 0, 108);
         Student stijn = new Student("Stijn", "de", "Bruin", 19, 0, 0, 109);
-        Student niffauw = new Student("Niffauw", "a", "Bruin", 19, 0, 0, 109);
-
+        Student niffauw = new Student("Niffauw", "a", "Bruin", 19, 0, 0, 110);
+        Student sarah = new Student("Sarah", "de", "Vos", 20, 0, 0, 111);
+        Student lydia = new Student("Lydia", "de", "Vos", 18, 0, 0, 112);
+        Student hans = new Student("Hans", "a", "Bruin", 21, 0, 0, 113);
+        Student ella = new Student("Ella", "van", "Roodhart", 20, 0, 0, 114);
+        Student john = new Student("John", "de", "Ree", 18, 0, 0, 115);
+        Student jan = new Student("Jan", "van", "Hoven", 17, 0, 0, 116);
+        Student stan = new Student("Stan", "de", "Vaart", 17, 0, 0, 117);
+        Student stanley = new Student("Stanley", "van", "Houten", 17, 0, 0, 118);
+        Student anna = new Student("Anna", "van", "Nert", 19, 0, 0, 119);
+        Student lisane = new Student("Lisane", "van", "Boeken", 20, 0, 0, 120);
+             
 
 
         Teacher maurice = new Teacher("Maurice", "", "Snoeren", 45, 0, 0, 100, Subject.PRORAMMING);
