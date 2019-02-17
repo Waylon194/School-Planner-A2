@@ -12,7 +12,8 @@ public class Database {
     private ArrayList<Class> classes;
     private ArrayList<Classroom> classrooms;
     private ArrayList<Lesson> lessons;
-    private ArrayList<Student> students;
+    private ArrayList<Student> studentsa2;
+    private ArrayList<Student> studentsb1;
     private ArrayList<Interval> intervals;
     private ArrayList<Group> groups;
     private ArrayList<Subject> subjects;
@@ -28,7 +29,8 @@ public class Database {
         this.classes = new ArrayList<>();
         this.classrooms = new ArrayList<>();
         this.lessons = new ArrayList<>();
-        this.students = new ArrayList<>();
+        this.studentsa2 = new ArrayList<>();
+        this.studentsb1 = new ArrayList<>();
         this.intervals = new ArrayList<>();
         this.groups = new ArrayList<>();
         this.subjects = new ArrayList<>();
@@ -87,12 +89,18 @@ public class Database {
         Student stanley = new Student("Stanley", "van", "Houten", 17, 0, 0, 118);
         Student anna = new Student("Anna", "van", "Nert", 19, 0, 0, 119);
         Student lisane = new Student("Lisane", "van", "Boeken", 20, 0, 0, 120);
-             
-
 
         Teacher maurice = new Teacher("Maurice", "", "Snoeren", 45, 0, 0, 100, Subject.PRORAMMING);
-        Teacher maurice2 = new Teacher("Johan", "", "Fakka", 45, 0, 0, 120, Subject.PRORAMMING);
-        Group a2 = new Group(students, "A2", maurice);
+        Teacher johan = new Teacher("Johan", "", "Fakka", 43, 0, 0, 110, Subject.GRAPHICS2D);
+        Teacher hansen = new Teacher("hansen", "van", "Bergen", 40, 0, 0, 130, Subject.GRAPHICS3D);
+        Teacher etienne = new Teacher("Etienne", "van", "Goosens", 43, 0, 0, 140, Subject.WORKSHOP);
+        Teacher pieter = new Teacher("Pieter", "Kop", "Jansen", 41, 0, 0, 150, Subject.MATH);
+        Teacher jessica = new Teacher("Jessica", "van der", "Heijden", 42, 0, 0, 160, Subject.HWI);
+        Teacher peter = new Teacher("Peter", "", "Kailuhu", 50, 0, 0, 170, Subject.PRORAMMING);
+
+        Group a2 = new Group(studentsa2, "A2", maurice);
+        Group b1 = new Group(studentsb1, "B1", pieter);
+
         this.groups.add(a2);
 
         Classroom classroom = new Classroom(1, 20, "LA201", false, false);
@@ -104,21 +112,42 @@ public class Database {
         Classroom classroom6 = new Classroom(7, 20, "LA226", false, false);
         Classroom classroom7 = new Classroom(8, 20, "LA236", false, false);
 
-
-
-
-        Data.Class classe = new Data.Class(groups, "12Tiav");
+        Data.Class classe = new Data.Class(groups, "12TIAV");
+        //teachers
         this.teachers.add(maurice);
-        this.teachers.add(maurice2);
-        this.teachers.add(maurice2);
-        this.students.add(kees);
-        this.students.add(stijn);
-        this.students.add(niffauw);
+        this.teachers.add(johan);
+        this.teachers.add(hansen);
+        this.teachers.add(etienne);
+        this.teachers.add(peter);
+        this.teachers.add(pieter);
+        this.teachers.add(jessica);
+
+        //students of group a2
+        this.studentsa2.add(kees);
+        this.studentsa2.add(stijn);
+        this.studentsa2.add(sarah);
+        this.studentsa2.add(lisane);
+        this.studentsa2.add(lydia);
+        this.studentsa2.add(ella);
+
+        //students of group b1
+        this.studentsb1.add(hans);
+        this.studentsb1.add(niffauw);
+        this.studentsb1.add(jan);
+        this.studentsb1.add(john);
+        this.studentsb1.add(stan);
+        this.studentsb1.add(stanley);
+        this.studentsb1.add(anna);
+
+        //groups of
         this.groups.add(a2);
+        this.groups.add(b1);
+
+
+        //class with 2 groups or more
         this.classes.add(classe);
 
-
-
+        // classrooms
         this.classrooms.add(classroom);
         this.classrooms.add(classroom1);
         this.classrooms.add(classroom2);
@@ -128,6 +157,7 @@ public class Database {
         this.classrooms.add(classroom6);
         this.classrooms.add(classroom7);
 
+        //lesson times in hour intervals
         this.intervals.add(FIRST_LESSON);
         this.intervals.add(SECOND_LESSON);
         this.intervals.add(THIRD_LESSON);
