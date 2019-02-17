@@ -77,10 +77,14 @@ public class Database {
         Student kees = new Student("Kees", "de", "Bruin", 19, 0, 0, 108);
         Student stijn = new Student("Stijn", "de", "Bruin", 19, 0, 0, 109);
         Student niffauw = new Student("Niffauw", "a", "Bruin", 19, 0, 0, 109);
+
+
+
         Teacher maurice = new Teacher("Maurice", "", "Snoeren", 45, 0, 0, 100, Subject.PRORAMMING);
         Teacher maurice2 = new Teacher("Johan", "", "Fakka", 45, 0, 0, 120, Subject.PRORAMMING);
         Group a2 = new Group(students, "A2", maurice);
         this.groups.add(a2);
+
         Classroom classroom = new Classroom(1, 20, "LA201", false, false);
         Classroom classroom1 = new Classroom(2, 20, "LA302", false, false);
         Classroom classroom2 = new Classroom(3, 20, "LA115", false, false);
@@ -89,6 +93,8 @@ public class Database {
         Classroom classroom5 = new Classroom(6, 20, "LD406", false, false);
         Classroom classroom6 = new Classroom(7, 20, "LA226", false, false);
         Classroom classroom7 = new Classroom(8, 20, "LA236", false, false);
+
+
 
 
         Data.Class classe = new Data.Class(groups, "12Tiav");
@@ -100,6 +106,9 @@ public class Database {
         this.students.add(niffauw);
         this.groups.add(a2);
         this.classes.add(classe);
+
+
+
         this.classrooms.add(classroom);
         this.classrooms.add(classroom1);
         this.classrooms.add(classroom2);
@@ -109,13 +118,6 @@ public class Database {
         this.classrooms.add(classroom6);
         this.classrooms.add(classroom7);
 
-       Lesson les1 = new Lesson(this.teachers, classroom, groups, Subject.PRORAMMING, FIRST_LESSON);
-//        Lesson les2 = new Lesson(maurice, classroom1, groups, Subject.PRORAMMING, SECOND_LESSON);
-//        Lesson les3 = new Lesson(maurice, classroom2, groups, Subject.PRORAMMING, THIRD_LESSON);
-       this.lessons.add(les1);
-//        this.lessons.add(les2);
-//        this.lessons.add(les3);
-
         this.intervals.add(FIRST_LESSON);
         this.intervals.add(SECOND_LESSON);
         this.intervals.add(THIRD_LESSON);
@@ -124,6 +126,13 @@ public class Database {
         this.intervals.add(SIXTH_LESSON);
         this.intervals.add(SEVENTH_LESSON);
         this.intervals.add(EIGHT_LESSON);
+
+
+
+
+
+
+
 
 
     }
