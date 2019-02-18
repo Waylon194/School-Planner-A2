@@ -11,7 +11,6 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import org.joda.time.DateTime;
-
 import java.util.Map;
 
 public class CreateLesson extends GridPane {
@@ -43,7 +42,6 @@ public class CreateLesson extends GridPane {
     private final ComboBox teacherComboBox;
     private final Label label4;
     private final ComboBox subjectComboBox;
-
 
     public Button getButtonGroup() {
         return buttonGroup;
@@ -83,10 +81,10 @@ public class CreateLesson extends GridPane {
 
     public CreateLesson(Agenda agenda) {
         this.agenda = agenda;
-
         gridPane = new GridPane();
         columnConstraints = new ColumnConstraints();
         columnConstraints0 = new ColumnConstraints();
+
         rowConstraints = new RowConstraints();
         rowConstraints0 = new RowConstraints();
         rowConstraints1 = new RowConstraints();
@@ -95,21 +93,24 @@ public class CreateLesson extends GridPane {
         rowConstraints4 = new RowConstraints();
         rowConstraints5 = new RowConstraints();
         rowConstraints6 = new RowConstraints();
-        label = new Label();
-        label0 = new Label();
-        label1 = new Label();
-        label2 = new Label();
-        label3 = new Label();
-        label14 = new Label();
-        buttonGroup = new Button();
-        buttonSaveLesson = new Button();
-        buttonCancelLesson = new Button();
-        buttonTeachers = new Button();
+
+        label = new Label("Classroom:");
+        label0 = new Label("Teacher(s):");
+        label1 = new Label("Group(s):");
+        label2 = new Label("Lessons Starting Time:");
+        label3 = new Label("Lessons Ending Time:");
+        label4 = new Label("Teachers:");
+        label14 = new Label("Subject:");
+
+        buttonGroup = new Button("Select Groups");
+        buttonSaveLesson = new Button("Save");
+        buttonCancelLesson = new Button("Cancel");
+        buttonTeachers = new Button("Select Teachers");
+
         comboStartTime = new ComboBox();
         comboEndTime = new ComboBox();
         classroomComboBox = new ComboBox();
         teacherComboBox = new ComboBox();
-        label4 = new Label();
         subjectComboBox = new ComboBox();
 
         setMaxHeight(USE_PREF_SIZE);
@@ -165,48 +166,38 @@ public class CreateLesson extends GridPane {
         rowConstraints6.setMinHeight(10.0);
         rowConstraints6.setPrefHeight(30.0);
         rowConstraints6.setVgrow(javafx.scene.layout.Priority.SOMETIMES);
-
         GridPane.setHalignment(label, javafx.geometry.HPos.CENTER);
-        label.setText("Classroom:");
 
         GridPane.setHalignment(label0, javafx.geometry.HPos.CENTER);
         GridPane.setRowIndex(label0, 1);
-        label0.setText("Teacher(s):");
 
         GridPane.setHalignment(label1, javafx.geometry.HPos.CENTER);
         GridPane.setRowIndex(label1, 2);
-        label1.setText("Group(s):");
 
         GridPane.setHalignment(label2, javafx.geometry.HPos.CENTER);
         GridPane.setRowIndex(label2, 3);
-        label2.setText("Lessons Starting Time:");
 
         GridPane.setHalignment(label3, javafx.geometry.HPos.CENTER);
         GridPane.setRowIndex(label3, 4);
-        label3.setText("Lessons Ending Time:");
 
         GridPane.setHalignment(label4, javafx.geometry.HPos.CENTER);
         GridPane.setRowIndex(label4, 6);
-        label4.setText("Teachers:");
 
         GridPane.setColumnIndex(buttonGroup, 1);
         GridPane.setHalignment(buttonGroup, javafx.geometry.HPos.CENTER);
         GridPane.setRowIndex(buttonGroup, 2);
         buttonGroup.setMnemonicParsing(false);
-        buttonGroup.setText("Select Groups");
 
         GridPane.setColumnIndex(buttonTeachers, 1);
         GridPane.setHalignment(buttonTeachers, javafx.geometry.HPos.CENTER);
         GridPane.setRowIndex(buttonTeachers, 1);
         buttonTeachers.setMnemonicParsing(false);
-        buttonTeachers.setText("Select Teachers");
 
         GridPane.setHalignment(buttonSaveLesson, javafx.geometry.HPos.CENTER);
         GridPane.setRowIndex(buttonSaveLesson, 7);
         buttonSaveLesson.setMnemonicParsing(false);
         buttonSaveLesson.setPrefHeight(25.0);
         buttonSaveLesson.setPrefWidth(76.0);
-        buttonSaveLesson.setText("Save");
 
         GridPane.setColumnIndex(buttonCancelLesson, 1);
         GridPane.setHalignment(buttonCancelLesson, javafx.geometry.HPos.CENTER);
@@ -214,25 +205,24 @@ public class CreateLesson extends GridPane {
         buttonCancelLesson.setMnemonicParsing(false);
         buttonCancelLesson.setPrefHeight(24.0);
         buttonCancelLesson.setPrefWidth(101.0);
-        buttonCancelLesson.setText("Cancel");
 
         GridPane.setColumnIndex(comboStartTime, 1);
         GridPane.setRowIndex(comboStartTime, 3);
         comboStartTime.setPrefHeight(25.0);
         comboStartTime.setPrefWidth(514.0);
+
         for (DateTime time : agenda.getTimes()) {
             int hour = time.getHourOfDay();
             int intMinute = time.getMinuteOfHour();
             String minute = "";
             if (intMinute<10){
-                minute+="0"+ String.valueOf(intMinute);
+                minute += "0"+ intMinute;
             }
             else {
                 minute = String.valueOf(intMinute);
             }
             //todo: change displayed time
             comboStartTime.getItems().add(time);
-            //comboStartTime.(hour+":"+minute);
         }
         GridPane.setColumnIndex(comboEndTime, 1);
         GridPane.setRowIndex(comboEndTime, 4);
@@ -244,7 +234,7 @@ public class CreateLesson extends GridPane {
             int intMinute = time.getMinuteOfHour();
             String minute = "";
             if (intMinute<10){
-                minute+="0"+ String.valueOf(intMinute);
+                minute += "0" + intMinute;
             }else{
                 minute = String.valueOf(intMinute);
             }
@@ -270,8 +260,6 @@ public class CreateLesson extends GridPane {
 
         GridPane.setHalignment(label4, javafx.geometry.HPos.CENTER);
         GridPane.setRowIndex(label4, 5);
-        label4.setText("Subject:");
-
 
         GridPane.setColumnIndex(subjectComboBox, 1);
         GridPane.setRowIndex(subjectComboBox, 5);
@@ -304,7 +292,6 @@ public class CreateLesson extends GridPane {
         gridPane.getChildren().add(comboEndTime);
         gridPane.getChildren().add(classroomComboBox);
        // gridPane.getChildren().add(teacherComboBox);
-
         gridPane.getChildren().add(subjectComboBox);
         gridPane.getChildren().add(buttonTeachers);
         getChildren().add(gridPane);
@@ -318,9 +305,11 @@ public class CreateLesson extends GridPane {
     public Teacher getChosenTeacher(){
         return (Teacher) teacherComboBox.getSelectionModel().getSelectedItem();
     }
+
     public Subject getChosenSubject(){
         return (Subject) subjectComboBox.getSelectionModel().getSelectedItem();
     }
+
     public DateTime getChosenStartTime(){
         if(!(comboStartTime.getSelectionModel().isEmpty())) {
             return (DateTime) comboStartTime.getSelectionModel().getSelectedItem();

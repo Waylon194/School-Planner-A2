@@ -5,12 +5,10 @@ import Data.Group;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.layout.VBox;
-
 import java.util.ArrayList;
 
 public class CreateGroupWindow extends VBox {
     private ArrayList<Group> selectedGroups;
-
     private VBox vBox;
     private ArrayList<String> groups;
     private Button saveGroups;
@@ -40,6 +38,7 @@ public class CreateGroupWindow extends VBox {
     public Button getSaveGroupsButton(){
         return this.saveGroups;
     }
+
     public ArrayList<CheckBox> getCheckBoxes(){
         return this.checkBoxes;
     }

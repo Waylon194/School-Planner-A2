@@ -3,14 +3,10 @@ package GUI.Components;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import Data.Agenda;
-
 import java.io.*;
 
-
 public class FileController {
-
     private FileChooser fileChooser = new FileChooser();
-
 
     public void saveFile(Stage stage, Agenda agenda){
         System.out.println("Save File");
@@ -25,14 +21,14 @@ public class FileController {
                 objectOut.writeObject(agenda);
                 objectOut.close();
                 System.out.println("The Object  was succesfully written to a file");
-            } catch (Exception ex) {
+            }
+            catch (Exception ex) {
                 ex.printStackTrace();
             }
         }
     }
 
     public Agenda openFile(Stage stage){
-
         System.out.println("Opening file");
         File file = fileChooser.showOpenDialog(stage);
         if (file == null){
