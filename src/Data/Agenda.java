@@ -1,17 +1,13 @@
 package Data;
 
-
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class Agenda implements Serializable {
-
     private Map<String,Teacher> teachers;
     private ArrayList<Class> classes;
     private ArrayList<Classroom> classrooms;
@@ -22,11 +18,7 @@ public class Agenda implements Serializable {
     private ArrayList<Subject> subjects;
     private ArrayList<DateTime> times;
 
-
-
-
     public Agenda() {
-
         Subject values[] = Subject.values();
         this.teachers = new HashMap<String,Teacher>();
         this.classes = new ArrayList<>();
@@ -38,11 +30,9 @@ public class Agenda implements Serializable {
         this.times = new ArrayList<>();
         this.students = new ArrayList<>();
 
-
         for (Subject value : values) {
             this.subjects.add(value);
         }
-
 
         final DateTime NINE = new DateTime(2019, 1, 1, 9, 0, 0);
         final DateTime TEN = new DateTime(2019, 1, 1, 10, 0, 0);
@@ -54,8 +44,6 @@ public class Agenda implements Serializable {
         final DateTime FOUR = new DateTime(2019, 1, 1, 16, 0, 0);
         final DateTime FIVE = new DateTime(2019, 1, 1, 17, 0, 0);
 
-
-
         this.times.add(NINE);
         this.times.add(TEN);
         this.times.add(ELEVEN);
@@ -66,7 +54,6 @@ public class Agenda implements Serializable {
         this.times.add(FOUR);
         this.times.add(FIVE);
 
-
         final Interval FIRST_LESSON = new Interval(NINE, TEN);
         final Interval SECOND_LESSON = new Interval(TEN, ELEVEN);
         final Interval THIRD_LESSON = new Interval(ELEVEN, TWELEVE);
@@ -75,7 +62,6 @@ public class Agenda implements Serializable {
         final Interval SIXTH_LESSON = new Interval(TWO, THREE);
         final Interval SEVENTH_LESSON = new Interval(THREE, FOUR);
         final Interval EIGHT_LESSON = new Interval(FOUR, FIVE);
-
 
         Student kees = new Student("Kees", "de", "Bruin", 19, 0, 0, 108);
         Student stijn = new Student("Stijn", "de", "Bruin", 19, 0, 0, 109);
@@ -105,7 +91,6 @@ public class Agenda implements Serializable {
         this.students.add(anna);
         this.students.add(lisane);
 
-
         Teacher maurice = new Teacher("Maurice", "", "Snoeren", 45, 0, 0, "100", Subject.PROGRAMMING);
         Teacher johan = new Teacher("Johan", "", "Fakka", 43, 0, 0, "110", Subject.GRAPHICS2D);
         Teacher hansen = new Teacher("Hansen", "van", "Bergen", 40, 0, 0, "130", Subject.GRAPHICS3D);
@@ -116,8 +101,6 @@ public class Agenda implements Serializable {
 
         Group a2 = new Group(studentRandomizer('a'), "A2", maurice);
         Group b1 = new Group(studentRandomizer('b'), "B1", pieter);
-
-
 
         Classroom classroom = new Classroom(1, 20, "LA201", false, false);
         Classroom classroom1 = new Classroom(2, 20, "LA302", false, false);
@@ -139,11 +122,9 @@ public class Agenda implements Serializable {
         this.teachers.put(pieter.getTeacherNumber(),pieter);
         this.teachers.put(jessica.getTeacherNumber(),jessica);
 
-
         //groups of
         this.groups.add(a2);
         this.groups.add(b1);
-
 
         //class with 2 groups or more
         this.classes.add(classe);
@@ -169,14 +150,9 @@ public class Agenda implements Serializable {
         this.intervals.add(EIGHT_LESSON);
     }
 
-
-
-
     public ArrayList<Lesson> returnLessons() {
         return this.lessons;
     }
-
-
 
     public void addTeacher(Teacher teacher) {
         this.teachers.put(teacher.getTeacherNumber(),teacher);
@@ -194,6 +170,7 @@ public class Agenda implements Serializable {
     public void addLesson(Lesson lesson) {
         this.lessons.add(lesson);
     }
+
     // TODO: 17-02-19 fix student array 
    public void addStudents(Student student) {
         this.students.add(student);
@@ -222,10 +199,6 @@ public class Agenda implements Serializable {
     public ArrayList<Lesson> getLessons() {
         return lessons;
     }
-
-//    public ArrayList<Student> getStudents() {
-//        return students;
-//    }
 
     public ArrayList<Interval> getIntervals() {
         return intervals;
@@ -261,25 +234,28 @@ public class Agenda implements Serializable {
         return this.times;
     }
 
+    //TODO Redo the method!
     public ArrayList<Student> studentRandomizer(char a){
-
         ArrayList<Student> klass = new ArrayList<>();
-
         if (a=='a'){
-
             for(int i = 0;i<students.size();i++){
-                if(i%3==0)
-                klass.add(students.get(i));
-            }
-
-            return klass;
-        } else if (a=='b'){
-            for(int i = 0;i<students.size();i++){
-                if(i%2==0)
+                if(i%3==0) {
                     klass.add(students.get(i));
+                }
             }
             return klass;
-        }else return klass;
+        }
+        else if (a=='b'){
+            for(int i = 0;i<students.size();i++){
+                if(i%2==0) {
+                    klass.add(students.get(i));
+                }
+            }
+            return klass;
+        }
+        else {
+            return klass;
+        }
     }
 
     public ArrayList<Group> groupRandomizer(char a){
@@ -287,6 +263,5 @@ public class Agenda implements Serializable {
 
         classs.add(groups.get(0));
         return classs;
-
     }
 }

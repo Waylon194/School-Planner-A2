@@ -1,8 +1,6 @@
 package Data;
 
-import org.joda.time.DateTime;
 import org.joda.time.Interval;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -26,24 +24,16 @@ public class Classroom extends Room implements Serializable {
         return whiteBoard;
     }
 
-
-
     public boolean isAvailable(Interval at) {
         for(Interval interval: unavailable) {
             if (at.overlaps(interval)){
                 return false;
             }
-            }
-        return true;
         }
-
-
-
-
+        return true;
+    }
 
     public void makeUnavailable(Interval interval) {
         this.unavailable.add(interval);
     }
-
-
 }
