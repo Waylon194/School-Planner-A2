@@ -28,8 +28,6 @@ public class Teacher extends Person implements Serializable{
                 ", TeacherNumber: " + teacherNumber);
     }
 
-
-
     public boolean isAvailable(Interval at) {
         for(Interval interval: unavailable) {
             if (at.overlaps(interval)) {

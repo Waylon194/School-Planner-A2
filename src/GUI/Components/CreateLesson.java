@@ -1,7 +1,7 @@
 package GUI.Components;
 
 import Data.Classroom;
-import Data.Database;
+import Data.Agenda;
 import Data.Subject;
 import Data.Teacher;
 import javafx.scene.control.Button;
@@ -11,13 +11,12 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import org.joda.time.DateTime;
-import org.joda.time.Interval;
 
 import java.util.Map;
 
 public class CreateLesson extends GridPane {
 
-    private Database database;
+    private Agenda agenda;
     private final GridPane gridPane;
     private final ColumnConstraints columnConstraints;
     private final ColumnConstraints columnConstraints0;
@@ -83,8 +82,8 @@ public class CreateLesson extends GridPane {
         return this.buttonTeachers;
     }
 
-    public CreateLesson(Database database) {
-        this.database = database;
+    public CreateLesson(Agenda agenda) {
+        this.agenda = agenda;
 
         gridPane = new GridPane();
         columnConstraints = new ColumnConstraints();
@@ -224,7 +223,7 @@ public class CreateLesson extends GridPane {
         GridPane.setRowIndex(comboStartTime, 3);
         comboStartTime.setPrefHeight(25.0);
         comboStartTime.setPrefWidth(514.0);
-        for (DateTime time : database.getTimes()) {
+        for (DateTime time : agenda.getTimes()) {
             int hour = time.getHourOfDay();
             int intMinute = time.getMinuteOfHour();
 
@@ -248,7 +247,7 @@ public class CreateLesson extends GridPane {
         GridPane.setRowIndex(comboEndTime, 4);
         comboEndTime.setPrefHeight(25.0);
         comboEndTime.setPrefWidth(514.0);
-        for (DateTime time : database.getTimes()) {
+        for (DateTime time : agenda.getTimes()) {
             int hour = time.getHourOfDay();
             int intMinute = time.getMinuteOfHour();
 
@@ -268,7 +267,7 @@ public class CreateLesson extends GridPane {
         classroomComboBox.setPrefHeight(25.0);
         classroomComboBox.setPrefWidth(514.0);
 
-        for(Classroom classroom: database.getClassrooms()){
+        for(Classroom classroom: agenda.getClassrooms()){
             classroomComboBox.getItems().add(classroom);
         }
 
@@ -281,7 +280,7 @@ public class CreateLesson extends GridPane {
 
 
 
-        for(Map.Entry<String,Teacher> teacher: database.getTeachers().entrySet()){
+        for(Map.Entry<String,Teacher> teacher: agenda.getTeachers().entrySet()){
             teacherComboBox.getItems().add(teacher);
 
         }
@@ -298,7 +297,7 @@ public class CreateLesson extends GridPane {
         subjectComboBox.setPrefHeight(25.0);
         subjectComboBox.setPrefWidth(705.0);
 
-        for (Subject subject: database.getSubjects()){
+        for (Subject subject: agenda.getSubjects()){
             subjectComboBox.getItems().add(subject);
         }
 

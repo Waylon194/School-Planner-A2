@@ -13,16 +13,16 @@ public class CreateView extends GridPane {
 
     GridPane gridPane = new GridPane();
 
-    public CreateView(Database database, GUIMain guiMain) {
+    public CreateView(Agenda agenda, GUIMain guiMain) {
 
 
-        if (database.amountOfLessons() > 0) {
+        if (agenda.amountOfLessons() > 0) {
 
-            for (int amountLessons = 0; amountLessons < database.amountOfLessons(); amountLessons++) {
-                Label label = new Label(database.returnLessons().get(amountLessons).getSubject().toString()
-                        +" "+ database.returnLessons().get(amountLessons).getClassroom().getLocation()
-                        +" "+ database.returnLessons().get(amountLessons).getTeachersAsString()
-                        +" "+ database.returnLessons().get(amountLessons).getGroupsAsString()
+            for (int amountLessons = 0; amountLessons < agenda.amountOfLessons(); amountLessons++) {
+                Label label = new Label(agenda.returnLessons().get(amountLessons).getSubject().toString()
+                        +" "+ agenda.returnLessons().get(amountLessons).getClassroom().getLocation()
+                        +" "+ agenda.returnLessons().get(amountLessons).getTeachersAsString()
+                        +" "+ agenda.returnLessons().get(amountLessons).getGroupsAsString()
                                     );
 
 
@@ -33,9 +33,9 @@ public class CreateView extends GridPane {
                 button.setOnAction(event -> {
 
 
-                    System.out.println(database.amountOfLessons());
-                    database.deleteLesson(i);
-                    System.out.println(database.amountOfLessons());
+                    System.out.println(agenda.amountOfLessons());
+                    agenda.deleteLesson(i);
+                    System.out.println(agenda.amountOfLessons());
                     guiMain.updateScene();
                     guiMain.update();
 
@@ -43,7 +43,7 @@ public class CreateView extends GridPane {
                 });
 
               /*  button1.setOnAction(event -> {
-                    database.printLessons();
+                    agenda.printLessons();
 
                 });*/
 
