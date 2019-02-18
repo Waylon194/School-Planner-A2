@@ -96,7 +96,6 @@ public class GUIMain extends Application {
             boolean subject = false;
             boolean beginTime = false;
             boolean endTime = false;
-            boolean available = false;
 
             if (getSelectedTeachers().size()>0){
                 teachers = true;
@@ -134,57 +133,63 @@ public class GUIMain extends Application {
                 System.out.println("Choose end time!");
             }
 
-            Interval interval = new Interval(createLesson.getChosenStartTime(), createLesson.getChosenEndTime());
-
-            getSelectedTeachers().forEach((key, value) -> {
-
-                if(!(value.isAvailable(interval))){
-                    this.condition = false;
-                    System.out.println("Teacher "+value+"is not available at this time");
-                    update();
-                    updateScene();
-                    createLessonWindow.close();
-                }else {
-                    this.condition = true;
-                }
-            });
-
-            if (!(createLesson.getChosenClasroom().isAvailable(interval))){
-                this.condition = false;
-                System.out.println(createLesson.getChosenClasroom() +"is not available at "+ interval);
-            }else{
-                this.condition = true;
-            }
-
-            getSelectedGroups().forEach(group -> {
-                if (!(group.isAvailable(interval))){
-                    this.condition = false;
-                    System.out.println(group+ " is already planned at "+ interval );
-                }else {
-                    this.condition = true;
-                }
-            });
-
-
-
-            if(teachers&&classroom&&groups&&subject&&beginTime&&endTime&&this.condition) {
-
-                //Interval interval = new Interval(createLesson.getChosenStartTime(), createLesson.getChosenEndTime());
-                database.returnLessons().add(new Lesson(getSelectedTeachers(), createLesson.getChosenClasroom(), getSelectedGroups(), createLesson.getChosenSubject(), interval));
-                updateScene();
-                update();
-                createLessonWindow.close();
-
-                createLesson.getChosenClasroom().makeUnavailable(interval);
-                for (Group selectedGroup : getSelectedGroups()) {
-                    selectedGroup.makeUnavailable(interval);
-                }
-
-
+            if(createLesson.getChosenStartTime()!=null
+                    &&createLesson.getChosenEndTime()!=null
+                    && (createLesson.getChosenEndTime().isAfter(createLesson.getChosenStartTime())
+                    ||createLesson.getChosenEndTime().isEqual(createLesson.getChosenStartTime()))) {
+                Interval interval = new Interval(createLesson.getChosenStartTime(), createLesson.getChosenEndTime());
 
                 getSelectedTeachers().forEach((key, value) -> {
-                   database.getTeachers().get(key).makeUnavailable(interval);
+
+                    if (!(value.isAvailable(interval))) {
+                        this.condition = false;
+                        System.out.println("Teacher " + value + "is not available at this time");
+                        update();
+                        updateScene();
+                        createLessonWindow.close();
+                    } else {
+                        this.condition = true;
+                    }
                 });
+
+
+                if (!(createLesson.getChosenClasroom().isAvailable(interval))) {
+                    this.condition = false;
+                    System.out.println(createLesson.getChosenClasroom() + "is not available at " + interval);
+                } else {
+                    this.condition = true;
+                }
+
+
+                getSelectedGroups().forEach(group -> {
+                    if (!(group.isAvailable(interval))) {
+                        this.condition = false;
+                        System.out.println(group + " is already planned at " + interval);
+                    } else {
+                        this.condition = true;
+                    }
+                });
+
+
+                if (teachers && classroom && groups && subject && beginTime && endTime && this.condition) {
+
+                    //TODO: fix the addLesson->deleteLesson -> addLesson (not possible) BUG!
+
+                    database.returnLessons().add(new Lesson(getSelectedTeachers(), createLesson.getChosenClasroom(), getSelectedGroups(), createLesson.getChosenSubject(), interval));
+                    updateScene();
+                    update();
+                    createLessonWindow.close();
+
+                    createLesson.getChosenClasroom().makeUnavailable(interval);
+                    for (Group selectedGroup : getSelectedGroups()) {
+                        selectedGroup.makeUnavailable(interval);
+                    }
+
+
+                    getSelectedTeachers().forEach((key, value) -> {
+                        database.getTeachers().get(key).makeUnavailable(interval);
+                    });
+                }
             }
 
 
@@ -323,6 +328,10 @@ public class GUIMain extends Application {
 
 
         });
+    }
+
+    public void setCondition(Boolean condition){
+        this.condition = condition;
     }
 
 }

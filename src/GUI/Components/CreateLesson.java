@@ -342,10 +342,14 @@ public class CreateLesson extends GridPane {
         return (Subject) subjectComboBox.getSelectionModel().getSelectedItem();
     }
     public DateTime getChosenStartTime(){
-        return (DateTime) comboStartTime.getSelectionModel().getSelectedItem();
+        if(!(comboStartTime.getSelectionModel().isEmpty())) {
+            return (DateTime) comboStartTime.getSelectionModel().getSelectedItem();
+        } else return null;
     }
     public DateTime getChosenEndTime(){
-        return (DateTime) comboEndTime.getSelectionModel().getSelectedItem();
+        if(!(comboEndTime.getSelectionModel().isEmpty())) {
+            return (DateTime) comboEndTime.getSelectionModel().getSelectedItem();
+        } else return null;
     }
 
 

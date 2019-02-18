@@ -19,7 +19,11 @@ public class CreateView extends GridPane {
         if (database.amountOfLessons() > 0) {
 
             for (int amountLessons = 0; amountLessons < database.amountOfLessons(); amountLessons++) {
-                Label label = new Label(database.returnLessons().get(amountLessons).getSubject().toString() + database.returnLessons().get(amountLessons).getClassroom().toString());
+                Label label = new Label(database.returnLessons().get(amountLessons).getSubject().toString() +
+                              database.returnLessons().get(amountLessons).getClassroom().toString());
+
+
+
                 Button button = new Button("Delete");
                // Button button1 = new Button("View");
                 final int i = amountLessons;
