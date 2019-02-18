@@ -44,7 +44,6 @@ public class Group implements Serializable {
         return true;
     }
 
-
     public void makeUnavailable(Interval interval) {
         this.unavailable.add(interval);
     }

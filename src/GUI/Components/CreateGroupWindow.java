@@ -1,6 +1,6 @@
 package GUI.Components;
 
-import Data.Database;
+import Data.Agenda;
 import Data.Group;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -16,14 +16,14 @@ public class CreateGroupWindow extends VBox {
     private Button saveGroups;
     private ArrayList<CheckBox> checkBoxes;
 
-    public CreateGroupWindow(Database database){
+    public CreateGroupWindow(Agenda agenda){
         vBox = new VBox();
         saveGroups = new Button("Save groups");
          checkBoxes = new ArrayList<>();
         this.selectedGroups = new ArrayList<>();
 
-        for(int i = 0; i< database.getAmountOfGroups(); i++){
-            CheckBox checkBox = new CheckBox(database.getGroups().get(i).toString());
+        for(int i = 0; i< agenda.getAmountOfGroups(); i++){
+            CheckBox checkBox = new CheckBox(agenda.getGroups().get(i).toString());
             checkBoxes.add(checkBox);
             vBox.getChildren().add(checkBox);
 

@@ -1,7 +1,6 @@
 package GUI.Components;
 
-import Data.Database;
-import Data.Group;
+import Data.Agenda;
 import Data.Teacher;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -17,7 +16,7 @@ public class CreateTeacherWindow extends VBox {
     private Button saveTeachers;
     private ArrayList<CheckBox> checkBoxes;
 
-    public CreateTeacherWindow(Database database){
+    public CreateTeacherWindow(Agenda agenda){
         vBox = new VBox();
         saveTeachers = new Button("Save Teachers");
         checkBoxes = new ArrayList<>();
@@ -25,17 +24,17 @@ public class CreateTeacherWindow extends VBox {
 
 
 
-        database.getTeachers().forEach((s, teacher) -> {
-            CheckBox checkBox = new CheckBox(database.getTeachers().get(s).getTeacherNumber() +" "+database.getTeachers().get(s).toString());
+        agenda.getTeachers().forEach((s, teacher) -> {
+            CheckBox checkBox = new CheckBox(agenda.getTeachers().get(s).getTeacherNumber() +" "+ agenda.getTeachers().get(s).toString());
             checkBoxes.add(checkBox);
             vBox.getChildren().add(checkBox);
 
 
                 });
 
-        /*for(int i = 0; i< database.getTeachers().size(); i++){
+        /*for(int i = 0; i< agenda.getTeachers().size(); i++){
 
-            CheckBox checkBox = new CheckBox(database.getTeachers().get());
+            CheckBox checkBox = new CheckBox(agenda.getTeachers().get());
             checkBoxes.add(checkBox);
             vBox.getChildren().add(checkBox);
         }*/

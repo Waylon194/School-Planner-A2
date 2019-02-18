@@ -5,7 +5,6 @@ import GUI.Components.*;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.CheckBox;
-import javafx.scene.layout.GridPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -15,19 +14,18 @@ import org.joda.time.Interval;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class GUIMain extends Application {
 
 
-    Database database = new Database();
+    Agenda agenda = new Agenda();
 
     private Gui gui = new Gui();
 
-    private CreateLesson createLesson = new CreateLesson(database);
-    private CreateView createView = new CreateView(database, this);
-    private CreateGroupWindow createGroupWindow = new CreateGroupWindow(database);
-    private CreateTeacherWindow createTeacherWindow = new CreateTeacherWindow(database);
+    private CreateLesson createLesson = new CreateLesson(agenda);
+    private CreateView createView = new CreateView(agenda, this);
+    private CreateGroupWindow createGroupWindow = new CreateGroupWindow(agenda);
+    private CreateTeacherWindow createTeacherWindow = new CreateTeacherWindow(agenda);
 
     private Stage createLessonWindow = new Stage();
     private Stage createGroupWindow2 = new Stage();
@@ -53,7 +51,7 @@ public class GUIMain extends Application {
 
     public void updateScene() {
         createViewWindow.close();
-        this.createView = new CreateView(database, this);
+        this.createView = new CreateView(agenda, this);
         this.viewScene = new Scene(createView);
         createViewWindow.setScene(viewScene);
     }
@@ -96,7 +94,6 @@ public class GUIMain extends Application {
             boolean subject = false;
             boolean beginTime = false;
             boolean endTime = false;
-            boolean available = false;
 
             if (getSelectedTeachers().size()>0){
                 teachers = true;
@@ -134,57 +131,63 @@ public class GUIMain extends Application {
                 System.out.println("Choose end time!");
             }
 
-            Interval interval = new Interval(createLesson.getChosenStartTime(), createLesson.getChosenEndTime());
-
-            getSelectedTeachers().forEach((key, value) -> {
-
-                if(!(value.isAvailable(interval))){
-                    this.condition = false;
-                    System.out.println("Teacher "+value+"is not available at this time");
-                    update();
-                    updateScene();
-                    createLessonWindow.close();
-                }else {
-                    this.condition = true;
-                }
-            });
-
-            if (!(createLesson.getChosenClasroom().isAvailable(interval))){
-                this.condition = false;
-                System.out.println(createLesson.getChosenClasroom() +"is not available at "+ interval);
-            }else{
-                this.condition = true;
-            }
-
-            getSelectedGroups().forEach(group -> {
-                if (!(group.isAvailable(interval))){
-                    this.condition = false;
-                    System.out.println(group+ " is already planned at "+ interval );
-                }else {
-                    this.condition = true;
-                }
-            });
-
-
-
-            if(teachers&&classroom&&groups&&subject&&beginTime&&endTime&&this.condition) {
-
-                //Interval interval = new Interval(createLesson.getChosenStartTime(), createLesson.getChosenEndTime());
-                database.returnLessons().add(new Lesson(getSelectedTeachers(), createLesson.getChosenClasroom(), getSelectedGroups(), createLesson.getChosenSubject(), interval));
-                updateScene();
-                update();
-                createLessonWindow.close();
-
-                createLesson.getChosenClasroom().makeUnavailable(interval);
-                for (Group selectedGroup : getSelectedGroups()) {
-                    selectedGroup.makeUnavailable(interval);
-                }
-
-
+            if(createLesson.getChosenStartTime()!=null
+                    &&createLesson.getChosenEndTime()!=null
+                    && (createLesson.getChosenEndTime().isAfter(createLesson.getChosenStartTime())
+                    ||createLesson.getChosenEndTime().isEqual(createLesson.getChosenStartTime()))) {
+                Interval interval = new Interval(createLesson.getChosenStartTime(), createLesson.getChosenEndTime());
 
                 getSelectedTeachers().forEach((key, value) -> {
-                   database.getTeachers().get(key).makeUnavailable(interval);
+
+                    if (!(value.isAvailable(interval))) {
+                        this.condition = false;
+                        System.out.println("Teacher " + value + " is not available at this time");
+                        update();
+                        updateScene();
+                        createLessonWindow.close();
+                    } else {
+                        this.condition = true;
+                    }
                 });
+
+
+                if (!(createLesson.getChosenClasroom().isAvailable(interval))) {
+                    this.condition = false;
+                    System.out.println(createLesson.getChosenClasroom() + "is not available at " + interval);
+                } else {
+                    this.condition = true;
+                }
+
+
+                getSelectedGroups().forEach(group -> {
+                    if (!(group.isAvailable(interval))) {
+                        this.condition = false;
+                        System.out.println(group + " is already planned at " + interval);
+                    } else {
+                        this.condition = true;
+                    }
+                });
+
+
+                if (teachers && classroom && groups && subject && beginTime && endTime && this.condition) {
+
+                    //TODO: fix the addLesson->deleteLesson -> addLesson (not possible) BUG!
+
+                    agenda.returnLessons().add(new Lesson(getSelectedTeachers(), createLesson.getChosenClasroom(), getSelectedGroups(), createLesson.getChosenSubject(), interval));
+                    updateScene();
+                    update();
+                    createLessonWindow.close();
+
+                    createLesson.getChosenClasroom().makeUnavailable(interval);
+                    for (Group selectedGroup : getSelectedGroups()) {
+                        selectedGroup.makeUnavailable(interval);
+                    }
+
+
+                    getSelectedTeachers().forEach((key, value) -> {
+                        agenda.getTeachers().get(key).makeUnavailable(interval);
+                    });
+                }
             }
 
 
@@ -202,14 +205,14 @@ public class GUIMain extends Application {
 
         //will open windows explorer to save object to file.
         gui.getButton1().setOnAction(event -> {
-            fileController.saveFile(createViewWindow, database);
+            fileController.saveFile(createViewWindow, agenda);
             update();
 
         });
 
         //will open windows explorer to open a file with object.
         gui.getButton2().setOnAction(event -> {
-            database = (fileController.openFile(createViewWindow));
+            agenda = (fileController.openFile(createViewWindow));
             update();
         });
 
@@ -254,7 +257,7 @@ public class GUIMain extends Application {
 
         for (CheckBox checkBox : createGroupWindow.getCheckBoxes()) {
             if (checkBox.isSelected()) {
-                selected.add(database.getGroups().get(i));
+                selected.add(agenda.getGroups().get(i));
             }
             i++;
 
@@ -270,7 +273,7 @@ public class GUIMain extends Application {
         for (CheckBox checkBox : createTeacherWindow.getCheckBoxes()) {
             if (checkBox.isSelected()) {
                number = checkBox.toString().substring(checkBox.toString().length()-4,checkBox.toString().length()-1);
-               selected.put(number,database.getTeachers().get(number));
+               selected.put(number, agenda.getTeachers().get(number));
 
 
             }
@@ -282,7 +285,7 @@ public class GUIMain extends Application {
 
     public void drawSchedule() {
         gui.clear();
-        List<Lesson> lessons = database.getLessons();
+        List<Lesson> lessons = agenda.getLessons();
         lessons.forEach(lesson -> {
 
             Hours hours = Hours.hoursBetween(lesson.getInterval().getStart(), lesson.getInterval().getEnd());
@@ -323,6 +326,10 @@ public class GUIMain extends Application {
 
 
         });
+    }
+
+    public void setCondition(Boolean condition){
+        this.condition = condition;
     }
 
 }
