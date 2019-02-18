@@ -19,13 +19,5 @@ public class MainClass {
 
 
       //  System.out.println(interval2.overlaps(interval));
-
-
-
-
-
-
-
-
     }
 }

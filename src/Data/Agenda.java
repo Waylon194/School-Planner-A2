@@ -92,7 +92,7 @@ public class Agenda implements Serializable {
         this.students.add(lisane);
 
         Teacher maurice = new Teacher("Maurice", "", "Snoeren", 45, 0, 0, "100", Subject.PROGRAMMING);
-        Teacher johan = new Teacher("Johan", "", "Fakka", 43, 0, 0, "110", Subject.GRAPHICS2D);
+        Teacher johan = new Teacher("Johan", "", "Talboom", 43, 0, 0, "110", Subject.GRAPHICS2D);
         Teacher hansen = new Teacher("Hansen", "van", "Bergen", 40, 0, 0, "130", Subject.GRAPHICS3D);
         Teacher etienne = new Teacher("Etienne", "van", "Goosens", 43, 0, 0, "140", Subject.WORKSHOP);
         Teacher pieter = new Teacher("Pieter", "Kop", "Jansen", 41, 0, 0, "150", Subject.MATH);

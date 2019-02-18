@@ -196,13 +196,11 @@ public class CreateLesson extends GridPane {
         buttonGroup.setMnemonicParsing(false);
         buttonGroup.setText("Select Groups");
 
-
         GridPane.setColumnIndex(buttonTeachers, 1);
         GridPane.setHalignment(buttonTeachers, javafx.geometry.HPos.CENTER);
         GridPane.setRowIndex(buttonTeachers, 1);
         buttonTeachers.setMnemonicParsing(false);
         buttonTeachers.setText("Select Teachers");
-
 
         GridPane.setHalignment(buttonSaveLesson, javafx.geometry.HPos.CENTER);
         GridPane.setRowIndex(buttonSaveLesson, 7);
@@ -226,43 +224,34 @@ public class CreateLesson extends GridPane {
         for (DateTime time : agenda.getTimes()) {
             int hour = time.getHourOfDay();
             int intMinute = time.getMinuteOfHour();
-
             String minute = "";
-
             if (intMinute<10){
                 minute+="0"+ String.valueOf(intMinute);
-            }else{minute = String.valueOf(intMinute);}
-
-
+            }
+            else {
+                minute = String.valueOf(intMinute);
+            }
             //todo: change displayed time
-
             comboStartTime.getItems().add(time);
             //comboStartTime.(hour+":"+minute);
-
         }
-
-
-
         GridPane.setColumnIndex(comboEndTime, 1);
         GridPane.setRowIndex(comboEndTime, 4);
         comboEndTime.setPrefHeight(25.0);
         comboEndTime.setPrefWidth(514.0);
+
         for (DateTime time : agenda.getTimes()) {
             int hour = time.getHourOfDay();
             int intMinute = time.getMinuteOfHour();
-
             String minute = "";
-
             if (intMinute<10){
                 minute+="0"+ String.valueOf(intMinute);
-            }else{minute = String.valueOf(intMinute);}
-
+            }else{
+                minute = String.valueOf(intMinute);
+            }
 
             comboEndTime.getItems().add(time);
-
         }
-
-
         GridPane.setColumnIndex(classroomComboBox, 1);
         classroomComboBox.setPrefHeight(25.0);
         classroomComboBox.setPrefWidth(514.0);
@@ -271,21 +260,14 @@ public class CreateLesson extends GridPane {
             classroomComboBox.getItems().add(classroom);
         }
 
-
-
         GridPane.setColumnIndex(teacherComboBox, 1);
         GridPane.setRowIndex(teacherComboBox, 1);
         teacherComboBox.setPrefHeight(25.0);
         teacherComboBox.setPrefWidth(552.0);
 
-
-
         for(Map.Entry<String,Teacher> teacher: agenda.getTeachers().entrySet()){
             teacherComboBox.getItems().add(teacher);
-
         }
-
-
 
         GridPane.setHalignment(label4, javafx.geometry.HPos.CENTER);
         GridPane.setRowIndex(label4, 5);
@@ -343,13 +325,14 @@ public class CreateLesson extends GridPane {
     public DateTime getChosenStartTime(){
         if(!(comboStartTime.getSelectionModel().isEmpty())) {
             return (DateTime) comboStartTime.getSelectionModel().getSelectedItem();
-        } else return null;
+        } else {
+            return null;
+        }
     }
+
     public DateTime getChosenEndTime(){
         if(!(comboEndTime.getSelectionModel().isEmpty())) {
             return (DateTime) comboEndTime.getSelectionModel().getSelectedItem();
         } else return null;
     }
-
-
 }

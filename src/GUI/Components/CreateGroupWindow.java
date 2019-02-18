@@ -31,9 +31,6 @@ public class CreateGroupWindow extends VBox {
         vBox.getChildren().add(saveGroups);
         vBox.setSpacing(10);
         getChildren().add(vBox);
-
-
-
     }
 
     public ArrayList<Group> getSelectedGroups(){
@@ -46,9 +43,4 @@ public class CreateGroupWindow extends VBox {
     public ArrayList<CheckBox> getCheckBoxes(){
         return this.checkBoxes;
     }
-
-
-
-
-
 }

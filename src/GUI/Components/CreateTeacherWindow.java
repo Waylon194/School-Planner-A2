@@ -22,14 +22,10 @@ public class CreateTeacherWindow extends VBox {
         checkBoxes = new ArrayList<>();
         this.selectedTeachers = new ArrayList<>();
 
-
-
         agenda.getTeachers().forEach((s, teacher) -> {
             CheckBox checkBox = new CheckBox(agenda.getTeachers().get(s).getTeacherNumber() +" "+ agenda.getTeachers().get(s).toString());
             checkBoxes.add(checkBox);
             vBox.getChildren().add(checkBox);
-
-
                 });
 
         /*for(int i = 0; i< agenda.getTeachers().size(); i++){
@@ -41,20 +37,13 @@ public class CreateTeacherWindow extends VBox {
         vBox.getChildren().add(saveTeachers);
         vBox.setSpacing(10);
         getChildren().add(vBox);
-
-
-
     }
-
-
 
     public Button getSaveTeachersButton(){
         return this.saveTeachers;
     }
+
     public ArrayList<CheckBox> getCheckBoxes(){
         return this.checkBoxes;
     }
-
-
-
 }

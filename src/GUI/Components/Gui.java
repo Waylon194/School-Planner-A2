@@ -480,7 +480,6 @@ public class Gui extends TabPane {
         anchorPane0.getChildren().add(vBox);
         getTabs().add(tab0);
 
-
         tab1.setText("Simulate");
         getTabs().add(tab1);
 

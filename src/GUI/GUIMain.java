@@ -183,7 +183,6 @@ public class GUIMain extends Application {
                         selectedGroup.makeUnavailable(interval);
                     }
 
-
                     getSelectedTeachers().forEach((key, value) -> {
                         agenda.getTeachers().get(key).makeUnavailable(interval);
                     });
@@ -236,16 +235,11 @@ public class GUIMain extends Application {
             createTeacherWindowStage.setScene(teacherWindow);
             createTeacherWindowStage.setTitle("Select Teachers:");
             createTeacherWindowStage.show();
-
-
-
         });
 
         createTeacherWindow.getSaveTeachersButton().setOnAction(event -> {
-
             createTeacherWindowStage.close();
            update();
-
         });
 
 
@@ -274,11 +268,8 @@ public class GUIMain extends Application {
             if (checkBox.isSelected()) {
                number = checkBox.toString().substring(checkBox.toString().length()-4,checkBox.toString().length()-1);
                selected.put(number, agenda.getTeachers().get(number));
-
-
             }
             i++;
-
         }
         return selected;
     }
@@ -323,13 +314,10 @@ public class GUIMain extends Application {
                     gui.drawLessonBlock(9, lesson.getClassroom().getNumber(), duration,lesson);
                     break;
             }
-
-
         });
     }
 
     public void setCondition(Boolean condition){
         this.condition = condition;
     }
-
 }

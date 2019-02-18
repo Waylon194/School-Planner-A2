@@ -17,18 +17,14 @@ public class FileController {
         File file = fileChooser.showSaveDialog(stage);
         if (file == null) {
             System.out.println("No file selected!");
-
         }
         else {
-
             try {
-
                 FileOutputStream fileOut = new FileOutputStream(file.getPath());
                 ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
                 objectOut.writeObject(agenda);
                 objectOut.close();
                 System.out.println("The Object  was succesfully written to a file");
-
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
@@ -36,7 +32,6 @@ public class FileController {
     }
 
     public Agenda openFile(Stage stage){
-
 
         System.out.println("Opening file");
         File file = fileChooser.showOpenDialog(stage);
@@ -53,10 +48,7 @@ public class FileController {
             catch (IOException | ClassNotFoundException ex) {
                 ex.printStackTrace();
             }
-
         }
-
         return null;
     }
-
 }

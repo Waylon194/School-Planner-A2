@@ -12,16 +12,22 @@ public class Lesson implements Serializable {
     private ArrayList <Group> studentClass;
     private Subject subject;
     private Interval interval;
+    private double popularity;
 
-   public Lesson (HashMap<String,Teacher> teachers, Classroom classroom, ArrayList<Group> studentClass, Subject subject, Interval interval) {
-      this.teachers = teachers;
-      this.classroom = classroom;
-      this.studentClass = studentClass;
-      this.subject = subject;
-      this.interval = interval;
-   }
+    public Lesson(HashMap<String, Teacher> teachers, Classroom classroom, ArrayList<Group> studentClass, Subject subject, Interval interval, double popularity) {
+        this.teachers = teachers;
+        this.classroom = classroom;
+        this.studentClass = studentClass;
+        this.subject = subject;
+        this.interval = interval;
+        this.popularity = popularity;
+    }
 
-   public Interval getInterval(){
+    public double getPopularity() {
+        return popularity;
+    }
+
+    public Interval getInterval(){
        return this.interval;
    }
 
@@ -50,7 +56,8 @@ public class Lesson implements Serializable {
       return  ("\n Subject: " + this.subject +
               "\n Teachers: " + teachers +
               "\n Classroom: " + classroom + studentClass +
-              "\n Time: " + returnLessonTimeAsString());
+              "\n Time: " + returnLessonTimeAsString() +
+              "\n Popularity: " + getPopularity());
    }
 
     public String returnBeginTimeAsString(){
@@ -58,7 +65,7 @@ public class Lesson implements Serializable {
         int intMinute = this.interval.toInterval().getStart().getMinuteOfHour();
         String minute = "";
         if (intMinute<10){
-            minute+="0"+ String.valueOf(intMinute);
+            minute += "0" + intMinute;
         }
         else{
             minute = String.valueOf(intMinute);
