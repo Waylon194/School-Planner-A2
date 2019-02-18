@@ -16,8 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Gui extends TabPane {
-
-    private final Tab tab;
+    private final Tab tabAgenda;
     private final AnchorPane anchorPane;
     private final GridPane gridPane;
     private final ColumnConstraints columnConstraints;
@@ -58,33 +57,31 @@ public class Gui extends TabPane {
     private final Label label15;
     private final Label label16;
     private final Label label17;
-    private final Tab tab0;
-    private final Tab tab1;
+    private final Tab tabViewEdit;
+    private final Tab tabSimulate;
     private final AnchorPane anchorPane0;
     private final VBox vBox;
-    private final Button button;
-    private final Button button0;
-    private final Button button1;
-    private final Button button2;
-
-
-    public Button getButton() {
-        return button;
-    }
-
-    public Button getButton0() {
-        return button0;
-    }
-
-    public Button getButton1() {
-        return button1;
-    }
-
-    public Button getButton2() {
-        return button2;
-    }
-
+    private final Button btnAddLesson;
+    private final Button btnViewLesson;
+    private final Button btnSaveSchedule;
+    private final Button btnOpenSchedule;
     Rectangle rectangle;
+
+    public Button getBtnAddLesson() {
+        return btnAddLesson;
+    }
+
+    public Button getBtnViewLesson() {
+        return btnViewLesson;
+    }
+
+    public Button getBtnSaveSchedule() {
+        return btnSaveSchedule;
+    }
+
+    public Button getBtnOpenSchedule() {
+        return btnOpenSchedule;
+    }
 
     public void drawLesson(int lesson, int classRoom) {
         rectangle = new Rectangle();
@@ -105,9 +102,7 @@ public class Gui extends TabPane {
            groups += group.getGroupName()+" ";
 
         }
-
         Label label = new Label("" + lesson.getTeachersAsString() + '\n' + lesson.getSubject()+'\n'+groups);
-       // Label label1 = new Label("" + lesson.getTeachersAsString() + '\n' + lesson.getSubject()+'\n'+groups);
 
         for (int i = startTime; i <= startTime + duration; i++) {
             drawLesson(i, classRoom);
@@ -117,7 +112,6 @@ public class Gui extends TabPane {
         GridPane.setHalignment(label, javafx.geometry.HPos.CENTER);
         GridPane.setValignment(label, javafx.geometry.VPos.CENTER);
         gridPane.getChildren().add(label);
-      //  gridPane.getChildren().add(label1);
     }
 
     public void clear() {
@@ -147,10 +141,13 @@ public class Gui extends TabPane {
     }
 
     public Gui() {
-        tab = new Tab();
-        tab1 = new Tab();
+        tabAgenda = new Tab();
+        tabViewEdit = new Tab();
+        tabSimulate = new Tab();
         anchorPane = new AnchorPane();
+        anchorPane0 = new AnchorPane();
         gridPane = new GridPane();
+
         columnConstraints = new ColumnConstraints();
         columnConstraints0 = new ColumnConstraints();
         columnConstraints1 = new ColumnConstraints();
@@ -160,6 +157,7 @@ public class Gui extends TabPane {
         columnConstraints5 = new ColumnConstraints();
         columnConstraints6 = new ColumnConstraints();
         columnConstraints7 = new ColumnConstraints();
+
         rowConstraints = new RowConstraints();
         rowConstraints0 = new RowConstraints();
         rowConstraints1 = new RowConstraints();
@@ -170,32 +168,33 @@ public class Gui extends TabPane {
         rowConstraints6 = new RowConstraints();
         rowConstraints7 = new RowConstraints();
         rowConstraints8 = new RowConstraints();
-        label = new Label();
-        label0 = new Label();
-        label1 = new Label();
-        label2 = new Label();
-        label3 = new Label();
-        label4 = new Label();
-        label5 = new Label();
-        label6 = new Label();
-        label7 = new Label();
-        label8 = new Label();
-        label9 = new Label();
-        label10 = new Label();
-        label11 = new Label();
-        label12 = new Label();
-        label13 = new Label();
+
+        label = new Label("LA201");
+        label0 = new Label("LA302");
+        label1 = new Label("LA115");
+        label2 = new Label("LX401b");
+        label3 = new Label("LD221");
+        label4 = new Label("LD406");
+        label5 = new Label("09:00");
+        label6 = new Label("10:00");
+        label7 = new Label("11:00");
+        label8 = new Label("12:00");
+        label9 = new Label("13:00");
+        label10 = new Label("14:00");
+        label11 = new Label("15:00");
+        label12 = new Label("16:00");
+        label13 = new Label("17:00");
         label14 = new Label();
-        label15 = new Label();
-        label16 = new Label();
+        label15 = new Label("LA226");
+        label16 = new Label("LA236");
         label17 = new Label();
-        tab0 = new Tab();
-        anchorPane0 = new AnchorPane();
+
         vBox = new VBox();
-        button = new Button();
-        button0 = new Button();
-        button1 = new Button("Save Schedule");
-        button2 = new Button("Open Schedule");
+
+        btnAddLesson = new Button("Add Lesson");
+        btnViewLesson = new Button("View Lessons");
+        btnSaveSchedule = new Button("Save Schedule");
+        btnOpenSchedule = new Button("Open Schedule");
 
         setMaxHeight(USE_PREF_SIZE);
         setMaxWidth(USE_PREF_SIZE);
@@ -205,7 +204,7 @@ public class Gui extends TabPane {
         setPrefWidth(840.0);
         setTabClosingPolicy(javafx.scene.control.TabPane.TabClosingPolicy.UNAVAILABLE);
 
-        tab.setText("Agenda");
+        tabAgenda.setText("Agenda");
 
         anchorPane.setMinHeight(0.0);
         anchorPane.setMinWidth(0.0);
@@ -314,77 +313,62 @@ public class Gui extends TabPane {
         GridPane.setColumnIndex(label, 1);
         GridPane.setHalignment(label, javafx.geometry.HPos.CENTER);
         GridPane.setValignment(label, javafx.geometry.VPos.CENTER);
-        label.setText("LA201");
 
         GridPane.setColumnIndex(label0, 2);
         GridPane.setHalignment(label0, javafx.geometry.HPos.CENTER);
         GridPane.setValignment(label0, javafx.geometry.VPos.CENTER);
-        label0.setText("LA302");
 
         GridPane.setColumnIndex(label1, 3);
         GridPane.setHalignment(label1, javafx.geometry.HPos.CENTER);
         GridPane.setValignment(label1, javafx.geometry.VPos.CENTER);
-        label1.setText("LA115");
 
         GridPane.setColumnIndex(label2, 4);
         GridPane.setHalignment(label2, javafx.geometry.HPos.CENTER);
         GridPane.setValignment(label2, javafx.geometry.VPos.CENTER);
-        label2.setText("LX401b");
 
         GridPane.setColumnIndex(label3, 5);
         GridPane.setHalignment(label3, javafx.geometry.HPos.CENTER);
         GridPane.setValignment(label3, javafx.geometry.VPos.CENTER);
-        label3.setText("LD221");
 
         GridPane.setColumnIndex(label4, 6);
         GridPane.setHalignment(label4, javafx.geometry.HPos.CENTER);
         GridPane.setValignment(label4, javafx.geometry.VPos.CENTER);
-        label4.setText("LD406");
 
         GridPane.setHalignment(label5, javafx.geometry.HPos.CENTER);
         GridPane.setRowIndex(label5, 1);
         GridPane.setValignment(label5, javafx.geometry.VPos.CENTER);
-        label5.setText("09:00");
 
         GridPane.setHalignment(label6, javafx.geometry.HPos.CENTER);
         GridPane.setRowIndex(label6, 2);
         GridPane.setValignment(label6, javafx.geometry.VPos.CENTER);
-        label6.setText("10:00");
 
         GridPane.setHalignment(label7, javafx.geometry.HPos.CENTER);
         GridPane.setRowIndex(label7, 3);
         GridPane.setValignment(label7, javafx.geometry.VPos.CENTER);
-        label7.setText("11:00");
 
         GridPane.setHalignment(label8, javafx.geometry.HPos.CENTER);
         GridPane.setRowIndex(label8, 4);
         GridPane.setValignment(label8, javafx.geometry.VPos.CENTER);
-        label8.setText("12:00");
 
         GridPane.setHalignment(label9, javafx.geometry.HPos.CENTER);
         GridPane.setRowIndex(label9, 5);
         GridPane.setValignment(label9, javafx.geometry.VPos.CENTER);
-        label9.setText("13:00");
 
         GridPane.setHalignment(label10, javafx.geometry.HPos.CENTER);
         GridPane.setRowIndex(label10, 6);
         GridPane.setValignment(label10, javafx.geometry.VPos.CENTER);
-        label10.setText("14:00");
 
         GridPane.setHalignment(label11, javafx.geometry.HPos.CENTER);
         GridPane.setRowIndex(label11, 7);
         GridPane.setValignment(label11, javafx.geometry.VPos.CENTER);
-        label11.setText("15:00");
 
         GridPane.setHalignment(label12, javafx.geometry.HPos.CENTER);
         GridPane.setRowIndex(label12, 8);
         GridPane.setValignment(label12, javafx.geometry.VPos.CENTER);
-        label12.setText("16:00");
 
         GridPane.setHalignment(label13, javafx.geometry.HPos.CENTER);
         GridPane.setRowIndex(label13, 9);
         GridPane.setValignment(label13, javafx.geometry.VPos.CENTER);
-        label13.setText("17:00");
 
         label14.setLayoutX(347.0);
         label14.setLayoutY(13.0);
@@ -392,15 +376,13 @@ public class Gui extends TabPane {
         GridPane.setColumnIndex(label15, 7);
         GridPane.setHalignment(label15, javafx.geometry.HPos.CENTER);
         GridPane.setValignment(label15, javafx.geometry.VPos.CENTER);
-        label15.setText("LA226");
 
         GridPane.setColumnIndex(label16, 8);
         GridPane.setHalignment(label16, javafx.geometry.HPos.CENTER);
         GridPane.setValignment(label16, javafx.geometry.VPos.CENTER);
-        label16.setText("LA236");
-        tab.setContent(anchorPane);
+        tabAgenda.setContent(anchorPane);
 
-        tab0.setText("View/Edit");
+        tabViewEdit.setText("View/Edit");
 
         anchorPane0.setMinHeight(0.0);
         anchorPane0.setMinWidth(0.0);
@@ -412,26 +394,24 @@ public class Gui extends TabPane {
         vBox.setPrefWidth(840.0);
         vBox.setSpacing(10.0);
 
-        button.setAlignment(javafx.geometry.Pos.BOTTOM_LEFT);
-        button.setContentDisplay(javafx.scene.control.ContentDisplay.CENTER);
-        button.setMnemonicParsing(false);
-        button.setText("Add Lesson");
-        VBox.setMargin(button, new Insets(10.0, 0.0, 0.0, 10.0));
-        button.setPadding(new Insets(10.0));
+        btnAddLesson.setAlignment(javafx.geometry.Pos.BOTTOM_LEFT);
+        btnAddLesson.setContentDisplay(javafx.scene.control.ContentDisplay.CENTER);
+        btnAddLesson.setMnemonicParsing(false);
+        VBox.setMargin(btnAddLesson, new Insets(10.0, 0.0, 0.0, 10.0));
+        btnAddLesson.setPadding(new Insets(10.0));
 
-        button0.setMnemonicParsing(false);
-        button0.setText("View Lessons");
-        VBox.setMargin(button0, new Insets(0.0, 0.0, 0.0, 10.0));
-        button0.setPadding(new Insets(10.0));
+        btnViewLesson.setMnemonicParsing(false);
+        VBox.setMargin(btnViewLesson, new Insets(0.0, 0.0, 0.0, 10.0));
+        btnViewLesson.setPadding(new Insets(10.0));
 
-        button1.setMnemonicParsing(false);
-        VBox.setMargin(button1, new Insets(0.0, 0.0, 0.0, 10.0));
-        button1.setPadding(new Insets(10.0));
+        btnSaveSchedule.setMnemonicParsing(false);
+        VBox.setMargin(btnSaveSchedule, new Insets(0.0, 0.0, 0.0, 10.0));
+        btnSaveSchedule.setPadding(new Insets(10.0));
 
-        button2.setMnemonicParsing(false);
-        VBox.setMargin(button2, new Insets(0.0, 0.0, 0.0, 10.0));
-        button2.setPadding(new Insets(10.0));
-        tab0.setContent(anchorPane0);
+        btnOpenSchedule.setMnemonicParsing(false);
+        VBox.setMargin(btnOpenSchedule, new Insets(0.0, 0.0, 0.0, 10.0));
+        btnOpenSchedule.setPadding(new Insets(10.0));
+        tabViewEdit.setContent(anchorPane0);
 
         gridPane.getColumnConstraints().add(columnConstraints);
         gridPane.getColumnConstraints().add(columnConstraints0);
@@ -442,6 +422,7 @@ public class Gui extends TabPane {
         gridPane.getColumnConstraints().add(columnConstraints5);
         gridPane.getColumnConstraints().add(columnConstraints6);
         gridPane.getColumnConstraints().add(columnConstraints7);
+
         gridPane.getRowConstraints().add(rowConstraints);
         gridPane.getRowConstraints().add(rowConstraints0);
         gridPane.getRowConstraints().add(rowConstraints1);
@@ -452,6 +433,7 @@ public class Gui extends TabPane {
         gridPane.getRowConstraints().add(rowConstraints6);
         gridPane.getRowConstraints().add(rowConstraints7);
         gridPane.getRowConstraints().add(rowConstraints8);
+
         gridPane.getChildren().add(label);
         gridPane.getChildren().add(label0);
         gridPane.getChildren().add(label1);
@@ -471,17 +453,18 @@ public class Gui extends TabPane {
         gridPane.getChildren().add(label15);
         gridPane.getChildren().add(label16);
         gridPane.getChildren().add(label17);
+
+        vBox.getChildren().add(btnAddLesson);
+        vBox.getChildren().add(btnViewLesson);
+        vBox.getChildren().add(btnSaveSchedule);
+        vBox.getChildren().add(btnOpenSchedule);
+
         anchorPane.getChildren().add(gridPane);
-        getTabs().add(tab);
-        vBox.getChildren().add(button);
-        vBox.getChildren().add(button0);
-        vBox.getChildren().add(button1);
-        vBox.getChildren().add(button2);
         anchorPane0.getChildren().add(vBox);
-        getTabs().add(tab0);
 
-        tab1.setText("Simulate");
-        getTabs().add(tab1);
-
+        getTabs().add(tabViewEdit);
+        getTabs().add(tabAgenda);
+        getTabs().add(tabSimulate);
+        tabSimulate.setText("Simulate");
     }
 }

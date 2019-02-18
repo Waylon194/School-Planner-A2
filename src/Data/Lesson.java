@@ -12,19 +12,29 @@ public class Lesson implements Serializable {
     private ArrayList <Group> studentClass;
     private Subject subject;
     private Interval interval;
-    private double popularity;
+//    private double popularity;
+//
+//
+//    public Lesson(HashMap<String, Teacher> teachers, Classroom classroom, ArrayList<Group> studentClass, Subject subject, Interval interval, double popularity) {
+//        this.teachers = teachers;
+//        this.classroom = classroom;
+//        this.studentClass = studentClass;
+//        this.subject = subject;
+//        this.interval = interval;
+//        this.popularity = popularity;
+//    }
+//
+//    public double getPopularity() {
+//        return popularity;
+//    }
 
-    public Lesson(HashMap<String, Teacher> teachers, Classroom classroom, ArrayList<Group> studentClass, Subject subject, Interval interval, double popularity) {
+
+    public Lesson(HashMap<String, Teacher> teachers, Classroom classroom, ArrayList<Group> studentClass, Subject subject, Interval interval) {
         this.teachers = teachers;
         this.classroom = classroom;
         this.studentClass = studentClass;
         this.subject = subject;
         this.interval = interval;
-        this.popularity = popularity;
-    }
-
-    public double getPopularity() {
-        return popularity;
     }
 
     public Interval getInterval(){
@@ -56,8 +66,8 @@ public class Lesson implements Serializable {
       return  ("\n Subject: " + this.subject +
               "\n Teachers: " + teachers +
               "\n Classroom: " + classroom + studentClass +
-              "\n Time: " + returnLessonTimeAsString() +
-              "\n Popularity: " + getPopularity());
+              "\n Time: " + returnLessonTimeAsString());
+//              "\n Popularity: " + getPopularity());
    }
 
     public String returnBeginTimeAsString(){

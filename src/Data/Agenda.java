@@ -37,7 +37,7 @@ public class Agenda implements Serializable {
         final DateTime NINE = new DateTime(2019, 1, 1, 9, 0, 0);
         final DateTime TEN = new DateTime(2019, 1, 1, 10, 0, 0);
         final DateTime ELEVEN = new DateTime(2019, 1, 1, 11, 0, 0);
-        final DateTime TWELEVE = new DateTime(2019, 1, 1, 12, 0, 0);
+        final DateTime TWELVE = new DateTime(2019, 1, 1, 12, 0, 0);
         final DateTime ONE = new DateTime(2019, 1, 1, 13, 0, 0);
         final DateTime TWO = new DateTime(2019, 1, 1, 14, 0, 0);
         final DateTime THREE = new DateTime(2019, 1, 1, 15, 0, 0);
@@ -47,7 +47,7 @@ public class Agenda implements Serializable {
         this.times.add(NINE);
         this.times.add(TEN);
         this.times.add(ELEVEN);
-        this.times.add(TWELEVE);
+        this.times.add(TWELVE);
         this.times.add(ONE);
         this.times.add(TWO);
         this.times.add(THREE);
@@ -56,8 +56,8 @@ public class Agenda implements Serializable {
 
         final Interval FIRST_LESSON = new Interval(NINE, TEN);
         final Interval SECOND_LESSON = new Interval(TEN, ELEVEN);
-        final Interval THIRD_LESSON = new Interval(ELEVEN, TWELEVE);
-        final Interval FOURTH_LESSON = new Interval(TWELEVE, ONE);
+        final Interval THIRD_LESSON = new Interval(ELEVEN, TWELVE);
+        final Interval FOURTH_LESSON = new Interval(TWELVE, ONE);
         final Interval FIFTH_LESSON = new Interval(ONE, TWO);
         final Interval SIXTH_LESSON = new Interval(TWO, THREE);
         final Interval SEVENTH_LESSON = new Interval(THREE, FOUR);
@@ -65,7 +65,6 @@ public class Agenda implements Serializable {
 
         Student kees = new Student("Kees", "de", "Bruin", 19, 0, 0, 108);
         Student stijn = new Student("Stijn", "de", "Bruin", 19, 0, 0, 109);
-        Student niffauw = new Student("Niffauw", "a", "Bruin", 19, 0, 0, 110);
         Student sarah = new Student("Sarah", "de", "Vos", 20, 0, 0, 111);
         Student lydia = new Student("Lydia", "de", "Vos", 18, 0, 0, 112);
         Student hans = new Student("Hans", "a", "Bruin", 21, 0, 0, 113);
@@ -79,7 +78,6 @@ public class Agenda implements Serializable {
 
         this.students.add(kees);
         this.students.add(stijn);
-        this.students.add(niffauw);
         this.students.add(sarah);
         this.students.add(lydia);
         this.students.add(hans);

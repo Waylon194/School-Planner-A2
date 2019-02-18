@@ -10,7 +10,6 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.joda.time.Hours;
 import org.joda.time.Interval;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -74,7 +73,7 @@ public class GUIMain extends Application {
         createGroupWindow2.initModality(Modality.APPLICATION_MODAL);
         createViewWindow.initModality(Modality.APPLICATION_MODAL);
 
-        gui.getButton().setOnAction(event -> {
+        gui.getBtnAddLesson().setOnAction(event -> {
 
             createLessonWindow.setScene(windowScene);
             createLessonWindow.setTitle("CreateLesson a new Lesson");
@@ -203,20 +202,20 @@ public class GUIMain extends Application {
         });
 
         //will open windows explorer to save object to file.
-        gui.getButton1().setOnAction(event -> {
+        gui.getBtnSaveSchedule().setOnAction(event -> {
             fileController.saveFile(createViewWindow, agenda);
             update();
 
         });
 
         //will open windows explorer to open a file with object.
-        gui.getButton2().setOnAction(event -> {
+        gui.getBtnOpenSchedule().setOnAction(event -> {
             agenda = (fileController.openFile(createViewWindow));
             update();
         });
 
         // will let you select a lesson to view/change, will load in all information.
-        gui.getButton0().setOnAction(event -> {
+        gui.getBtnViewLesson().setOnAction(event -> {
             createViewWindow.setScene(viewScene);
             createViewWindow.setTitle("Change/View");
             createViewWindow.show();

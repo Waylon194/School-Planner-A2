@@ -15,7 +15,6 @@ import org.joda.time.DateTime;
 import java.util.Map;
 
 public class CreateLesson extends GridPane {
-
     private Agenda agenda;
     private final GridPane gridPane;
     private final ColumnConstraints columnConstraints;
