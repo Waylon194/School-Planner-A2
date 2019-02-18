@@ -19,8 +19,11 @@ public class CreateView extends GridPane {
         if (database.amountOfLessons() > 0) {
 
             for (int amountLessons = 0; amountLessons < database.amountOfLessons(); amountLessons++) {
-                Label label = new Label(database.returnLessons().get(amountLessons).getSubject().toString() +
-                              database.returnLessons().get(amountLessons).getClassroom().toString());
+                Label label = new Label(database.returnLessons().get(amountLessons).getSubject().toString()
+                        +" "+ database.returnLessons().get(amountLessons).getClassroom().getLocation()
+                        +" "+ database.returnLessons().get(amountLessons).getTeachersAsString()
+                        +" "+ database.returnLessons().get(amountLessons).getGroupsAsString()
+                                    );
 
 
 

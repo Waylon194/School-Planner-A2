@@ -106,4 +106,15 @@ public class Lesson implements Serializable {
     public ArrayList<Group> getGroups(){
        return this.studentClass;
     }
+
+    public String getGroupsAsString(){
+       String groups = "";
+
+        for (Group group : getGroups()) {
+            groups+=group.getGroupName();
+
+        }
+       return groups;
+
+    }
 }

@@ -25,7 +25,7 @@ public class Teacher extends Person implements Serializable{
     @Override
     public String toString () {
         return (getFirstName() + " " + getAdditive() + " " + getLastName() +
-                ", TeacherNumber: " + teacherNumber).replace('{',' ').replace('}',' ');
+                ", TeacherNumber: " + teacherNumber);
     }
 
 
