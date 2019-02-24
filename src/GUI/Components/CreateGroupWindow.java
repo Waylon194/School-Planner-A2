@@ -24,7 +24,6 @@ public class CreateGroupWindow extends VBox {
             CheckBox checkBox = new CheckBox(agenda.getGroups().get(i).toString());
             checkBoxes.add(checkBox);
             vBox.getChildren().add(checkBox);
-
         }
         vBox.getChildren().add(saveGroups);
         vBox.setSpacing(10);

@@ -3,14 +3,22 @@ package GUI;
 import Data.*;
 import GUI.Components.*;
 import javafx.application.Application;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.GridPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.joda.time.Hours;
 import org.joda.time.Interval;
+
+import javax.xml.soap.Text;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
@@ -186,7 +194,6 @@ public class GUIMain extends Application {
         gui.getBtnSaveSchedule().setOnAction(event -> {
             fileController.saveFile(createViewWindow, agenda);
             update();
-
         });
 
         //will open windows explorer to open a file with object.
@@ -199,6 +206,104 @@ public class GUIMain extends Application {
         gui.getBtnViewLesson().setOnAction(event -> {
             createViewWindow.setScene(viewScene);
             createViewWindow.setTitle("Change/View");
+            createViewWindow.show();
+            update();
+        });
+
+        gui.getBtnAddTeacher().setOnAction(e -> {
+            ArrayList<Label> labelArrayList = new ArrayList<>();
+            ArrayList<TextField> txtFieldArray = new ArrayList<>();
+
+            GridPane gridPane = new GridPane();
+            Button btnSubmit = new Button("Submit");
+
+            Label lblFirstName = new Label("First name:");
+            labelArrayList.add(lblFirstName);
+            Label lblAdditive = new Label("Additive:");
+            labelArrayList.add(lblAdditive);
+            Label lblLastName = new Label("Last name:");
+            labelArrayList.add(lblLastName);
+            Label lblAge = new Label("Age:");
+            labelArrayList.add(lblAge);
+            Label lblTeachNumber = new Label("Teacher number:");
+            labelArrayList.add(lblTeachNumber);
+
+            TextField txtFirstName = new TextField();
+            txtFieldArray.add(txtFirstName);
+            TextField txtAdditive = new TextField();
+            txtFieldArray.add(txtAdditive);
+            TextField txtLastName = new TextField();
+            txtFieldArray.add(txtLastName);
+            TextField txtAge = new TextField();
+            txtFieldArray.add(txtAge);
+            TextField txtTeachNumber = new TextField();
+            txtFieldArray.add(txtTeachNumber);
+
+            for(int i = 0; i < labelArrayList.size(); i++) {
+                gridPane.add(labelArrayList.get(i), 1, i);
+                gridPane.add(txtFieldArray.get(i), 2, i);
+            }
+
+
+            gridPane.setPadding(new Insets(20, 20, 20, 20));
+            gridPane.setVgap(20);
+            gridPane.setHgap(20);
+            gridPane.add(btnSubmit, 3, labelArrayList.size() + 1);
+
+            Scene scene = new Scene(gridPane);
+
+            btnSubmit.setOnAction(event -> {
+                Teacher newTeacher = new Teacher(txtFirstName.getText(), txtAdditive.getText(), txtLastName.getText(), Integer.parseInt(txtAge.getText()),
+                        0, 0, txtTeachNumber.getText());
+                agenda.addTeacher(newTeacher);
+                createViewWindow.close();
+            });
+
+            createViewWindow.setScene(scene);
+            createViewWindow.show();
+            update();
+        });
+
+        gui.getBtnAddClassroom().setOnAction(event -> {
+            ArrayList<Label> labelArrayList = new ArrayList<>();
+            ArrayList<TextField> txtArrayList = new ArrayList<>();
+
+            Label lblNumber = new Label("Number:");
+            labelArrayList.add(lblNumber);
+            Label lblSeats = new Label("Amount of seats:");
+            labelArrayList.add(lblSeats);
+            Label lblLocation = new Label("Location:");
+            labelArrayList.add(lblLocation);
+
+
+            TextField txtNumber = new TextField();
+            txtArrayList.add(txtNumber);
+            TextField txtSeat = new TextField();
+            txtArrayList.add(txtSeat);
+            TextField txtLocation = new TextField();
+            txtArrayList.add(txtLocation);
+
+            Button btnSubmit = new Button("Submit");
+
+            GridPane gridpane = new GridPane();
+            gridpane.setPadding(new Insets(20, 20, 20, 20));
+            gridpane.setHgap(20);
+            gridpane.setVgap(20);
+
+            for(int i = 0; i < labelArrayList.size(); i++) {
+                gridpane.add(labelArrayList.get(i), 1, i);
+                gridpane.add(txtArrayList.get(i), 2, i);
+            }
+            gridpane.add(btnSubmit, 3, labelArrayList.size() + 1);
+
+            btnSubmit.setOnAction(e -> {
+                Classroom newClassroom = new Classroom(Integer.parseInt(txtNumber.getText()), Integer.parseInt(txtSeat.getText()), txtLocation.getText(), true, true);
+                agenda.addClassroom(newClassroom);
+                createViewWindow.close();
+            });
+
+            Scene scene = new Scene(gridpane);
+            createViewWindow.setScene(scene);
             createViewWindow.show();
             update();
         });

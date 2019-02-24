@@ -16,7 +16,7 @@ import java.util.List;
 
 public class Gui extends TabPane {
     private final Tab tabAgenda;
-    private final AnchorPane anchorPane;
+    private final AnchorPane tabAnchorPane;
     private final GridPane gridPane;
     private final ColumnConstraints columnConstraints;
     private final ColumnConstraints columnConstraints0;
@@ -73,85 +73,12 @@ public class Gui extends TabPane {
     private final Button btnChangeLessonTime;
     Rectangle rectangle;
 
-    public Button getBtnAddLesson() {
-        return btnAddLesson;
-    }
-
-    public Button getBtnViewLesson() {
-        return btnViewLesson;
-    }
-
-    public Button getBtnSaveSchedule() {
-        return btnSaveSchedule;
-    }
-
-    public Button getBtnOpenSchedule() {
-        return btnOpenSchedule;
-    }
-
-    public void drawLesson(int lesson, int classRoom) {
-        rectangle = new Rectangle();
-        GridPane.setColumnIndex(rectangle, classRoom);
-        GridPane.setRowIndex(rectangle, lesson);
-        rectangle.setSmooth(true);
-        rectangle.setFill(Color.BEIGE);
-        rectangle.setHeight(gridPane.getRowConstraints().get(classRoom).getPrefHeight() - 12.5);
-        rectangle.setStroke(javafx.scene.paint.Color.BLACK);
-        rectangle.setStrokeType(javafx.scene.shape.StrokeType.INSIDE);
-        rectangle.setWidth(gridPane.getColumnConstraints().get(classRoom).getPrefWidth());
-        gridPane.getChildren().add(rectangle);
-    }
-
-    public void drawLessonBlock(int startTime, int classRoom, int duration, Lesson lesson) {
-        String groups = "";
-        for (Group group : lesson.getGroups()) {
-           groups += group.getGroupName()+" ";
-
-        }
-        Label label = new Label("" + lesson.getTeachersAsString() + '\n' + lesson.getSubject()+'\n'+groups);
-
-        for (int i = startTime; i <= startTime + duration; i++) {
-            drawLesson(i, classRoom);
-        }
-        GridPane.setColumnIndex(label, classRoom);
-        GridPane.setRowIndex(label, startTime);
-        GridPane.setHalignment(label, javafx.geometry.HPos.CENTER);
-        GridPane.setValignment(label, javafx.geometry.VPos.CENTER);
-        gridPane.getChildren().add(label);
-    }
-
-    public void clear() {
-        List<Node> nodes = new ArrayList<>();
-        nodes.add(gridPane.getChildren().get(0));
-        nodes.add(gridPane.getChildren().get(1));
-        nodes.add(gridPane.getChildren().get(2));
-        nodes.add(gridPane.getChildren().get(3));
-        nodes.add(gridPane.getChildren().get(4));
-        nodes.add(gridPane.getChildren().get(5));
-        nodes.add(gridPane.getChildren().get(6));
-        nodes.add(gridPane.getChildren().get(7));
-        nodes.add(gridPane.getChildren().get(8));
-        nodes.add(gridPane.getChildren().get(9));
-        nodes.add(gridPane.getChildren().get(10));
-        nodes.add(gridPane.getChildren().get(11));
-        nodes.add(gridPane.getChildren().get(12));
-        nodes.add(gridPane.getChildren().get(13));
-        nodes.add(gridPane.getChildren().get(14));
-        nodes.add(gridPane.getChildren().get(15));
-        nodes.add(gridPane.getChildren().get(16));
-        nodes.add(gridPane.getChildren().get(17));
-        nodes.add(gridPane.getChildren().get(18));
-        nodes.add(gridPane.getChildren().get(19));
-        gridPane.getChildren().clear();
-        gridPane.getChildren().addAll(nodes);
-    }
-
     public Gui() {
         tabAgenda = new Tab("Agenda");
         tabViewEdit = new Tab("View/Edit");
         tabSimulate = new Tab("Simulate");
 
-        anchorPane = new AnchorPane();
+        tabAnchorPane = new AnchorPane();
         anchorPane0 = new AnchorPane();
         gridPane = new GridPane();
 
@@ -220,10 +147,10 @@ public class Gui extends TabPane {
         setPrefWidth(840.0);
         setTabClosingPolicy(javafx.scene.control.TabPane.TabClosingPolicy.UNAVAILABLE);
 
-        anchorPane.setMinHeight(0.0);
-        anchorPane.setMinWidth(0.0);
-        anchorPane.setPrefHeight(180.0);
-        anchorPane.setPrefWidth(200.0);
+        tabAnchorPane.setMinHeight(0.0);
+        tabAnchorPane.setMinWidth(0.0);
+        tabAnchorPane.setPrefHeight(180.0);
+        tabAnchorPane.setPrefWidth(200.0);
 
         gridPane.setGridLinesVisible(true);
         gridPane.setPrefHeight(572.0);
@@ -394,7 +321,7 @@ public class Gui extends TabPane {
         GridPane.setColumnIndex(label16, 8);
         GridPane.setHalignment(label16, javafx.geometry.HPos.CENTER);
         GridPane.setValignment(label16, javafx.geometry.VPos.CENTER);
-        tabAgenda.setContent(anchorPane);
+        tabAgenda.setContent(tabAnchorPane);
 
         anchorPane0.setMinHeight(0.0);
         anchorPane0.setMinWidth(0.0);
@@ -434,6 +361,10 @@ public class Gui extends TabPane {
         btnAddGroup.setMnemonicParsing(false);
         VBox.setMargin(btnAddGroup, new Insets(0,0,0,10));
         btnAddGroup.setPadding(new Insets(10));
+
+        btnAddGroup.setOnAction(e -> {
+
+        });
 
         btnAddSubject.setMnemonicParsing(false);
         VBox.setMargin(btnAddSubject, new Insets(0,0,0,10));
@@ -489,17 +420,106 @@ public class Gui extends TabPane {
         vBoxLeftRow.getChildren().add(btnSaveSchedule);
         vBoxLeftRow.getChildren().add(btnOpenSchedule);
 
-        vBoxRightRow.getChildren().addAll(btnAddTeacher, btnAddClassroom, btnAddGroup, btnAddSubject);
+        vBoxRightRow.getChildren().addAll(btnAddTeacher, btnAddClassroom);
         vBoxRightRow.setSpacing(10);
 
         hBoxButtons.getChildren().addAll(vBoxLeftRow, vBoxRightRow);
         hBoxButtons.setSpacing(150);
 
-        anchorPane.getChildren().add(gridPane);
+        tabAnchorPane.getChildren().add(gridPane);
         anchorPane0.getChildren().add(hBoxButtons);
 
         getTabs().add(tabViewEdit);
         getTabs().add(tabAgenda);
         getTabs().add(tabSimulate);
+    }
+
+    public Button getBtnAddLesson() {
+        return btnAddLesson;
+    }
+
+    public Button getBtnViewLesson() {
+        return btnViewLesson;
+    }
+
+    public Button getBtnSaveSchedule() {
+        return btnSaveSchedule;
+    }
+
+    public Button getBtnOpenSchedule() {
+        return btnOpenSchedule;
+    }
+
+    public Button getBtnAddTeacher() {
+        return btnAddTeacher;
+    }
+
+    public Button getBtnAddClassroom() {
+        return btnAddClassroom;
+    }
+
+    public Button getBtnAddGroup() {
+        return btnAddGroup;
+    }
+
+    public Button getBtnAddSubject() {
+        return btnAddSubject;
+    }
+
+    public void drawLesson(int lesson, int classRoom) {
+        rectangle = new Rectangle();
+        GridPane.setColumnIndex(rectangle, classRoom);
+        GridPane.setRowIndex(rectangle, lesson);
+        rectangle.setSmooth(true);
+        rectangle.setFill(Color.BEIGE);
+        rectangle.setHeight(gridPane.getRowConstraints().get(classRoom).getPrefHeight() - 12.5);
+        rectangle.setStroke(javafx.scene.paint.Color.BLACK);
+        rectangle.setStrokeType(javafx.scene.shape.StrokeType.INSIDE);
+        rectangle.setWidth(gridPane.getColumnConstraints().get(classRoom).getPrefWidth());
+        gridPane.getChildren().add(rectangle);
+    }
+
+    public void drawLessonBlock(int startTime, int classRoom, int duration, Lesson lesson) {
+        String groups = "";
+        for (Group group : lesson.getGroups()) {
+            groups += group.getGroupName()+" ";
+
+        }
+        Label label = new Label("" + lesson.getTeachersAsString() + '\n' + lesson.getSubject()+'\n'+groups);
+
+        for (int i = startTime; i <= startTime + duration; i++) {
+            drawLesson(i, classRoom);
+        }
+        GridPane.setColumnIndex(label, classRoom);
+        GridPane.setRowIndex(label, startTime);
+        GridPane.setHalignment(label, javafx.geometry.HPos.CENTER);
+        GridPane.setValignment(label, javafx.geometry.VPos.CENTER);
+        gridPane.getChildren().add(label);
+    }
+
+    public void clear() {
+        List<Node> nodes = new ArrayList<>();
+        nodes.add(gridPane.getChildren().get(0));
+        nodes.add(gridPane.getChildren().get(1));
+        nodes.add(gridPane.getChildren().get(2));
+        nodes.add(gridPane.getChildren().get(3));
+        nodes.add(gridPane.getChildren().get(4));
+        nodes.add(gridPane.getChildren().get(5));
+        nodes.add(gridPane.getChildren().get(6));
+        nodes.add(gridPane.getChildren().get(7));
+        nodes.add(gridPane.getChildren().get(8));
+        nodes.add(gridPane.getChildren().get(9));
+        nodes.add(gridPane.getChildren().get(10));
+        nodes.add(gridPane.getChildren().get(11));
+        nodes.add(gridPane.getChildren().get(12));
+        nodes.add(gridPane.getChildren().get(13));
+        nodes.add(gridPane.getChildren().get(14));
+        nodes.add(gridPane.getChildren().get(15));
+        nodes.add(gridPane.getChildren().get(16));
+        nodes.add(gridPane.getChildren().get(17));
+        nodes.add(gridPane.getChildren().get(18));
+        nodes.add(gridPane.getChildren().get(19));
+        gridPane.getChildren().clear();
+        gridPane.getChildren().addAll(nodes);
     }
 }

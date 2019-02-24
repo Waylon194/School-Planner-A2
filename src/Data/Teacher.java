@@ -9,11 +9,10 @@ public class Teacher extends Person implements Serializable{
     private Subject subject;
     private ArrayList<Interval> unavailable;
 
-    public Teacher (String firstName, String additive, String lastName, int age, int xLocation, int yLocation, String teacherNumber, Subject subject) {
+    public Teacher (String firstName, String additive, String lastName, int age, int xLocation, int yLocation, String teacherNumber) {
         super(firstName, additive, lastName, age, xLocation, yLocation);
         this.unavailable = new ArrayList<>();
         this.teacherNumber = teacherNumber;
-        this.subject = subject;
     }
 
     public String getTeacherNumber () {

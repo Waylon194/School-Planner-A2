@@ -291,7 +291,7 @@ public class CreateLesson extends GridPane {
         gridPane.getChildren().add(comboStartTime);
         gridPane.getChildren().add(comboEndTime);
         gridPane.getChildren().add(classroomComboBox);
-       // gridPane.getChildren().add(teacherComboBox);
+//        gridPane.getChildren().add(teacherComboBox);
         gridPane.getChildren().add(subjectComboBox);
         gridPane.getChildren().add(buttonTeachers);
         getChildren().add(gridPane);

@@ -7,6 +7,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.layout.VBox;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 public class CreateTeacherWindow extends VBox {
     private ArrayList<Teacher> selectedTeachers;
@@ -22,18 +23,14 @@ public class CreateTeacherWindow extends VBox {
         checkBoxes = new ArrayList<>();
         this.selectedTeachers = new ArrayList<>();
 
-        agenda.getTeachers().forEach((s, teacher) -> {
-            CheckBox checkBox = new CheckBox(agenda.getTeachers().get(s).getTeacherNumber() +" "+ agenda.getTeachers().get(s).toString());
+        Map teacherMap = agenda.getTeachers();
+
+        for(Object obj : teacherMap.keySet()) {
+            CheckBox checkBox = new CheckBox(teacherMap.get(obj).toString());
             checkBoxes.add(checkBox);
             vBox.getChildren().add(checkBox);
-                });
+        }
 
-        /*for(int i = 0; i< agenda.getTeachers().size(); i++){
-
-            CheckBox checkBox = new CheckBox(agenda.getTeachers().get());
-            checkBoxes.add(checkBox);
-            vBox.getChildren().add(checkBox);
-        }*/
         vBox.getChildren().add(saveTeachers);
         vBox.setSpacing(10);
         getChildren().add(vBox);
