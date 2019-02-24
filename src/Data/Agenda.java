@@ -20,7 +20,7 @@ public class Agenda implements Serializable {
 
     public Agenda() {
         Subject values[] = Subject.values();
-        this.teachers = new HashMap<String,Teacher>();
+        this.teachers = new HashMap<>();
         this.classes = new ArrayList<>();
         this.classrooms = new ArrayList<>();
         this.lessons = new ArrayList<>();
@@ -154,7 +154,6 @@ public class Agenda implements Serializable {
 
     public void addTeacher(Teacher teacher) {
         this.teachers.put(teacher.getTeacherNumber(),teacher);
-
     }
 
     public void addClass(Class schoolClass) {
@@ -169,8 +168,8 @@ public class Agenda implements Serializable {
         this.lessons.add(lesson);
     }
 
-    // TODO: 17-02-19 fix student array 
-   public void addStudents(Student student) {
+    // TODO: 17-02-19 fix student array
+    public void addStudents(Student student) {
         this.students.add(student);
     }
 
@@ -235,17 +234,17 @@ public class Agenda implements Serializable {
     //TODO Redo the method!
     public ArrayList<Student> studentRandomizer(char a){
         ArrayList<Student> klass = new ArrayList<>();
-        if (a=='a'){
-            for(int i = 0;i<students.size();i++){
-                if(i%3==0) {
+        if (a == 'a'){
+            for(int i = 0; i < students.size(); i++){
+                if(i % 3 == 0) {
                     klass.add(students.get(i));
                 }
             }
             return klass;
         }
-        else if (a=='b'){
-            for(int i = 0;i<students.size();i++){
-                if(i%2==0) {
+        else if (a == 'b'){
+            for(int i = 0; i < students.size(); i++){
+                if(i % 2 == 0) {
                     klass.add(students.get(i));
                 }
             }
@@ -258,7 +257,6 @@ public class Agenda implements Serializable {
 
     public ArrayList<Group> groupRandomizer(char a){
         ArrayList<Group> classs = new ArrayList<>();
-
         classs.add(groups.get(0));
         return classs;
     }

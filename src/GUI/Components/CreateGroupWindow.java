@@ -10,21 +10,18 @@ import java.util.ArrayList;
 public class CreateGroupWindow extends VBox {
     private ArrayList<Group> selectedGroups;
     private VBox vBox;
-    private ArrayList<String> groups;
     private Button saveGroups;
     private ArrayList<CheckBox> checkBoxes;
 
     public CreateGroupWindow(Agenda agenda){
         vBox = new VBox();
-        saveGroups = new Button("Save groups");
+        saveGroups = new Button("Save group(s)");
          checkBoxes = new ArrayList<>();
         this.selectedGroups = new ArrayList<>();
-
         for(int i = 0; i< agenda.getAmountOfGroups(); i++){
             CheckBox checkBox = new CheckBox(agenda.getGroups().get(i).toString());
             checkBoxes.add(checkBox);
             vBox.getChildren().add(checkBox);
-
         }
         vBox.getChildren().add(saveGroups);
         vBox.setSpacing(10);
