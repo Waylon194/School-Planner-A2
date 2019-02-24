@@ -67,38 +67,37 @@ public class GUIMain extends Application {
         primaryStage.show();
     }
 
-    public void buttonhandler()  {
+    public void buttonhandler() {
         createLessonWindow.initModality(Modality.APPLICATION_MODAL);
         createGroupWindow2.initModality(Modality.APPLICATION_MODAL);
         createViewWindow.initModality(Modality.APPLICATION_MODAL);
 
         gui.getBtnAddLesson().setOnAction(event -> {
-
             createLessonWindow.setScene(windowScene);
-            createLessonWindow.setTitle("CreateLesson a new Lesson");
+            createLessonWindow.setTitle("Create Lesson");
             createLessonWindow.show();
             update();
         });
 
         //closes add lesson window
         createLesson.getButtonCancelLesson().setOnAction(event -> createLessonWindow.close());
-
         //saves lesson to a object and closes window WIP!
         createLesson.getButtonSaveLesson().setOnAction(event -> {
-
             boolean teachers = false;
             boolean classroom = false;
             boolean groups = false;
             boolean subject = false;
             boolean beginTime = false;
             boolean endTime = false;
+            int popularity = 1;
 
-            if (getSelectedTeachers().size()>0){
+            if (getSelectedTeachers().size() > 0){
                 teachers = true;
             }
             else{
                 System.out.println("Choose Teacher!");
             }
+
             if (!(createLesson.getClassroomComboBox().getSelectionModel().isEmpty())){
                 classroom = true;
             }
@@ -106,12 +105,13 @@ public class GUIMain extends Application {
                 System.out.println("Choose classroom!");
             }
 
-            if(getSelectedGroups().size()>0){
+            if(getSelectedGroups().size() > 0){
                 groups = true;
             }
             else {
-                System.out.println("Select groups!");
+                System.out.println("Select group(s)!");
             }
+
             if (!(createLesson.getSubjectComboBox().getSelectionModel().isEmpty())){
                 subject = true;
             }
@@ -125,15 +125,18 @@ public class GUIMain extends Application {
             else{
                 System.out.println("Choose begin time!");
             }
+
             if(!(createLesson.getComboEndTime().getSelectionModel().isEmpty())){
                 endTime = true;
-            }else{
+            }
+            else{
                 System.out.println("Choose end time!");
             }
-            if(createLesson.getChosenStartTime()!=null
-                    &&createLesson.getChosenEndTime()!=null
-                    && (createLesson.getChosenEndTime().isAfter(createLesson.getChosenStartTime())
-                    ||createLesson.getChosenEndTime().isEqual(createLesson.getChosenStartTime()))) {
+
+            if(createLesson.getChosenStartTime()!= null
+                && createLesson.getChosenEndTime()!= null
+                && (createLesson.getChosenEndTime().isAfter(createLesson.getChosenStartTime())
+                || createLesson.getChosenEndTime().isEqual(createLesson.getChosenStartTime()))) {
                 Interval interval = new Interval(createLesson.getChosenStartTime(), createLesson.getChosenEndTime());
 
                 getSelectedTeachers().forEach((key, value) -> {
@@ -150,7 +153,7 @@ public class GUIMain extends Application {
 
                 if (!(createLesson.getChosenClasroom().isAvailable(interval))) {
                     this.condition = false;
-                    System.out.println(createLesson.getChosenClasroom() + "is not available at " + interval);
+                    System.out.println(createLesson.getChosenClasroom() + " is not available at " + interval);
                 }
                 else {
                     this.condition = true;
@@ -160,14 +163,15 @@ public class GUIMain extends Application {
                     if (!(group.isAvailable(interval))) {
                         this.condition = false;
                         System.out.println(group + " is already planned at " + interval);
-                    } else {
+                    }
+                    else {
                         this.condition = true;
                     }
                 });
 
-                if (teachers && classroom && groups && subject && beginTime && endTime && this.condition) {
+                if (teachers && classroom && groups && subject && beginTime && endTime && this.condition && popularity != 0) {
                     //TODO: fix the addLesson->deleteLesson -> addLesson (not possible) BUG!
-                    agenda.returnLessons().add(new Lesson(getSelectedTeachers(), createLesson.getChosenClasroom(), getSelectedGroups(), createLesson.getChosenSubject(), interval));
+                    agenda.returnLessons().add(new Lesson(getSelectedTeachers(), createLesson.getChosenClasroom(), getSelectedGroups(), createLesson.getChosenSubject(), interval, popularity));
                     updateScene();
                     update();
                     createLessonWindow.close();
@@ -185,7 +189,7 @@ public class GUIMain extends Application {
         //opens window to add groups WIP!
         createLesson.getButtonGroup().setOnAction(event -> {
             createGroupWindow2.setScene(groupWindow);
-            createGroupWindow2.setTitle("Select groups:");
+            createGroupWindow2.setTitle("Select group(s):");
             createGroupWindow2.show();
             update();
         });
@@ -315,7 +319,7 @@ public class GUIMain extends Application {
 
         createLesson.getButtonTeachers().setOnAction(event -> {
             createTeacherWindowStage.setScene(teacherWindow);
-            createTeacherWindowStage.setTitle("Select Teachers:");
+            createTeacherWindowStage.setTitle("Select Teacher(s):");
             createTeacherWindowStage.show();
         });
 
@@ -338,10 +342,9 @@ public class GUIMain extends Application {
     }
 
     public HashMap<String, Teacher> getSelectedTeachers() {
-      HashMap<String,Teacher> selected = new HashMap<>();
+        HashMap<String,Teacher> selected = new HashMap<>();
         int i = 0;
-        String number= "";
-
+        String number = "";
         for (CheckBox checkBox : createTeacherWindow.getCheckBoxes()) {
             if (checkBox.isSelected()) {
                number = checkBox.toString().substring(checkBox.toString().length()-4,checkBox.toString().length()-1);
@@ -356,38 +359,37 @@ public class GUIMain extends Application {
         gui.clear();
         List<Lesson> lessons = agenda.getLessons();
         lessons.forEach(lesson -> {
-            Hours hours = Hours.hoursBetween(lesson.getInterval().getStart(), lesson.getInterval().getEnd());
-            int duration = Integer.parseInt(hours.toString().substring(2, 3));
-            int start = lesson.getInterval().getStart().getHourOfDay();
-            System.out.println(start);
-            switch (start) {
-                case 9:
-                    gui.drawLessonBlock(1, lesson.getClassroom().getNumber(), duration,lesson);
-                    break;
-                case 10:
-                    gui.drawLessonBlock(2, lesson.getClassroom().getNumber(), duration,lesson);
-                    break;
-                case 11:
-                    gui.drawLessonBlock(3, lesson.getClassroom().getNumber(), duration,lesson);
-                    break;
-                case 12:
-                    gui.drawLessonBlock(4, lesson.getClassroom().getNumber(), duration,lesson);
-                    break;
-                case 13:
-                    gui.drawLessonBlock(5, lesson.getClassroom().getNumber(), duration,lesson);
-                    break;
-                case 14:
-                    gui.drawLessonBlock(6, lesson.getClassroom().getNumber(), duration,lesson);
-                    break;
-                case 15:
-                    gui.drawLessonBlock(7, lesson.getClassroom().getNumber(), duration,lesson);
-                    break;
-                case 16:
-                    gui.drawLessonBlock(8, lesson.getClassroom().getNumber(), duration,lesson);
-                    break;
-                case 17:
-                    gui.drawLessonBlock(9, lesson.getClassroom().getNumber(), duration,lesson);
-                    break;
+        Hours hours = Hours.hoursBetween(lesson.getInterval().getStart(), lesson.getInterval().getEnd());
+        int duration = Integer.parseInt(hours.toString().substring(2, 3));
+        int start = lesson.getInterval().getStart().getHourOfDay();
+        switch (start) {
+            case 9:
+                gui.drawLessonBlock(1, lesson.getClassroom().getNumber(), duration,lesson);
+                break;
+            case 10:
+                gui.drawLessonBlock(2, lesson.getClassroom().getNumber(), duration,lesson);
+                break;
+            case 11:
+                gui.drawLessonBlock(3, lesson.getClassroom().getNumber(), duration,lesson);
+                break;
+            case 12:
+                gui.drawLessonBlock(4, lesson.getClassroom().getNumber(), duration,lesson);
+                break;
+            case 13:
+                gui.drawLessonBlock(5, lesson.getClassroom().getNumber(), duration,lesson);
+                break;
+            case 14:
+                gui.drawLessonBlock(6, lesson.getClassroom().getNumber(), duration,lesson);
+                break;
+            case 15:
+                gui.drawLessonBlock(7, lesson.getClassroom().getNumber(), duration,lesson);
+                break;
+            case 16:
+                gui.drawLessonBlock(8, lesson.getClassroom().getNumber(), duration,lesson);
+                break;
+            case 17:
+                gui.drawLessonBlock(9, lesson.getClassroom().getNumber(), duration,lesson);
+                break;
             }
         });
     }

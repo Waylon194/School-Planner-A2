@@ -1,6 +1,5 @@
 package GUI.Components;
 
-import Data.Group;
 import Data.Lesson;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
@@ -118,11 +117,11 @@ public class Gui extends TabPane {
         label11 = new Label("15:00");
         label12 = new Label("16:00");
         label13 = new Label("17:00");
-        //TODO Find purpose?!
+        //TODO: Find purpose?!
         label14 = new Label();
         label15 = new Label("LA226");
         label16 = new Label("LA236");
-        //TODO Find purpose?!
+        //TODO: Find purpose?!
         label17 = new Label();
 
         vBoxLeftRow = new VBox();
@@ -130,7 +129,7 @@ public class Gui extends TabPane {
         hBoxButtons = new HBox();
 
         btnAddLesson = new Button("Add Lesson");
-        btnViewLesson = new Button("View Lessons");
+        btnViewLesson = new Button("View Lesson(s)");
         btnSaveSchedule = new Button("Save Schedule");
         btnOpenSchedule = new Button("Open Schedule");
         btnAddTeacher = new Button("Add Teacher");
@@ -374,53 +373,18 @@ public class Gui extends TabPane {
         VBox.setMargin(btnChangeLessonTime, new Insets(0,0,0,10));
         btnChangeLessonTime.setPadding(new Insets(10));
 
-        gridPane.getColumnConstraints().add(columnConstraints);
-        gridPane.getColumnConstraints().add(columnConstraints0);
-        gridPane.getColumnConstraints().add(columnConstraints1);
-        gridPane.getColumnConstraints().add(columnConstraints2);
-        gridPane.getColumnConstraints().add(columnConstraints3);
-        gridPane.getColumnConstraints().add(columnConstraints4);
-        gridPane.getColumnConstraints().add(columnConstraints5);
-        gridPane.getColumnConstraints().add(columnConstraints6);
-        gridPane.getColumnConstraints().add(columnConstraints7);
+        gridPane.getColumnConstraints().addAll(columnConstraints, columnConstraints0, columnConstraints1,
+                columnConstraints2, columnConstraints3, columnConstraints4,
+                columnConstraints5, columnConstraints6, columnConstraints7);
 
-        gridPane.getRowConstraints().add(rowConstraints);
-        gridPane.getRowConstraints().add(rowConstraints0);
-        gridPane.getRowConstraints().add(rowConstraints1);
-        gridPane.getRowConstraints().add(rowConstraints2);
-        gridPane.getRowConstraints().add(rowConstraints3);
-        gridPane.getRowConstraints().add(rowConstraints4);
-        gridPane.getRowConstraints().add(rowConstraints5);
-        gridPane.getRowConstraints().add(rowConstraints6);
-        gridPane.getRowConstraints().add(rowConstraints7);
-        gridPane.getRowConstraints().add(rowConstraints8);
+        gridPane.getRowConstraints().addAll(rowConstraints, rowConstraints0, rowConstraints1, rowConstraints2, rowConstraints3,
+                rowConstraints4, rowConstraints5, rowConstraints6, rowConstraints7, rowConstraints8);
 
-        gridPane.getChildren().addAll(label);
-        gridPane.getChildren().add(label0);
-        gridPane.getChildren().add(label1);
-        gridPane.getChildren().add(label2);
-        gridPane.getChildren().add(label3);
-        gridPane.getChildren().add(label4);
-        gridPane.getChildren().add(label5);
-        gridPane.getChildren().add(label6);
-        gridPane.getChildren().add(label7);
-        gridPane.getChildren().add(label8);
-        gridPane.getChildren().add(label9);
-        gridPane.getChildren().add(label10);
-        gridPane.getChildren().add(label11);
-        gridPane.getChildren().add(label12);
-        gridPane.getChildren().add(label13);
-        gridPane.getChildren().add(label14);
-        gridPane.getChildren().add(label15);
-        gridPane.getChildren().add(label16);
-        gridPane.getChildren().add(label17);
+        gridPane.getChildren().addAll(label, label0, label1, label2, label3, label4, label5, label6, label7, label8,
+                label9, label10, label11, label12, label13, label14, label15, label16, label17);
 
-        vBoxLeftRow.getChildren().add(btnAddLesson);
-        vBoxLeftRow.getChildren().add(btnViewLesson);
-        vBoxLeftRow.getChildren().add(btnSaveSchedule);
-        vBoxLeftRow.getChildren().add(btnOpenSchedule);
-
-        vBoxRightRow.getChildren().addAll(btnAddTeacher, btnAddClassroom);
+        vBoxLeftRow.getChildren().addAll(btnAddLesson, btnViewLesson, btnSaveSchedule, btnOpenSchedule );
+        vBoxRightRow.getChildren().addAll(btnAddTeacher, btnAddClassroom, btnAddGroup, btnAddSubject);
         vBoxRightRow.setSpacing(10);
 
         hBoxButtons.getChildren().addAll(vBoxLeftRow, vBoxRightRow);
@@ -429,9 +393,7 @@ public class Gui extends TabPane {
         tabAnchorPane.getChildren().add(gridPane);
         anchorPane0.getChildren().add(hBoxButtons);
 
-        getTabs().add(tabViewEdit);
-        getTabs().add(tabAgenda);
-        getTabs().add(tabSimulate);
+        getTabs().addAll(tabViewEdit, tabAgenda, tabSimulate);
     }
 
     public Button getBtnAddLesson() {
