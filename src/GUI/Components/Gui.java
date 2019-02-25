@@ -1,5 +1,6 @@
 package GUI.Components;
 
+import Data.Group;
 import Data.Lesson;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
@@ -384,7 +385,7 @@ public class Gui extends TabPane {
                 label9, label10, label11, label12, label13, label14, label15, label16, label17);
 
         vBoxLeftRow.getChildren().addAll(btnAddLesson, btnViewLesson, btnSaveSchedule, btnOpenSchedule );
-        vBoxRightRow.getChildren().addAll(btnAddTeacher, btnAddClassroom, btnAddGroup, btnAddSubject);
+        vBoxRightRow.getChildren().addAll(btnAddTeacher, btnAddClassroom);
         vBoxRightRow.setSpacing(10);
 
         hBoxButtons.getChildren().addAll(vBoxLeftRow, vBoxRightRow);

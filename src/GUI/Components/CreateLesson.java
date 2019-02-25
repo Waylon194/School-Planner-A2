@@ -237,7 +237,7 @@ public class CreateLesson extends GridPane {
                 minute = String.valueOf(intMinute);
             }
             //TODO: Change display time
-            comboEndTime.getItems().add(time);
+            comboStartTime.getItems().add(time);
         }
 
         GridPane.setColumnIndex(comboEndTime, 1);
