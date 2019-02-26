@@ -10,21 +10,17 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
-import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.joda.time.Hours;
 import org.joda.time.Interval;
-
-import javax.xml.soap.Text;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
 public class GUIMain extends Application {
     Agenda agenda = new Agenda();
-    private Gui gui = new Gui();
+    private Gui gui = new Gui(agenda);
     private CreateLesson createLesson = new CreateLesson(agenda);
     private CreateView createView = new CreateView(agenda, this);
     private CreateGroupWindow createGroupWindow = new CreateGroupWindow(agenda);
@@ -40,8 +36,6 @@ public class GUIMain extends Application {
     private Scene teacherWindow = new Scene(createTeacherWindow);
     private FileController fileController = new FileController();
     private boolean condition = true;
-
-    FileChooser fileChooser = new FileChooser();
 
     public static void main(String[] args) {
         launch("Gui.java");
@@ -134,9 +128,9 @@ public class GUIMain extends Application {
             }
 
             if(createLesson.getChosenStartTime()!= null
-                && createLesson.getChosenEndTime()!= null
-                && (createLesson.getChosenEndTime().isAfter(createLesson.getChosenStartTime())
-                || createLesson.getChosenEndTime().isEqual(createLesson.getChosenStartTime()))) {
+                    && createLesson.getChosenEndTime()!= null
+                    && (createLesson.getChosenEndTime().isAfter(createLesson.getChosenStartTime())
+                    || createLesson.getChosenEndTime().isEqual(createLesson.getChosenStartTime()))) {
                 Interval interval = new Interval(createLesson.getChosenStartTime(), createLesson.getChosenEndTime());
 
                 getSelectedTeachers().forEach((key, value) -> {
@@ -260,6 +254,7 @@ public class GUIMain extends Application {
                 Teacher newTeacher = new Teacher(txtFirstName.getText(), txtAdditive.getText(), txtLastName.getText(), Integer.parseInt(txtAge.getText()),
                         0, 0, txtTeachNumber.getText());
                 agenda.addTeacher(newTeacher);
+                createTeacherWindow.update();
                 createViewWindow.close();
             });
 
@@ -301,8 +296,11 @@ public class GUIMain extends Application {
             gridpane.add(btnSubmit, 3, labelArrayList.size() + 1);
 
             btnSubmit.setOnAction(e -> {
-                Classroom newClassroom = new Classroom(Integer.parseInt(txtNumber.getText()), Integer.parseInt(txtSeat.getText()), txtLocation.getText(), true, true);
+                Classroom newClassroom = new Classroom(0, Integer.parseInt(txtSeat.getText()), txtLocation.getText(), true, true);
                 agenda.addClassroom(newClassroom);
+                gui.addClassroomGrid();
+                System.out.println(agenda.getClassrooms());
+                createLesson.update();
                 createViewWindow.close();
             });
 
@@ -325,7 +323,7 @@ public class GUIMain extends Application {
 
         createTeacherWindow.getSaveTeachersButton().setOnAction(event -> {
             createTeacherWindowStage.close();
-           update();
+            update();
         });
     }
 
@@ -347,8 +345,8 @@ public class GUIMain extends Application {
         String number = "";
         for (CheckBox checkBox : createTeacherWindow.getCheckBoxes()) {
             if (checkBox.isSelected()) {
-               number = checkBox.toString().substring(checkBox.toString().length()-4,checkBox.toString().length()-1);
-               selected.put(number, agenda.getTeachers().get(number));
+                number = checkBox.toString().substring(checkBox.toString().length()-4,checkBox.toString().length()-1);
+                selected.put(number, agenda.getTeachers().get(number));
             }
             i++;
         }
@@ -356,40 +354,39 @@ public class GUIMain extends Application {
     }
 
     public void drawSchedule() {
-        gui.clear();
         List<Lesson> lessons = agenda.getLessons();
         lessons.forEach(lesson -> {
-        Hours hours = Hours.hoursBetween(lesson.getInterval().getStart(), lesson.getInterval().getEnd());
-        int duration = Integer.parseInt(hours.toString().substring(2, 3));
-        int start = lesson.getInterval().getStart().getHourOfDay();
-        switch (start) {
-            case 9:
-                gui.drawLessonBlock(1, lesson.getClassroom().getNumber(), duration,lesson);
-                break;
-            case 10:
-                gui.drawLessonBlock(2, lesson.getClassroom().getNumber(), duration,lesson);
-                break;
-            case 11:
-                gui.drawLessonBlock(3, lesson.getClassroom().getNumber(), duration,lesson);
-                break;
-            case 12:
-                gui.drawLessonBlock(4, lesson.getClassroom().getNumber(), duration,lesson);
-                break;
-            case 13:
-                gui.drawLessonBlock(5, lesson.getClassroom().getNumber(), duration,lesson);
-                break;
-            case 14:
-                gui.drawLessonBlock(6, lesson.getClassroom().getNumber(), duration,lesson);
-                break;
-            case 15:
-                gui.drawLessonBlock(7, lesson.getClassroom().getNumber(), duration,lesson);
-                break;
-            case 16:
-                gui.drawLessonBlock(8, lesson.getClassroom().getNumber(), duration,lesson);
-                break;
-            case 17:
-                gui.drawLessonBlock(9, lesson.getClassroom().getNumber(), duration,lesson);
-                break;
+            Hours hours = Hours.hoursBetween(lesson.getInterval().getStart(), lesson.getInterval().getEnd());
+            int duration = Integer.parseInt(hours.toString().substring(2, 3));
+            int start = lesson.getInterval().getStart().getHourOfDay();
+            switch (start) {
+                case 9:
+                    gui.drawLessonBlock(1, lesson.getClassroom().getNumber(), duration,lesson);
+                    break;
+                case 10:
+                    gui.drawLessonBlock(2, lesson.getClassroom().getNumber(), duration,lesson);
+                    break;
+                case 11:
+                    gui.drawLessonBlock(3, lesson.getClassroom().getNumber(), duration,lesson);
+                    break;
+                case 12:
+                    gui.drawLessonBlock(4, lesson.getClassroom().getNumber(), duration,lesson);
+                    break;
+                case 13:
+                    gui.drawLessonBlock(5, lesson.getClassroom().getNumber(), duration,lesson);
+                    break;
+                case 14:
+                    gui.drawLessonBlock(6, lesson.getClassroom().getNumber(), duration,lesson);
+                    break;
+                case 15:
+                    gui.drawLessonBlock(7, lesson.getClassroom().getNumber(), duration,lesson);
+                    break;
+                case 16:
+                    gui.drawLessonBlock(8, lesson.getClassroom().getNumber(), duration,lesson);
+                    break;
+                case 17:
+                    gui.drawLessonBlock(9, lesson.getClassroom().getNumber(), duration,lesson);
+                    break;
             }
         });
     }
