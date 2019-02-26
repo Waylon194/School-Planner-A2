@@ -11,6 +11,8 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import org.joda.time.DateTime;
+
+import java.awt.*;
 import java.util.Map;
 
 public class CreateLesson extends GridPane {
@@ -326,6 +328,13 @@ public class CreateLesson extends GridPane {
         }
         else {
             return null;
+        }
+    }
+
+    public void update() {
+        classroomComboBox.getItems().clear();
+        for(Classroom classroom : agenda.getClassrooms()) {
+            classroomComboBox.getItems().add(classroom);
         }
     }
 }
