@@ -45,6 +45,7 @@ public class Gui extends TabPane {
     private Agenda agenda;
     private List<Label> classroomLabelArray;
     private List<Label> timeLabelArray;
+    private final int childeren;
 
     public Gui(Agenda agenda) {
         this.agenda = agenda;
@@ -205,6 +206,8 @@ public class Gui extends TabPane {
 
         getTabs().addAll(tabViewEdit, tabAgenda, tabSimulate);
 
+        childeren = gridPane.getChildren().size();
+
     }
 
     public Button getBtnAddLesson() {
@@ -278,7 +281,7 @@ public class Gui extends TabPane {
 
     public void clear() {
         List<Node> retain = new ArrayList<>();
-        for (int i = 0;i < 17;i++) {
+        for (int i = 0;i < childeren;i++) {
             retain.add(gridPane.getChildren().get(i));
         }
         gridPane.getChildren().retainAll(retain);
