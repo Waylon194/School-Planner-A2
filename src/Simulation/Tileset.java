@@ -40,26 +40,27 @@ public class Tileset {
             BufferedImage furnitureTiles = ImageIO.read(new File("Resources/Sprites/Map/Furniture_Japanese Styled.png"));
             BufferedImage groundTiles = ImageIO.read(new File("Resources/Sprites/Map/ground_tiles.png"));
             int j = 0;
-            for(int i = 0; i < 2714; i++) {
+            for(int i = 0; i < 2710; i++) {
 
                 if(i<2016){
                     this.tiles[i] = rpgTiles.getSubimage(32 * (j % 32), 32 * (j / 32), 32, 32);
                     j++;
-                    if(j==2015){
+                    if(i==2015){
+                        j=0;
+                    }
+
+                }
+                else if(i<2272){
+                    this.tiles[i] = furnitureTiles.getSubimage(32 * (j % 16), 32 * (j /16), 32, 32);
+                    j++;
+                    if (i==2271){
                         j=0;
                     }
                 }
-                else if(i<2273){
-                    this.tiles[i] = furnitureTiles.getSubimage(32 * (j % 32), 32 * (j / 32), 32, 32);
-                    if(j==2){
-                        j=2272;
-                    }
-                }
                 else {
-                    this.tiles[i] = groundTiles.getSubimage(32 * (j % 32), 32 * (j / 32), 32, 32);
+                    this.tiles[i] = groundTiles.getSubimage(32 * (j % 21), 32 * (j / 21), 32, 32);
+                    j++;
                 }
-
-
             }
 
             }  catch (Exception e) {

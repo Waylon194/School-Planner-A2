@@ -13,7 +13,8 @@ import java.io.IOException;
 
 public class Simulation extends Application {
 
-    Tileset tileset;
+    private Tileset tileset;
+    private Canvas canvas;
 
     public Simulation() throws IOException, ParseException {
         tileset = new Tileset();
@@ -22,7 +23,7 @@ public class Simulation extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Canvas canvas = new Canvas(4000, 4000);
+        this.canvas = new Canvas(1920, 1080);
         draw(new FXGraphics2D(canvas.getGraphicsContext2D()));
         primaryStage.setScene(new Scene(new Group(canvas)));
         primaryStage.setTitle("Simulation");
@@ -39,24 +40,24 @@ public class Simulation extends Application {
         int x = 0;
         int scaleFactor = 16;
         for(int j=0; j<3;j++){
-        for(int i = 0;i< 10000; i++){
-            int value = tileset.getValue(i,j);
-            if(value!=0) {
-                graphics.drawImage(tileset.getTile(value-1), 100+ x * scaleFactor, 100+y * scaleFactor, scaleFactor, scaleFactor, null);
-            }
-            if((i!=0)&&((i+1)%100==0)&&i!=9999){
-                x=0;
-                y++;
-            }
-            else if(i==9999){
-                x=0;
-                y=0;
+            for(int i = 0;i< 10000; i++){
+                int value = tileset.getValue(i,j);
+                if(value!=0) {
+                    graphics.drawImage(tileset.getTile(value-1), (int)this.canvas.getWidth()/5+ x * scaleFactor,y * scaleFactor, scaleFactor, scaleFactor, null);
+                }
+                if((i!=0)&&((i+1)%100==0)&&i!=9999){
+                    x=0;
+                    y++;
+                }
+                else if(i==9999){
+                    x=0;
+                    y=0;
 
+                }
+                else{
+                    x++;
+                }
             }
-            else{
-                x++;
-            }
-        }
         }
 
     }
