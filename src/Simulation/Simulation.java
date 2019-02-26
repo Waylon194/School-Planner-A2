@@ -20,7 +20,6 @@ public class Simulation extends Application {
         tileset = new Tileset();
     }
 
-
     @Override
     public void start(Stage primaryStage) throws Exception {
         this.canvas = new Canvas(1920, 1080);
@@ -32,40 +31,33 @@ public class Simulation extends Application {
 
     }
 
-
     public void draw(FXGraphics2D graphics) throws IOException, ParseException {
-
-
-        int y =0;
+        int y = 0;
         int x = 0;
         int scaleFactor = 16;
-        for(int j=0; j<3;j++){
-            for(int i = 0;i< 10000; i++){
-                int value = tileset.getValue(i,j);
-                if(value!=0) {
-                    graphics.drawImage(tileset.getTile(value-1), (int)this.canvas.getWidth()/5+ x * scaleFactor,y * scaleFactor, scaleFactor, scaleFactor, null);
+        for (int j = 0; j < 3; j++) {
+            for (int i = 0; i < 10000; i++) {
+                int value = tileset.getValue(i, j);
+                if (value != 0) {
+                    graphics.drawImage(tileset.getTile(value - 1), (int) this.canvas.getWidth() / 5 + x * scaleFactor, y * scaleFactor, scaleFactor, scaleFactor, null);
                 }
-                if((i!=0)&&((i+1)%100==0)&&i!=9999){
-                    x=0;
+
+                if ((i != 0) && ((i + 1) % 100 == 0) && i != 9999) {
+                    x = 0;
                     y++;
                 }
-                else if(i==9999){
-                    x=0;
-                    y=0;
+                else if (i == 9999) {
+                    x = 0;
+                    y = 0;
 
                 }
-                else{
+                else {
                     x++;
                 }
             }
         }
-
     }
-
-
-
-
-
+    
     public static void main(String[] args) {
         launch(Simulation.class);
     }
