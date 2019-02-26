@@ -354,6 +354,7 @@ public class GUIMain extends Application {
     }
 
     public void drawSchedule() {
+        gui.clear();
         List<Lesson> lessons = agenda.getLessons();
         lessons.forEach(lesson -> {
             Hours hours = Hours.hoursBetween(lesson.getInterval().getStart(), lesson.getInterval().getEnd());

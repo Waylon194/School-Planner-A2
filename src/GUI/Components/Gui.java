@@ -5,6 +5,7 @@ import Data.Classroom;
 import Data.Group;
 import Data.Lesson;
 import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
@@ -14,6 +15,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Gui extends TabPane {
@@ -258,6 +260,7 @@ public class Gui extends TabPane {
         GridPane.setHalignment(label, javafx.geometry.HPos.CENTER);
         GridPane.setValignment(label, javafx.geometry.VPos.CENTER);
         gridPane.getChildren().add(label);
+
     }
 
     public void addClassroomGrid() {
@@ -271,5 +274,13 @@ public class Gui extends TabPane {
 
     public AnchorPane getanchorPane() {
         return this.anchorPane0;
+    }
+
+    public void clear() {
+        List<Node> retain = new ArrayList<>();
+        for (int i = 0;i < 17;i++) {
+            retain.add(gridPane.getChildren().get(i));
+        }
+        gridPane.getChildren().retainAll(retain);
     }
 }
