@@ -267,16 +267,11 @@ public class GUIMain extends Application {
             ArrayList<Label> labelArrayList = new ArrayList<>();
             ArrayList<TextField> txtArrayList = new ArrayList<>();
 
-            Label lblNumber = new Label("Number:");
-            labelArrayList.add(lblNumber);
             Label lblSeats = new Label("Amount of seats:");
             labelArrayList.add(lblSeats);
             Label lblLocation = new Label("Location:");
             labelArrayList.add(lblLocation);
-
-
-            TextField txtNumber = new TextField();
-            txtArrayList.add(txtNumber);
+            
             TextField txtSeat = new TextField();
             txtArrayList.add(txtSeat);
             TextField txtLocation = new TextField();
@@ -296,7 +291,7 @@ public class GUIMain extends Application {
             gridpane.add(btnSubmit, 3, labelArrayList.size() + 1);
 
             btnSubmit.setOnAction(e -> {
-                Classroom newClassroom = new Classroom(0, Integer.parseInt(txtSeat.getText()), txtLocation.getText(), true, true);
+                Classroom newClassroom = new Classroom(agenda.getClassrooms().size(), Integer.parseInt(txtSeat.getText()), txtLocation.getText(), true, true);
                 agenda.addClassroom(newClassroom);
                 gui.addClassroomGrid();
                 System.out.println(agenda.getClassrooms());
