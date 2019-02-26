@@ -15,7 +15,7 @@ public class Simulation extends Application {
 
     Tileset tileset;
 
-    public Simulation() throws FileNotFoundException, ParseException {
+    public Simulation() throws IOException, ParseException {
         tileset = new Tileset();
     }
 
@@ -34,19 +34,21 @@ public class Simulation extends Application {
 
     public void draw(FXGraphics2D graphics) throws IOException, ParseException {
 
+
         int y =0;
         int x = 0;
-        for(int j=0; j<5;j++){
-        for(int i = 0;i< 2500; i++){
+        int scaleFactor = 16;
+        for(int j=0; j<3;j++){
+        for(int i = 0;i< 10000; i++){
             int value = tileset.getValue(i,j);
             if(value!=0) {
-                graphics.drawImage(tileset.getTile(value-1), 100+ x * 16, 100+y * 16, 16, 16, null);
+                graphics.drawImage(tileset.getTile(value-1), 100+ x * scaleFactor, 100+y * scaleFactor, scaleFactor, scaleFactor, null);
             }
-            if((i!=0)&&((i+1)%50==0)&&i!=2499){
+            if((i!=0)&&((i+1)%100==0)&&i!=9999){
                 x=0;
                 y++;
             }
-            else if(i==2499){
+            else if(i==9999){
                 x=0;
                 y=0;
 
@@ -54,15 +56,8 @@ public class Simulation extends Application {
             else{
                 x++;
             }
-
-
         }
         }
-
-
-
-
-
 
     }
 

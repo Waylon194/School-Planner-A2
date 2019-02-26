@@ -15,41 +15,63 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import static java.lang.Math.incrementExact;
 import static java.lang.Math.toIntExact;
 
 @SuppressWarnings("deprecation")
 public class Tileset {
 
-    private BufferedImage tilesImage;
+
     private BufferedImage[] tiles;
-    private File tilesFile;
     private org.json.simple.parser.JSONParser jsonParser;
-    private File jsonFile;
     private FileReader fileReader;
     private ArrayList<Object[]> layers;
+    private File jsonFile;
 
-    public Tileset() throws FileNotFoundException, ParseException{
+    public Tileset() throws IOException, ParseException{
 
         this.jsonParser = new JSONParser();
-        try{
-            this.jsonFile = new File("sources/fourLayers.json");
-            this.tilesFile = new File("sources/sprites/RPG stuff.png");
-            this.fileReader = new FileReader(jsonFile);
-            this.tilesImage = ImageIO.read(tilesFile);
-            this.tiles = new BufferedImage[2016];
-            this.layers = getJsonValues();
 
-            for(int i = 0; i < 2016; i++) {
-                this.tiles[i] = tilesImage.getSubimage(32 * (i % 32), 32 * (i / 32), 32, 32);
+        try{
+            this.tiles = new BufferedImage[2715];
+            this.jsonFile = new File("Resources/JSON/SchoolVernieuwdeSimplified.json");
+            this.fileReader = new FileReader(jsonFile);
+            BufferedImage rpgTiles = ImageIO.read(new File("Resources/Sprites/Map/RPG stuff.png"));
+            BufferedImage furnitureTiles = ImageIO.read(new File("Resources/Sprites/Map/Furniture_Japanese Styled.png"));
+            BufferedImage groundTiles = ImageIO.read(new File("Resources/Sprites/Map/ground_tiles.png"));
+            int j = 0;
+            for(int i = 0; i < 2714; i++) {
+
+                if(i<2016){
+                    this.tiles[i] = rpgTiles.getSubimage(32 * (j % 32), 32 * (j / 32), 32, 32);
+                    j++;
+                    if(j==2015){
+                        j=0;
+                    }
+                }
+                else if(i<2273){
+                    this.tiles[i] = furnitureTiles.getSubimage(32 * (j % 32), 32 * (j / 32), 32, 32);
+                    if(j==2){
+                        j=2272;
+                    }
+                }
+                else {
+                    this.tiles[i] = groundTiles.getSubimage(32 * (j % 32), 32 * (j / 32), 32, 32);
+                }
+
 
             }
 
-        }
-        catch (Exception e) {
+            }  catch (Exception e) {
             e.printStackTrace();
         }
 
-    }
+        this.layers = getJsonValues();
+
+
+        }
+
+
 
 
     public BufferedImage getTile(int i){
@@ -68,7 +90,6 @@ public class Tileset {
             JSONArray data = (JSONArray) layer.get("data");
             Object[] dataLong = data.toArray();
             dataValues.add(dataLong);
-
         }
 
         return dataValues;
