@@ -237,7 +237,7 @@ public class Gui extends TabPane {
         GridPane.setRowIndex(rectangle, lesson);
         rectangle.setSmooth(true);
         rectangle.setFill(Color.BEIGE);
-        rectangle.setHeight(gridPane.getRowConstraints().get(classRoom).getPrefHeight() - 12.5);
+        rectangle.setHeight(gridPane.getRowConstraints().get(classRoom).getPrefHeight()-5);
         rectangle.setStroke(javafx.scene.paint.Color.BLACK);
         rectangle.setStrokeType(javafx.scene.shape.StrokeType.INSIDE);
         rectangle.setWidth(gridPane.getColumnConstraints().get(classRoom).getPrefWidth());
