@@ -34,6 +34,8 @@ public class GUIMain extends Application {
     private Scene mainWindow = new Scene(gui);
     private Scene groupWindow = new Scene(createGroupWindow);
     private Scene teacherWindow = new Scene(createTeacherWindow);
+    private Stage errorStage = new Stage();
+    private Button btnSubmit;
     private FileController fileController = new FileController();
     private boolean condition = true;
 
@@ -136,7 +138,9 @@ public class GUIMain extends Application {
                 getSelectedTeachers().forEach((key, value) -> {
                     if (!(value.isAvailable(interval))) {
                         this.condition = false;
-                        System.out.println("Teacher " + value + " is not available at this time");
+//                        System.out.println("Teacher " + value + " is not available at this time");
+                        createErrorStage(new Label("Teacher is nog available at this time"));
+                        errorStage.show();
                         update();
                         updateScene();
                         createLessonWindow.close();
@@ -147,7 +151,9 @@ public class GUIMain extends Application {
 
                 if (!(createLesson.getChosenClasroom().isAvailable(interval))) {
                     this.condition = false;
-                    System.out.println(createLesson.getChosenClasroom() + " is not available at " + interval);
+//                    System.out.println(createLesson.getChosenClasroom() + " is not available at " + interval);
+                    createErrorStage(new Label("Classroom is not available at this time"));
+                    this.errorStage.show();
                 }
                 else {
                     this.condition = true;
@@ -157,6 +163,8 @@ public class GUIMain extends Application {
                     if (!(group.isAvailable(interval))) {
                         this.condition = false;
                         System.out.println(group + " is already planned at " + interval);
+                        createErrorStage(new Label("Group is not available at this time"));
+                        this.errorStage.show();
                     }
                     else {
                         this.condition = true;
@@ -389,5 +397,21 @@ public class GUIMain extends Application {
 
     public void setCondition(Boolean condition){
         this.condition = condition;
+    }
+
+    public void createErrorStage(Label label) {
+        this.btnSubmit = new Button("OK");
+        GridPane gridpane = new GridPane();
+        gridpane.add(label, 2, 1);
+        gridpane.add(this.btnSubmit, 3, 3);
+        gridpane.setPadding(new Insets(20, 20, 20, 20));
+        gridpane.setVgap(20);
+        gridpane.setHgap(20);
+        Scene temp = new Scene(gridpane);
+        this.errorStage.setScene(temp);
+
+        this.btnSubmit.setOnAction(e -> {
+            this.errorStage.close();
+        });
     }
 }
