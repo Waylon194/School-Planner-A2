@@ -45,7 +45,7 @@ public class Gui extends TabPane {
     private Agenda agenda;
     private List<Label> classroomLabelArray;
     private List<Label> timeLabelArray;
-    private final int childeren;
+    private int childeren;
 
     public Gui(Agenda agenda) {
         this.agenda = agenda;
@@ -273,6 +273,7 @@ public class Gui extends TabPane {
         String clrName = "   " + agenda.getClassrooms().get(agenda.getClassrooms().size() - 1).getLocation();
         gridPane.add(new Label(clrName), currentColumnms, 0);
         gridPane.setPrefWidth(gridPane.getWidth());
+        childeren++;
     }
 
     public AnchorPane getanchorPane() {
