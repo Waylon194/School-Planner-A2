@@ -45,7 +45,7 @@ public class Gui extends TabPane {
     private Agenda agenda;
     private List<Label> classroomLabelArray;
     private List<Label> timeLabelArray;
-    private int childeren;
+    private List<Node> children = new ArrayList<>();
 
     public Gui(Agenda agenda) {
         this.agenda = agenda;
@@ -206,8 +206,7 @@ public class Gui extends TabPane {
 
         getTabs().addAll(tabViewEdit, tabAgenda, tabSimulate);
 
-        childeren = gridPane.getChildren().size();
-
+        children.addAll(gridPane.getChildren());
     }
 
     public Button getBtnAddLesson() {
@@ -273,7 +272,7 @@ public class Gui extends TabPane {
         String clrName = "   " + agenda.getClassrooms().get(agenda.getClassrooms().size() - 1).getLocation();
         gridPane.add(new Label(clrName), currentColumnms, 0);
         gridPane.setPrefWidth(gridPane.getWidth());
-        childeren++;
+        children.add(gridPane.getChildren().get(gridPane.getChildren().size()-1));
     }
 
     public AnchorPane getanchorPane() {
@@ -281,10 +280,6 @@ public class Gui extends TabPane {
     }
 
     public void clear() {
-        List<Node> retain = new ArrayList<>();
-        for (int i = 0;i < childeren;i++) {
-            retain.add(gridPane.getChildren().get(i));
-        }
-        gridPane.getChildren().retainAll(retain);
+       gridPane.getChildren().retainAll(children);
     }
 }
