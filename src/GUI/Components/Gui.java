@@ -92,10 +92,10 @@ public class Gui extends TabPane {
         btnAddSubject = new Button("Add Subject");
         btnChangeLessonTime = new Button("Change Lesson Time");
 
-//        setMaxHeight(USE_PREF_SIZE);
-//        setMaxWidth(USE_PREF_SIZE);
-//        setMinHeight(USE_PREF_SIZE);
-//        setMinWidth(USE_PREF_SIZE);
+        setMaxHeight(USE_PREF_SIZE);
+        setMaxWidth(USE_PREF_SIZE);
+        setMinHeight(USE_PREF_SIZE);
+        setMinWidth(USE_PREF_SIZE);
         setPrefHeight(600.0);
         setPrefWidth(840.0);
         setTabClosingPolicy(javafx.scene.control.TabPane.TabClosingPolicy.UNAVAILABLE);
@@ -248,6 +248,7 @@ public class Gui extends TabPane {
 
     public void drawLessonBlock(int startTime, int classRoom, int duration, Lesson lesson) {
         String groups = "";
+        System.out.println(classRoom);
         for (Group group : lesson.getGroups()) {
             groups += group.getGroupName() + " ";
 
