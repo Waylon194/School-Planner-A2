@@ -1,8 +1,6 @@
 package Data;
 
-import org.joda.time.DateTime;
 import org.joda.time.Interval;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -33,7 +31,6 @@ public class Group implements Serializable {
                 "\n Students: " + students +
                 "\n Mentor: " + mentor).replace('[',' ').replace(']',' ');
     }
-
 
     public boolean isAvailable(Interval at) {
         for(Interval interval: unavailable) {

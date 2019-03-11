@@ -1,8 +1,6 @@
 package Data;
 
-import org.joda.time.DateTime;
 import org.joda.time.Interval;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -11,11 +9,10 @@ public class Teacher extends Person implements Serializable{
     private Subject subject;
     private ArrayList<Interval> unavailable;
 
-    public Teacher (String firstName, String additive, String lastName, int age, int xLocation, int yLocation, String teacherNumber, Subject subject) {
+    public Teacher (String firstName, String additive, String lastName, int age, int xLocation, int yLocation, String teacherNumber) {
         super(firstName, additive, lastName, age, xLocation, yLocation);
         this.unavailable = new ArrayList<>();
         this.teacherNumber = teacherNumber;
-        this.subject = subject;
     }
 
     public String getTeacherNumber () {
@@ -37,9 +34,7 @@ public class Teacher extends Person implements Serializable{
         return true;
     }
 
-
     public void makeUnavailable(Interval interval) {
         this.unavailable.add(interval);
     }
-
 }
