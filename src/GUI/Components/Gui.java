@@ -41,6 +41,8 @@ public class Gui extends TabPane {
     private final Button btnAddGroup;
     private final Button btnAddSubject;
     private final Button btnChangeLessonTime;
+
+
     Rectangle rectangle;
     private Agenda agenda;
     private List<Label> classroomLabelArray;
@@ -195,7 +197,7 @@ public class Gui extends TabPane {
 
 
         vBoxLeftRow.getChildren().addAll(btnAddLesson, btnViewLesson, btnSaveSchedule, btnOpenSchedule);
-        vBoxRightRow.getChildren().addAll(btnAddTeacher, btnAddClassroom);
+        vBoxRightRow.getChildren().addAll(btnAddTeacher, btnAddClassroom,btnAddSubject);
         vBoxRightRow.setSpacing(10);
 
         hBoxButtons.getChildren().addAll(vBoxLeftRow, vBoxRightRow);
@@ -231,6 +233,10 @@ public class Gui extends TabPane {
 
     public Button getBtnAddClassroom() {
         return btnAddClassroom;
+    }
+
+    public Button getBtnAddSubject(){
+        return btnAddSubject;
     }
 
     public void drawLesson(int lesson, int classRoom) {
