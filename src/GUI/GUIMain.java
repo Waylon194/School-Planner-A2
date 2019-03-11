@@ -313,6 +313,41 @@ public class GUIMain extends Application {
             update();
         });
 
+
+        gui.getBtnAddSubject().setOnAction(event -> {
+
+            Label subjectLable = new Label("Subject: ");
+            TextField subjectTextField = new TextField();
+            Button btnSubmit = new Button("Submit");
+
+
+            GridPane gridpane = new GridPane();
+            gridpane.setPadding(new Insets(20, 20, 20, 20));
+            gridpane.setHgap(20);
+            gridpane.setVgap(20);
+
+            gridpane.add(subjectLable,1,0);
+            gridpane.add(subjectTextField,2,0);
+            gridpane.add(btnSubmit, 3, 0);
+
+            btnSubmit.setOnAction(e -> {
+                Subject newSubject = new Subject(subjectTextField.getText());
+                agenda.addSubject(newSubject);
+                createLesson.update();
+                createViewWindow.close();
+            });
+
+            Scene scene = new Scene(gridpane);
+            createViewWindow.setScene(scene);
+            createViewWindow.show();
+            update();
+
+
+
+
+
+        });
+
         createGroupWindow.getSaveGroupsButton().setOnAction(event -> {
             createGroupWindow2.close();
             update();

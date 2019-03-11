@@ -2,6 +2,8 @@ package Data;
 
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
+import sun.jvm.hotspot.jdi.ArrayReferenceImpl;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -19,7 +21,7 @@ public class Agenda implements Serializable {
     private ArrayList<DateTime> times;
 
     public Agenda() {
-        Subject values[] = Subject.values();
+        this.subjects=  new ArrayList<>();
         this.teachers = new HashMap<>();
         this.classes = new ArrayList<>();
         this.classrooms = new ArrayList<>();
@@ -30,9 +32,7 @@ public class Agenda implements Serializable {
         this.times = new ArrayList<>();
         this.students = new ArrayList<>();
 
-        for (Subject value : values) {
-            this.subjects.add(value);
-        }
+
 
         final DateTime NINE = new DateTime(2019, 1, 1, 9, 0, 0);
         final DateTime TEN = new DateTime(2019, 1, 1, 10, 0, 0);
@@ -146,6 +146,14 @@ public class Agenda implements Serializable {
         this.intervals.add(SIXTH_LESSON);
         this.intervals.add(SEVENTH_LESSON);
         this.intervals.add(EIGHT_LESSON);
+
+        Subject calculus = new Subject("CALCULUS");
+        Subject linearAlgebra = new Subject("LINEAR ALGEBRA");
+
+        this.subjects.add(calculus);
+        this.subjects.add(linearAlgebra);
+
+
     }
 
     public ArrayList<Lesson> returnLessons() {
@@ -167,6 +175,8 @@ public class Agenda implements Serializable {
     public void addLesson(Lesson lesson) {
         this.lessons.add(lesson);
     }
+
+
 
     // TODO: 17-02-19 fix student array
     public void addStudents(Student student) {

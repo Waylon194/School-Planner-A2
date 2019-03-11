@@ -336,5 +336,10 @@ public class CreateLesson extends GridPane {
         for(Classroom classroom : agenda.getClassrooms()) {
             classroomComboBox.getItems().add(classroom);
         }
+        subjectComboBox.getItems().clear();
+
+        for(Subject subject: agenda.getSubjects()){
+            subjectComboBox.getItems().add(subject);
+        }
     }
 }
