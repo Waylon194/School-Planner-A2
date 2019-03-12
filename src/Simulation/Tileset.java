@@ -29,7 +29,7 @@ public class Tileset {
 
         try {
             this.tiles = new BufferedImage[2715];
-            this.jsonFile = new File("Resources/JSON/SchoolVernieuwdeSimplified.json");
+            this.jsonFile = new File("Resources/JSON/SchoolPlanner_withAllLayers.json");
             this.fileReader = new FileReader(jsonFile);
             BufferedImage rpgTiles = ImageIO.read(new File("Resources/Sprites/Map/RPG stuff.png"));
             BufferedImage furnitureTiles = ImageIO.read(new File("Resources/Sprites/Map/Furniture_Japanese Styled.png"));

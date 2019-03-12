@@ -90,7 +90,7 @@ public class Simulation extends Application {
         int y = 0;
         int x = 0;
         int scaleFactor = 16;
-        for (int j = 0; j < 4; j++) {
+        for (int j = 0; j < 8; j++) {
             for (int i = 0; i < 10000; i++) {
                 long value = tileset.getValue(i, j);
                 if (value != 0) {
