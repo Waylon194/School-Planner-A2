@@ -32,7 +32,6 @@ public class Simulation extends Application {
         this.stage = primaryStage;
         FXGraphics2D g2d = new FXGraphics2D(canvas.getGraphicsContext2D());
         drawMap(g2d);
-        draw(g2d);
         primaryStage.setScene(new Scene(new Group(canvas)));
         primaryStage.setTitle("Simulation");
         primaryStage.show();
@@ -45,13 +44,15 @@ public class Simulation extends Application {
                     last = now;
                 update((now - last) / 1.0e9);
                 last = now;
-                try {
+
+             /*   try {
                     draw(g2d);
                 } catch (IOException e) {
                     e.printStackTrace();
                 } catch (ParseException e) {
                     e.printStackTrace();
-                }
+                }*/
+
             }
         }.start();
 
@@ -89,11 +90,11 @@ public class Simulation extends Application {
         int y = 0;
         int x = 0;
         int scaleFactor = 16;
-        for (int j = 0; j < 3; j++) {
+        for (int j = 0; j < 4; j++) {
             for (int i = 0; i < 10000; i++) {
-                int value = tileset.getValue(i, j);
+                long value = tileset.getValue(i, j);
                 if (value != 0) {
-                    graphics.drawImage(tileset.getTile(value - 1), (int) this.canvas.getWidth() / 5 + x * scaleFactor, y * scaleFactor, scaleFactor, scaleFactor, null);
+                    graphics.drawImage(tileset.getTile((int)value - 1), (int) this.canvas.getWidth() / 5 + x * scaleFactor, 50+y * scaleFactor, scaleFactor, scaleFactor, null);
                 }
 
                 if ((i != 0) && ((i + 1) % 100 == 0) && i != 9999) {
@@ -116,9 +117,10 @@ public class Simulation extends Application {
         for(Visitor visitor : visitors)
             visitor.update(visitors);
     }
-    
+
     public static void main(String[] args) {
         launch(Simulation.class);
     }
 
 }
+

@@ -84,9 +84,29 @@ public class Tileset {
         return dataValues;
     }
 
-    public int getValue(int tileValue, int layer) {
+    public long getValue(int tileValue, int layer) {
 
-        return toIntExact((long) this.layers.get(layer)[tileValue]);
+
+        try {
+            if (((long) this.layers.get(layer)[tileValue])<10000){
+                return toIntExact((long) this.layers.get(layer)[tileValue]);
+            }
+
+        }
+        catch (Exception e){
+           e.printStackTrace();
+        }
+        return 2700;
+
+
+
+
+    }
+
+    public static void main(String[] args) throws IOException, ParseException {
+        Tileset tileset = new Tileset();
+        long i = tileset.getValue(0,0);
+        System.out.println(i);
     }
 
 }
