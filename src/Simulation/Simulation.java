@@ -5,15 +5,24 @@ import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.image.WritableImage;
 import javafx.stage.Stage;
 import org.jfree.fx.FXGraphics2D;
 import org.json.simple.parser.ParseException;
 
+import javax.imageio.ImageReader;
+import javax.imageio.spi.ImageReaderSpi;
 import java.awt.*;
+import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
+import java.awt.image.ImageObserver;
+import java.awt.image.Raster;
+import java.awt.image.WritableRaster;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.nio.Buffer;
 import java.util.ArrayList;
 
 public class Simulation extends Application {
@@ -45,13 +54,15 @@ public class Simulation extends Application {
                 update((now - last) / 1.0e9);
                 last = now;
 
-             /*   try {
-                    draw(g2d);
+               try {
+
+                   drawMap(g2d);
+                   draw(g2d);
                 } catch (IOException e) {
                     e.printStackTrace();
                 } catch (ParseException e) {
                     e.printStackTrace();
-                }*/
+                }
 
             }
         }.start();
@@ -79,9 +90,7 @@ public class Simulation extends Application {
 
 
     public void draw(FXGraphics2D graphics) throws IOException, ParseException {
-        graphics.setBackground(Color.pink);
         graphics.clearRect(0,0,(int)stage.getWidth(), (int)stage.getHeight());
-
         for(Visitor visitor : visitors)
             visitor.draw(graphics);
     }
@@ -89,14 +98,23 @@ public class Simulation extends Application {
     public void drawMap(FXGraphics2D graphics){
         int y = 0;
         int x = 0;
-        int scaleFactor = 16;
-        for (int j = 0; j < 8; j++) {
+        int scaleFactor = 32;
+        for (int j = 0; j < 4; j++) {
             for (int i = 0; i < 10000; i++) {
                 long value = tileset.getValue(i, j);
                 if (value != 0) {
-                    graphics.drawImage(tileset.getTile((int)value - 1), (int) this.canvas.getWidth() / 5 + x * scaleFactor, 50+y * scaleFactor, scaleFactor, scaleFactor, null);
-                }
+                    if (value<2715) {
+                        AffineTransform tx = new AffineTransform();
+                        tx.translate(x*scaleFactor, y*scaleFactor);
+                        graphics.drawImage(tileset.getTile((int) value - 1),  tx, null);
+                    }
+                    else{
+                        AffineTransform tx = new AffineTransform();
+                        tx.translate(x*scaleFactor, y*scaleFactor);
+                        graphics.drawImage(tileset.getTile((int)calculateRotatedValue(value) - 1),  tx, null);
+                    }
 
+                }
                 if ((i != 0) && ((i + 1) % 100 == 0) && i != 9999) {
                     x = 0;
                     y++;
@@ -112,6 +130,22 @@ public class Simulation extends Application {
             }
         }
     }
+
+    private long calculateRotatedValue(long value) {
+
+        long FLIPPED_HORIZONTALLY_FLAG = 0x80000000;
+        long FLIPPED_VERTICALLY_FLAG   = 0x40000000;
+        long FLIPPED_DIAGONALLY_FLAG   = 0x20000000;
+        long JOHANS_CONSTANTEXD        = ~0xE0000000;
+
+
+        return value&JOHANS_CONSTANTEXD;
+
+
+
+
+    }
+
     public void update(double deltaTime)
     {
         for(Visitor visitor : visitors)

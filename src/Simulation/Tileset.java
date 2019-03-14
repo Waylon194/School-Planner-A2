@@ -1,11 +1,17 @@
 package Simulation;
 
+import javafx.scene.image.Image;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import javax.imageio.ImageIO;
+import javax.imageio.ImageWriter;
+import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.awt.image.ImageObserver;
+import java.awt.image.ImageProducer;
+import java.awt.image.WritableRenderedImage;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
@@ -60,6 +66,8 @@ public class Tileset {
             e.printStackTrace();
         }
 
+
+
         this.layers = getJsonValues();
 
 
@@ -85,19 +93,8 @@ public class Tileset {
     }
 
     public long getValue(int tileValue, int layer) {
-
-
         return (long) this.layers.get(layer)[tileValue];
-
-
-
-
     }
 
-    public static void main(String[] args) throws IOException, ParseException {
-        Tileset tileset = new Tileset();
-        long i = tileset.getValue(0,0);
-        System.out.println(i);
-    }
 
 }
