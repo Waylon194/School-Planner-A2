@@ -87,16 +87,7 @@ public class Tileset {
     public long getValue(int tileValue, int layer) {
 
 
-        try {
-            if (((long) this.layers.get(layer)[tileValue])<10000){
-                return toIntExact((long) this.layers.get(layer)[tileValue]);
-            }
-
-        }
-        catch (Exception e){
-           e.printStackTrace();
-        }
-        return 2700;
+        return (long) this.layers.get(layer)[tileValue];
 
 
 
