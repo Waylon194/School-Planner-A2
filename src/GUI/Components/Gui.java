@@ -102,8 +102,8 @@ public class Gui extends TabPane {
         setPrefWidth(840.0);
         setTabClosingPolicy(javafx.scene.control.TabPane.TabClosingPolicy.UNAVAILABLE);
 
-        tabAnchorPane.setMinHeight(0.0);
-        tabAnchorPane.setMinWidth(0.0);
+        tabAnchorPane.setMinHeight(180);
+        tabAnchorPane.setMinWidth(200);
         tabAnchorPane.setPrefHeight(180.0);
         tabAnchorPane.setPrefWidth(200.0);
 
@@ -113,12 +113,12 @@ public class Gui extends TabPane {
 
         columnConstraints.setHgrow(javafx.scene.layout.Priority.SOMETIMES);
         columnConstraints.setMaxWidth(40.0);
-        columnConstraints.setMinWidth(10.0);
+        columnConstraints.setMinWidth(40.0);
         columnConstraints.setPrefWidth(40.0);
         gridPane.getColumnConstraints().add(columnConstraints);
 
         rowConstraints.setMaxHeight(43.0);
-        rowConstraints.setMinHeight(5.0);
+        rowConstraints.setMinHeight(31.0);
         rowConstraints.setPrefHeight(31.0);
         rowConstraints.setVgrow(javafx.scene.layout.Priority.SOMETIMES);
         gridPane.getRowConstraints().add(rowConstraints);
@@ -128,10 +128,10 @@ public class Gui extends TabPane {
         }
 
         for(int i = 0; i < agenda.getClassrooms().size(); i++) {
-            RowConstraints row = new RowConstraints(10, 75, 75);
+            RowConstraints row = new RowConstraints(75, 75, 75);
             gridPane.getRowConstraints().add(row);
 
-            ColumnConstraints column = new ColumnConstraints(10, 100, 100);
+            ColumnConstraints column = new ColumnConstraints(100, 100, 100);
             gridPane.getColumnConstraints().add(column);
         }
 
@@ -209,6 +209,7 @@ public class Gui extends TabPane {
         getTabs().addAll(tabViewEdit, tabAgenda, tabSimulate);
 
         children.addAll(gridPane.getChildren());
+        //System.out.println(gridPane.getColumnConstraints().size());
     }
 
     public Button getBtnAddLesson() {
@@ -241,20 +242,20 @@ public class Gui extends TabPane {
 
     public void drawLesson(int lesson, int classRoom) {
         rectangle = new Rectangle();
-        GridPane.setColumnIndex(rectangle, classRoom);
-        GridPane.setRowIndex(rectangle, lesson);
         rectangle.setSmooth(true);
         rectangle.setFill(Color.BEIGE);
-        rectangle.setHeight(gridPane.getRowConstraints().get(classRoom).getPrefHeight()-5);
+        rectangle.setHeight(gridPane.getRowConstraints().get(classRoom-1).getPrefHeight());
         rectangle.setStroke(javafx.scene.paint.Color.BLACK);
         rectangle.setStrokeType(javafx.scene.shape.StrokeType.INSIDE);
         rectangle.setWidth(gridPane.getColumnConstraints().get(classRoom).getPrefWidth());
+        GridPane.setColumnIndex(rectangle, classRoom);
+        GridPane.setRowIndex(rectangle, lesson);
         gridPane.getChildren().add(rectangle);
     }
 
     public void drawLessonBlock(int startTime, int classRoom, int duration, Lesson lesson) {
         String groups = "";
-        System.out.println(classRoom);
+        System.out.println("Classroom: "+classRoom);
         for (Group group : lesson.getGroups()) {
             groups += group.getGroupName() + " ";
 
@@ -275,7 +276,6 @@ public class Gui extends TabPane {
     public void addClassroomGrid() {
         int currentColumnms = gridPane.getColumnConstraints().size();
         gridPane.getColumnConstraints().add(currentColumnms, new ColumnConstraints(100));
-
         String clrName = "   " + agenda.getClassrooms().get(agenda.getClassrooms().size() - 1).getLocation();
         gridPane.add(new Label(clrName), currentColumnms, 0);
         gridPane.setPrefWidth(gridPane.getWidth());
@@ -285,7 +285,6 @@ public class Gui extends TabPane {
     public AnchorPane getanchorPane() {
         return this.anchorPane0;
     }
-
     public void clear() {
        gridPane.getChildren().retainAll(children);
     }

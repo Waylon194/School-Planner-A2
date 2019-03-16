@@ -299,12 +299,13 @@ public class GUIMain extends Application {
             gridpane.add(btnSubmit, 3, labelArrayList.size() + 1);
 
             btnSubmit.setOnAction(e -> {
-                Classroom newClassroom = new Classroom(agenda.getClassrooms().size(), Integer.parseInt(txtSeat.getText()), txtLocation.getText(), true, true);
+
+                Classroom newClassroom = new Classroom(agenda.getClassrooms().size()+1, Integer.parseInt(txtSeat.getText()), txtLocation.getText(), true, true);
                 agenda.addClassroom(newClassroom);
                 gui.addClassroomGrid();
-                System.out.println(agenda.getClassrooms());
                 createLesson.update();
                 createViewWindow.close();
+
             });
 
             Scene scene = new Scene(gridpane);
@@ -398,6 +399,8 @@ public class GUIMain extends Application {
             Hours hours = Hours.hoursBetween(lesson.getInterval().getStart(), lesson.getInterval().getEnd());
             int duration = Integer.parseInt(hours.toString().substring(2, 3));
             int start = lesson.getInterval().getStart().getHourOfDay();
+            System.out.println("fakka classroom number!!!");
+            agenda.getClassrooms().forEach(e -> System.out.println(e.getNumber()));
             switch (start) {
                 case 9:
                     gui.drawLessonBlock(1, lesson.getClassroom().getNumber(), duration,lesson);
