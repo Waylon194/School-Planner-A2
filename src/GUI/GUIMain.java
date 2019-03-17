@@ -259,11 +259,27 @@ public class GUIMain extends Application {
             Scene scene = new Scene(gridPane);
 
             btnSubmit.setOnAction(event -> {
-                Teacher newTeacher = new Teacher(txtFirstName.getText(), txtAdditive.getText(), txtLastName.getText(), Integer.parseInt(txtAge.getText()),
-                        0, 0, txtTeachNumber.getText());
-                agenda.addTeacher(newTeacher);
-                createTeacherWindow.update();
-                createViewWindow.close();
+                if(!txtFirstName.getText().isEmpty()
+                        && !txtLastName.getText().isEmpty()
+                        && !txtAge.getText().isEmpty()
+                        && !txtTeachNumber.getText().isEmpty()) {
+                    try{
+                        Teacher newTeacher = new Teacher(txtFirstName.getText(), txtAdditive.getText(), txtLastName.getText(), Integer.parseInt(txtAge.getText()),
+                                0, 0, txtTeachNumber.getText());
+                        agenda.addTeacher(newTeacher);
+                        createTeacherWindow.update();
+                        createViewWindow.close();
+                    }
+                    catch (Exception exception){
+                        createErrorStage(new Label("Age has to be a numeric value"));
+                        this.errorStage.show();
+                    }
+                }
+                else {
+                    createErrorStage(new Label("Enter all needed values"));
+                    this.errorStage.show();
+
+                }
             });
 
             createViewWindow.setScene(scene);
@@ -300,11 +316,28 @@ public class GUIMain extends Application {
 
             btnSubmit.setOnAction(e -> {
 
-                Classroom newClassroom = new Classroom(agenda.getClassrooms().size()+1, Integer.parseInt(txtSeat.getText()), txtLocation.getText(), true, true);
-                agenda.addClassroom(newClassroom);
-                gui.addClassroomGrid();
-                createLesson.update();
-                createViewWindow.close();
+                if(!(txtSeat.getText().isEmpty()) && !(txtLocation.getText().isEmpty())){
+                    try{
+                        Integer.parseInt(txtSeat.getText());
+                        Classroom newClassroom = new Classroom(agenda.getClassrooms().size() + 1, Integer.parseInt(txtSeat.getText()), txtLocation.getText(), true, true);
+                        agenda.addClassroom(newClassroom);
+                        gui.addClassroomGrid();
+                        createLesson.update();
+                        createViewWindow.close();
+                    }
+                    catch (Exception exception){
+                        createErrorStage(new Label("Capacity has to be a numeric value"));
+                        this.errorStage.show();
+                    }
+
+                }
+                else {
+                    createErrorStage(new Label("Enter classroom and/or capacity"));
+                    this.errorStage.show();
+
+                }
+
+
 
             });
 
@@ -332,10 +365,20 @@ public class GUIMain extends Application {
             gridpane.add(btnSubmit, 3, 0);
 
             btnSubmit.setOnAction(e -> {
-                Subject newSubject = new Subject(subjectTextField.getText());
-                agenda.addSubject(newSubject);
-                createLesson.update();
-                createViewWindow.close();
+
+                if(!(subjectTextField.getText().isEmpty())) {
+                    Subject newSubject = new Subject(subjectTextField.getText());
+                    agenda.addSubject(newSubject);
+                    createLesson.update();
+                    createViewWindow.close();
+
+                }
+                else{
+                    Label errorLabel = new Label("You can not create an empty subject");
+                    createErrorStage(errorLabel);
+                    this.errorStage.show();
+
+                }
             });
 
             Scene scene = new Scene(gridpane);
