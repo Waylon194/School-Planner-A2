@@ -48,6 +48,9 @@ public class Simulation extends Application {
         primaryStage.setTitle("Simulation");
         primaryStage.show();
 
+        PathFinder pathFinder = new PathFinder();
+        pathFinder.calculateDistanceMap(36, 22);
+
 //       new AnimationTimer() {
 //            long last = -1;
 //            @Override
