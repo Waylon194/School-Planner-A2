@@ -35,7 +35,7 @@ public class Tileset {
 
         try {
             this.tiles = new BufferedImage[2715];
-            this.jsonFile = new File("Resources/JSON/SchoolPlanner_withAllLayers.json");
+            this.jsonFile = new File("Resources/JSON/SchoolPlanner_withAllLayersVersion2.json");
             this.fileReader = new FileReader(jsonFile);
             BufferedImage rpgTiles = ImageIO.read(new File("Resources/Sprites/Map/RPG stuff.png"));
             BufferedImage furnitureTiles = ImageIO.read(new File("Resources/Sprites/Map/Furniture_Japanese Styled.png"));
@@ -61,16 +61,10 @@ public class Tileset {
                     j++;
                 }
             }
-
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-
-
         this.layers = getJsonValues();
-
-
     }
 
     public BufferedImage getTile(int i) {
