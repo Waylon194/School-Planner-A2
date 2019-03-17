@@ -36,8 +36,8 @@ public class CreateTeacherWindow extends VBox {
 
     public void update() {
         vBox.getChildren().clear();
-        agenda.getTeachers().forEach((s, teacher) -> {
-            CheckBox checkBox = new CheckBox(" " + agenda.getTeachers().get(s).toString());
+        agenda.getTeachers().forEach(teacher -> {
+            CheckBox checkBox = new CheckBox(" " + teacher.toString());
             checkBoxes.add(checkBox);
             vBox.getChildren().add(checkBox);
         });

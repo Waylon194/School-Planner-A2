@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Agenda implements Serializable {
-    private Map<String,Teacher> teachers;
+    private ArrayList<Teacher> teachers;
     private ArrayList<Class> classes;
     private ArrayList<Classroom> classrooms;
     private ArrayList<Lesson> lessons;
@@ -22,7 +22,7 @@ public class Agenda implements Serializable {
 
     public Agenda() {
         this.subjects=  new ArrayList<>();
-        this.teachers = new HashMap<>();
+        this.teachers = new ArrayList<>();
         this.classes = new ArrayList<>();
         this.classrooms = new ArrayList<>();
         this.lessons = new ArrayList<>();
@@ -112,13 +112,13 @@ public class Agenda implements Serializable {
         Data.Class classe = new Data.Class(groups, "12TIAV");
 
         //teachers
-        this.teachers.put(maurice.getTeacherNumber(),maurice);
-        this.teachers.put(johan.getTeacherNumber(),johan);
-        this.teachers.put(hansen.getTeacherNumber(),hansen);
-        this.teachers.put(etienne.getTeacherNumber(),etienne);
-        this.teachers.put(peter.getTeacherNumber(),peter);
-        this.teachers.put(pieter.getTeacherNumber(),pieter);
-        this.teachers.put(jessica.getTeacherNumber(),jessica);
+        this.teachers.add(maurice);
+        this.teachers.add(johan);
+        this.teachers.add(hansen);
+        this.teachers.add(etienne);
+        this.teachers.add(pieter);
+        this.teachers.add(jessica);
+        this.teachers.add(peter);
 
         //groups of
         this.groups.add(a2);
@@ -161,7 +161,7 @@ public class Agenda implements Serializable {
     }
 
     public void addTeacher(Teacher teacher) {
-        this.teachers.put(teacher.getTeacherNumber(),teacher);
+      this.teachers.add(teacher);
     }
 
     public void addClass(Class schoolClass) {
@@ -191,7 +191,7 @@ public class Agenda implements Serializable {
         this.subjects.add(subject);
     }
 
-    public Map<String, Teacher> getTeachers() {
+    public ArrayList<Teacher> getTeachers() {
         return teachers;
     }
 
