@@ -16,7 +16,7 @@ public class CreateGroupWindow extends VBox {
     public CreateGroupWindow(Agenda agenda){
         vBox = new VBox();
         saveGroups = new Button("Save group(s)");
-         checkBoxes = new ArrayList<>();
+        checkBoxes = new ArrayList<>();
         this.selectedGroups = new ArrayList<>();
         for(int i = 0; i< agenda.getAmountOfGroups(); i++){
             CheckBox checkBox = new CheckBox(agenda.getGroups().get(i).toString());

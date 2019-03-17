@@ -1,9 +1,6 @@
 package GUI.Components;
 
-import Data.Agenda;
-import Data.Classroom;
-import Data.Group;
-import Data.Lesson;
+import Data.*;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -260,6 +257,10 @@ public class Gui extends TabPane {
             groups += group.getGroupName() + " ";
 
         }
+        String teachers = "";
+        for(Teacher teacher: lesson.getTeachers()){
+            teachers+=" "+teacher.getLastName();
+        }
         Label label = new Label("" + lesson.getTeachers() + '\n' + lesson.getSubject() + '\n' + groups);
 
         for (int i = startTime; i <= startTime + duration; i++) {
@@ -270,6 +271,7 @@ public class Gui extends TabPane {
         GridPane.setHalignment(label, javafx.geometry.HPos.CENTER);
         GridPane.setValignment(label, javafx.geometry.VPos.CENTER);
         gridPane.getChildren().add(label);
+
 
     }
 

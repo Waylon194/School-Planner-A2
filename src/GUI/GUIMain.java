@@ -9,6 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.PixelReader;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -46,11 +47,14 @@ public class GUIMain extends Application {
         createViewWindow.close();
         this.createView = new CreateView(agenda, this);
         this.viewScene = new Scene(createView);
+        createTeacherWindow = new CreateTeacherWindow(agenda);
         createViewWindow.setScene(viewScene);
+
     }
 
     public void update() {
         drawSchedule();
+
     }
 
     @Override
@@ -80,20 +84,68 @@ public class GUIMain extends Application {
         createLesson.getButtonSaveLesson().setOnAction(event -> {
 
 
-            ArrayList<Teacher> teachers = getSelectedTeachers();
-            Interval lessonInterval = new Interval(createLesson.getChosenStartTime(),createLesson.getChosenEndTime());
-            ArrayList<Group> groups = getSelectedGroups();
-            Classroom classroom = createLesson.getChosenClasroom();
-            int popularity = createLesson.getPopularity();
-            Subject subject = createLesson.getChosenSubject();
+            try{
+
+                boolean oneOfMillionConditions = true;
+                ArrayList<Teacher> teachers = getSelectedTeachers();
+                System.out.println(teachers);
+                Interval lessonInterval = new Interval(createLesson.getChosenStartTime(),createLesson.getChosenEndTime());
+                ArrayList<Group> groups = getSelectedGroups();
+                Classroom classroom = createLesson.getChosenClasroom();
+                int popularity = createLesson.getPopularity();
+                Subject subject = createLesson.getChosenSubject();
+
+                for (Teacher teacher: teachers) {
+                    if (!teacher.isAvailable(lessonInterval)) {
+                        createErrorStage(new Label(teacher + "is not availabe at this time"));
+                        errorStage.show();
+                        oneOfMillionConditions = false;
+                    }
+                }
+                for(Group group: groups) {
+                    if (!group.isAvailable(lessonInterval)) {
+                        createErrorStage(new Label(group + "is not availabe at this time"));
+                        errorStage.show();
+                        oneOfMillionConditions = false;
+                    }
+                }
+                if (!classroom.isAvailable(lessonInterval)){
+                    oneOfMillionConditions = false;
+                    createErrorStage(new Label(classroom + "is not availabe at this time"));
+                }
+
+                if(oneOfMillionConditions){
+
+                teachers.forEach(teacher -> {
+                    teacher.makeUnavailable(lessonInterval);
+                });
+
+                groups.forEach(group -> {
+                    group.makeUnavailable(lessonInterval);
+                });
+
+                classroom.makeUnavailable(lessonInterval);
+
+                Lesson lesson = new Lesson(teachers,classroom,groups,subject,lessonInterval,popularity);
+                agenda.addLesson(lesson);
+                createLessonWindow.close();
+                update();
+                updateScene();
+                }
 
 
-            Lesson lesson = new Lesson(teachers,classroom,groups,subject,lessonInterval,popularity);
-            agenda.addLesson(lesson);
-            createLessonWindow.close();
 
-            drawSchedule();
-            update();
+            }
+            catch (Exception exception){
+                createErrorStage(new Label("Begin time can not be after end time"));
+                errorStage.show();
+                exception.printStackTrace();
+            }
+
+
+
+
+
 
 
 
@@ -101,7 +153,7 @@ public class GUIMain extends Application {
 
         });
 
-        //opens window to add groups WIP!
+
         createLesson.getButtonGroup().setOnAction(event -> {
             createGroupWindow2.setScene(groupWindow);
             createGroupWindow2.setTitle("Select group(s):");
@@ -123,6 +175,7 @@ public class GUIMain extends Application {
 
         // will let you select a lesson to view/change, will load in all information.
         gui.getBtnViewLesson().setOnAction(event -> {
+
             createViewWindow.setScene(viewScene);
             createViewWindow.setTitle("Change/View");
             createViewWindow.show();
@@ -183,6 +236,8 @@ public class GUIMain extends Application {
                         agenda.addTeacher(newTeacher);
                         createTeacherWindow.update();
                         createViewWindow.close();
+                        updateScene();
+
                     }
                     catch (Exception exception){
                         createErrorStage(new Label("Age has to be a numeric value"));
@@ -198,7 +253,7 @@ public class GUIMain extends Application {
 
             createViewWindow.setScene(scene);
             createViewWindow.show();
-            update();
+           // update();
         });
 
         gui.getBtnAddClassroom().setOnAction(event -> {
@@ -286,6 +341,7 @@ public class GUIMain extends Application {
                     createLesson.update();
                     createViewWindow.close();
 
+
                 }
                 else{
                     Label errorLabel = new Label("You can not create an empty subject");
@@ -309,17 +365,20 @@ public class GUIMain extends Application {
         createGroupWindow.getSaveGroupsButton().setOnAction(event -> {
             createGroupWindow2.close();
             update();
+            System.out.println(getSelectedGroups());
         });
 
         createLesson.getButtonTeachers().setOnAction(event -> {
             createTeacherWindowStage.setScene(teacherWindow);
             createTeacherWindowStage.setTitle("Select Teacher(s):");
             createTeacherWindowStage.show();
+
         });
 
         createTeacherWindow.getSaveTeachersButton().setOnAction(event -> {
             createTeacherWindowStage.close();
             update();
+            System.out.println(getSelectedTeachers());
         });
     }
 
@@ -329,6 +388,7 @@ public class GUIMain extends Application {
         for (CheckBox checkBox : createGroupWindow.getCheckBoxes()) {
             if (checkBox.isSelected()) {
                 selected.add(agenda.getGroups().get(i));
+
             }
             i++;
         }
@@ -338,7 +398,6 @@ public class GUIMain extends Application {
     public ArrayList<Teacher> getSelectedTeachers() {
         ArrayList<Teacher> selected = new ArrayList<>();
         int i = 0;
-        String number = "";
         for (CheckBox checkBox : createTeacherWindow.getCheckBoxes()) {
             if (checkBox.isSelected()) {
                 selected.add(agenda.getTeachers().get(i));

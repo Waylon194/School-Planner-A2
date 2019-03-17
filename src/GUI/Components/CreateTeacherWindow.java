@@ -21,9 +21,8 @@ public class CreateTeacherWindow extends VBox {
         checkBoxes = new ArrayList<>();
         this.selectedTeachers = new ArrayList<>();
         this.agenda = agenda;
-
-        update();
         getChildren().add(vBox);
+        update();
     }
 
     public Button getSaveTeachersButton(){
