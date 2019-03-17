@@ -8,7 +8,6 @@ import javafx.scene.layout.VBox;
 import java.util.ArrayList;
 
 public class CreateGroupWindow extends VBox {
-    private ArrayList<Group> selectedGroups;
     private VBox vBox;
     private Button saveGroups;
     private ArrayList<CheckBox> checkBoxes;
@@ -17,7 +16,6 @@ public class CreateGroupWindow extends VBox {
         vBox = new VBox();
         saveGroups = new Button("Save group(s)");
         checkBoxes = new ArrayList<>();
-        this.selectedGroups = new ArrayList<>();
         for(int i = 0; i< agenda.getAmountOfGroups(); i++){
             CheckBox checkBox = new CheckBox(agenda.getGroups().get(i).toString());
             checkBoxes.add(checkBox);
@@ -28,9 +26,6 @@ public class CreateGroupWindow extends VBox {
         getChildren().add(vBox);
     }
 
-    public ArrayList<Group> getSelectedGroups(){
-        return this.selectedGroups;
-    }
 
     public Button getSaveGroupsButton(){
         return this.saveGroups;

@@ -25,22 +25,25 @@ public class CreateTeacherWindow extends VBox {
         update();
     }
 
+
+
+    public void update() {
+        vBox.getChildren().clear();
+        checkBoxes.clear();
+        for(Teacher teacher: agenda.getTeachers()){
+            System.out.println(teacher);
+            CheckBox checkBox = new CheckBox(" " + teacher.toString());
+            checkBoxes.add(checkBox);
+            vBox.getChildren().add(checkBox);
+        }
+        vBox.getChildren().add(saveTeachers);
+        vBox.setSpacing(10);
+    }
     public Button getSaveTeachersButton(){
         return this.saveTeachers;
     }
 
     public ArrayList<CheckBox> getCheckBoxes(){
         return this.checkBoxes;
-    }
-
-    public void update() {
-        vBox.getChildren().clear();
-        agenda.getTeachers().forEach(teacher -> {
-            CheckBox checkBox = new CheckBox(" " + teacher.toString());
-            checkBoxes.add(checkBox);
-            vBox.getChildren().add(checkBox);
-        });
-        vBox.getChildren().add(saveTeachers);
-        vBox.setSpacing(10);
     }
 }

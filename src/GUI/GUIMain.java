@@ -1,6 +1,7 @@
 package GUI;
 
 import Data.*;
+import Data.Class;
 import GUI.Components.*;
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -47,7 +48,6 @@ public class GUIMain extends Application {
         createViewWindow.close();
         this.createView = new CreateView(agenda, this);
         this.viewScene = new Scene(createView);
-        createTeacherWindow = new CreateTeacherWindow(agenda);
         createViewWindow.setScene(viewScene);
 
     }
@@ -59,6 +59,8 @@ public class GUIMain extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        primaryStage.setWidth(1080);
+        primaryStage.setHeight(700);
         primaryStage.setScene(mainWindow);
         primaryStage.setTitle("School Planner");
         buttonhandler();
@@ -87,7 +89,7 @@ public class GUIMain extends Application {
             try{
 
                 boolean oneOfMillionConditions = true;
-                ArrayList<Teacher> teachers = getSelectedTeachers();
+                ArrayList<Teacher> teachers = getSelectedTeachers(this.agenda);
                 System.out.println(teachers);
                 Interval lessonInterval = new Interval(createLesson.getChosenStartTime(),createLesson.getChosenEndTime());
                 ArrayList<Group> groups = getSelectedGroups();
@@ -142,24 +144,9 @@ public class GUIMain extends Application {
                 exception.printStackTrace();
             }
 
-
-
-
-
-
-
-
-
-
         });
 
 
-        createLesson.getButtonGroup().setOnAction(event -> {
-            createGroupWindow2.setScene(groupWindow);
-            createGroupWindow2.setTitle("Select group(s):");
-            createGroupWindow2.show();
-            update();
-        });
 
         //will open windows explorer to save object to file.
         gui.getBtnSaveSchedule().setOnAction(event -> {
@@ -233,10 +220,11 @@ public class GUIMain extends Application {
                     try{
                         Teacher newTeacher = new Teacher(txtFirstName.getText(), txtAdditive.getText(), txtLastName.getText(), Integer.parseInt(txtAge.getText()),
                                 0, 0, txtTeachNumber.getText());
+                        createViewWindow.close();
+
                         agenda.addTeacher(newTeacher);
                         createTeacherWindow.update();
-                        createViewWindow.close();
-                        updateScene();
+
 
                     }
                     catch (Exception exception){
@@ -288,7 +276,8 @@ public class GUIMain extends Application {
                 if(!(txtSeat.getText().isEmpty()) && !(txtLocation.getText().isEmpty())){
                     try{
                         Integer.parseInt(txtSeat.getText());
-                        Classroom newClassroom = new Classroom(agenda.getClassrooms().size() + 1, Integer.parseInt(txtSeat.getText()), txtLocation.getText(), true, true);
+                        System.out.println(agenda.getClassrooms().size());
+                        Classroom newClassroom = new Classroom(agenda.getClassrooms().size() +1, Integer.parseInt(txtSeat.getText()), txtLocation.getText(), true, true);
                         agenda.addClassroom(newClassroom);
                         gui.addClassroomGrid();
                         createLesson.update();
@@ -362,6 +351,13 @@ public class GUIMain extends Application {
 
         });
 
+        createLesson.getButtonGroup().setOnAction(event -> {
+            createGroupWindow2.setScene(groupWindow);
+            createGroupWindow2.setTitle("Select group(s):");
+            createGroupWindow2.show();
+            update();
+        });
+
         createGroupWindow.getSaveGroupsButton().setOnAction(event -> {
             createGroupWindow2.close();
             update();
@@ -372,13 +368,18 @@ public class GUIMain extends Application {
             createTeacherWindowStage.setScene(teacherWindow);
             createTeacherWindowStage.setTitle("Select Teacher(s):");
             createTeacherWindowStage.show();
+            update();
+
 
         });
 
         createTeacherWindow.getSaveTeachersButton().setOnAction(event -> {
             createTeacherWindowStage.close();
             update();
-            System.out.println(getSelectedTeachers());
+            System.out.println(getSelectedTeachers(this.agenda));
+            for(Classroom classroom: agenda.getClassrooms()){
+                System.out.println(classroom.getNumber());
+            }
         });
     }
 
@@ -395,15 +396,17 @@ public class GUIMain extends Application {
         return selected;
     }
 
-    public ArrayList<Teacher> getSelectedTeachers() {
+    public ArrayList<Teacher> getSelectedTeachers(Agenda agenda) {
         ArrayList<Teacher> selected = new ArrayList<>();
         int i = 0;
         for (CheckBox checkBox : createTeacherWindow.getCheckBoxes()) {
             if (checkBox.isSelected()) {
                 selected.add(agenda.getTeachers().get(i));
+                System.out.println(i);  //TODO WHYYYYYYYYYYYYYYYYYYYY IT BEGINS AT 7
             }
             i++;
         }
+
         return selected;
     }
 
