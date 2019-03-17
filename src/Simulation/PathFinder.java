@@ -7,14 +7,16 @@ import java.awt.*;
 import java.awt.geom.Point2D;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Queue;
 
 public class PathFinder extends JPanel {
+    public HashMap<Point2D, Integer> distanceMap;
     private ArrayList<Integer> layerData;
     {
         try {
-            layerData = new ArrayList<>(new Tileset().getLayerData(4,5));
+            layerData = new ArrayList<>(new Tileset().getLayerData(4, 5));
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ParseException e) {
@@ -29,22 +31,6 @@ public class PathFinder extends JPanel {
     int targetY;
 
     boolean fillValue;
-
-    public void setTargetX(int targetX) {
-        this.targetX = targetX;
-    }
-
-    public void setTargetY(int targetY) {
-        this.targetY = targetY;
-    }
-
-    public int getTargetX() {
-        return targetX;
-    }
-
-    public int getTargetY() {
-        return targetY;
-    }
 
     PathFinder() {
         for (int i = 0; i < 1000; i++)
@@ -89,46 +75,48 @@ public class PathFinder extends JPanel {
     }
 
     public void calculateDistanceMap(int targetX, int targetY) {
-//        map[targetX][targetY] = false;
-//
-//        for (int x = 0; x < 100; x++)
-//            for (int y = 0; y < 100; y++)
-//                distance[x][y] = Integer.MAX_VALUE;
-//
-//        Queue<Point2D> points = new LinkedList<>();
-//        points.offer(new Point2D.Double(targetX, targetY));
-//        distance[targetX][targetY] = 0;
-//
-//        while (!points.isEmpty()) {
-//            Point2D p = points.poll();
-//
-//            for (int x = -1; x <= 1; x++) {
-//                for (int y = -1; y <= 1; y++) {
-//                    // Check new point is inside field
-//
-//                    if (p.getX() + x < 0 || p.getX() + x >= 100 || p.getY() + y < 0 || p.getY() + y >= 100 || Math.abs(x) == Math.abs(y))
-//                        continue;
-//
-//                    double d = distance[(int) p.getX()][(int) p.getY()] + Math.sqrt(x * x + y * y);
-//                    if (d < distance[(int) p.getX() + x][(int) p.getY() + y] && !map[(int) p.getX() + x][(int) p.getY() + y]) {
-//                        distance[(int) p.getX() + x][(int) p.getY() + y] = d;
-//                        points.offer(new Point2D.Double((int) p.getX() + x, (int) p.getY() + y));
-//                    }
-//                }
-//            }
-//        }
-        ArrayList<Point> list = new ArrayList<>();
-        for(int x = 0; x < 100; x++) {
+        distanceMap = new HashMap<>();
+        ArrayList<Point> walkableTilesList = new ArrayList<>();
+        for (int x = 0; x < 100; x++) {
             for (int y = 0; y < 100; y++) {
-                if (this.layerData.get(x * y) == 0) {
-                } else {
-                    list.add(new Point(x, y));
+                if (!(this.layerData.get(x * y) == 0)) {
+                    walkableTilesList.add(new Point(x, y));
                 }
             }
         }
-        System.out.println(list);
-        System.out.println(list.size());
-    }
+//        System.out.println(walkableTilesList);
+//        System.out.println(walkableTilesList.size());
 
-    
+        for (int x = 0; x < 100; x++)
+            for (int y = 0; y < 100; y++)
+                distance[x][y] = Integer.MAX_VALUE;
+
+        map[targetX][targetY] = false;
+
+        Queue<Point> points = new LinkedList<>();
+        points.offer(new Point(targetX, targetY));
+        distance[targetX][targetY] = 0;
+
+        while (!points.isEmpty()) {
+            Point2D p = points.poll();
+
+            for (int x = -1; x <= 1; x++) {
+                for (int y = -1; y <= 1; y++) {
+                    // Check new point is inside field
+
+                    if (!walkableTilesList.contains(p)) {
+                        //if (p.getX() + x < 0 || p.getX() >= 100 || p.getY() + y < 0 || p.getY() + y >= 100 || Math.abs(x) == Math.abs(y)) {
+                            continue;
+                        //}
+                    }
+
+                    double d = distance[(int) p.getX()][(int) p.getY()] + Math.sqrt(x * x + y * y);
+                    if (d < distance[(int) p.getX() + x][(int) p.getY() + y] && !map[(int) p.getX() + x][(int) p.getY() + y]) {
+                        distance[(int) p.getX() + x][(int) p.getY() + y] = d;
+                        points.offer(new Point(((Point) p).x + x, ((Point) p).y + y));
+                    }
+                }
+            }
+        }
+    }
 }
