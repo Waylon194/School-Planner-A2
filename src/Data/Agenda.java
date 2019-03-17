@@ -156,9 +156,6 @@ public class Agenda implements Serializable {
 
     }
 
-    public ArrayList<Lesson> returnLessons() {
-        return this.lessons;
-    }
 
     public void addTeacher(Teacher teacher) {
       this.teachers.add(teacher);

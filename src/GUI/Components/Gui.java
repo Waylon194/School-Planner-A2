@@ -260,7 +260,7 @@ public class Gui extends TabPane {
             groups += group.getGroupName() + " ";
 
         }
-        Label label = new Label("" + lesson.getTeachersAsString() + '\n' + lesson.getSubject() + '\n' + groups);
+        Label label = new Label("" + lesson.getTeachers() + '\n' + lesson.getSubject() + '\n' + groups);
 
         for (int i = startTime; i <= startTime + duration; i++) {
             drawLesson(i, classRoom);

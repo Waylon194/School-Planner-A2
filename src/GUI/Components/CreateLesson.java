@@ -305,6 +305,9 @@ public class CreateLesson extends GridPane {
     public Classroom getChosenClasroom(){
         return (Classroom) classroomComboBox.getSelectionModel().getSelectedItem();
     }
+    public int getPopularity(){
+        return (int) popularityComboBox.getSelectionModel().getSelectedItem();
+    }
 
     public Teacher getChosenTeacher(){
         return (Teacher) teacherComboBox.getSelectionModel().getSelectedItem();

@@ -7,14 +7,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Lesson implements Serializable {
-    private HashMap<String,Teacher> teachers;
+    private ArrayList<Teacher> teachers;
     private Classroom classroom;
     private ArrayList <Group> studentClass;
     private Subject subject;
     private Interval interval;
     private double popularity;
 
-    public Lesson(HashMap<String, Teacher> teachers, Classroom classroom, ArrayList<Group> studentClass, Subject subject, Interval interval, double popularity) {
+    public Lesson(ArrayList<Teacher> teachers, Classroom classroom, ArrayList<Group> studentClass, Subject subject, Interval interval, int popularity) {
         this.teachers = teachers;
         this.classroom = classroom;
         this.studentClass = studentClass;
@@ -31,17 +31,10 @@ public class Lesson implements Serializable {
         return popularity;
     }
 
-    public HashMap<String,Teacher> getTeachers () {
+    public ArrayList<Teacher> getTeachers () {
         return teachers;
     }
 
-    public String getTeachersAsString () {
-        String teachers = "";
-        for(Map.Entry<String,Teacher> teacher : this.teachers.entrySet()){
-            teachers += teacher.getValue().getFirstName().substring(0,1) + ". " + teacher.getValue().getLastName();
-        }
-        return teachers;
-    }
 
     public Classroom getClassroom () {
       return classroom;
