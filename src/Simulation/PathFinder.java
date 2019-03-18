@@ -38,6 +38,9 @@ public class PathFinder extends JPanel {
 //            map[(int) (Math.random() * 100)][(int) (Math.random() * 100)] = true; // map randomizer
         for (int i = 0; i < 100; i++)
             map[0][i] = map[99][i] = map[i][0] = map[i][99] = true; // map border init
+
+        //TODO Dit moet weg in de echte code anders klopt de targetX en targetY niet dan voert hij altijd de distancemap voor dit punt uit
+        calculateDistanceMap(45, 18);
     }
 
     public void paintComponent(Graphics g) {
