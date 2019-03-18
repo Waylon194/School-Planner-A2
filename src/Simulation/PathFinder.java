@@ -1,19 +1,20 @@
 package Simulation;
 
+import javafx.scene.effect.Light;
 import org.json.simple.parser.ParseException;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyListener;
 import java.awt.geom.Point2D;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.*;
+import java.util.List;
 
 public class PathFinder extends JPanel {
-    public HashMap<Point2D, Integer> distanceMap;
+    public Map<Point2D,Integer> distanceMap;
     private ArrayList<Integer> layerData;
+    private List<Point> path;
 
     {
         try {
@@ -41,11 +42,13 @@ public class PathFinder extends JPanel {
 
         //TODO Dit moet weg in de echte code anders klopt de targetX en targetY niet dan voert hij altijd de distancemap voor dit punt uit
         calculateDistanceMap(45, 18);
+        calculatePath(18, 20);
     }
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
+        Color color;
 
         int w = getWidth() / 100;
         int h = getHeight() / 100;
@@ -57,15 +60,29 @@ public class PathFinder extends JPanel {
                     float dist = (float) distance[x][y] / 100;
                     if (dist > 1)
                         dist = 1;
-
                     g2.setColor(new Color(dist, 1 - dist, 0.0f));
                 }
                 g2.fillRect(x * w, y * h, w, h);
+                g2.setColor(Color.black);
+                g2.drawString("" + distanceMap.get(new Point(x, y)), x * w, y * h);
             }
         }
 
         g2.setColor(Color.green);
         g2.fillRect(targetX * w, targetY * h, w, h);
+
+        for (int x = 0; x < 99; x++) {
+            for (int y = 0; y < 99; y++) {
+                g2.setColor(Color.black);
+                Point cur = new Point(x, y);
+                for (Point e : path) {
+                    if (e.equals(cur))
+
+                        g2.fillRect(x * w, y * h, w, h);
+                }
+            }
+
+        }
 
     }
 
@@ -77,11 +94,46 @@ public class PathFinder extends JPanel {
         frame.setVisible(true);
     }
 
+    public void calculatePath(int targetX, int targetY) {
+        Point current = new Point(targetX, targetY);
+        Queue<Point> points = new LinkedList<>();
+        points.offer(current);
+        double currentDistance = distanceMap.get(current);
+        path = new ArrayList<>();
+        path.add(current);
+
+
+        while (!points.isEmpty()) {
+            current = points.poll();
+            for (int x = -1; x <= 1; x++) {
+                for (int y = -1; y <= 1; y++) {
+
+                    Point neighbour = new Point(current.x + x, current.y + y);
+
+                    if (distanceMap.get(neighbour) == null) {
+                        path.add(current);
+                        path.add(neighbour);
+                        continue;
+                    }
+
+                    double checkNew = distanceMap.get(neighbour);
+
+                    if (checkNew == currentDistance-1) {
+                        currentDistance = checkNew;
+                        points.offer(neighbour);
+                        path.add(neighbour);
+                    }
+                }
+            }
+        }
+        System.out.println(path);
+    }
+
     public void calculateDistanceMap(int targetX, int targetY) {
         distanceMap = new HashMap<>();
         ArrayList<Point> collisionTilesList = new ArrayList<>();
-        for (int x = 0; x < 100 - 1; x++) {
-            for (int y = 0; y < 100 - 1; y++) {
+        for (int x = 0; x < 100; x++) {
+            for (int y = 0; y < 100; y++) {
                 if (!(this.layerData.get(y * 100 + x) == 0)) {
                     collisionTilesList.add(new Point(x, y));
                 }
@@ -120,6 +172,7 @@ public class PathFinder extends JPanel {
                     if (d < distance[(int) p.getX() + x][(int) p.getY() + y] && !map[(int) p.getX() + x][(int) p.getY() + y]) {
                         distance[(int) p.getX() + x][(int) p.getY() + y] = d;
                         points.offer(new Point(((Point) p).x + x, ((Point) p).y + y));
+                        distanceMap.put(new Point(((Point) p).x + x, ((Point) p).y + y), (int)d);
                     }
                 }
             }
