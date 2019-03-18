@@ -154,10 +154,19 @@ public class GUIMain extends Application {
             update();
         });
 
+
+        //TODO: IMPORTANT! After loading a file with added teachers (with buttons) they aren't shown in the teacher selection combobox.!!!!
+        //TODO: same with classrooms and subjects
         //will open windows explorer to open a file with object.
         gui.getBtnOpenSchedule().setOnAction(event -> {
             agenda = (fileController.openFile(createViewWindow));
             update();
+            updateScene();
+            createLesson.update();
+            createTeacherWindow.update();
+
+
+
         });
 
         // will let you select a lesson to view/change, will load in all information.
@@ -248,7 +257,7 @@ public class GUIMain extends Application {
             ArrayList<Label> labelArrayList = new ArrayList<>();
             ArrayList<TextField> txtArrayList = new ArrayList<>();
 
-            Label lblSeats = new Label("Amount of seats:");
+            Label lblSeats = new Label("Capacity:");
             labelArrayList.add(lblSeats);
             Label lblLocation = new Label("Location:");
             labelArrayList.add(lblLocation);
