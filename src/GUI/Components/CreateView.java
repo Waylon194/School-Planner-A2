@@ -12,10 +12,14 @@ public class CreateView extends GridPane {
     public CreateView(Agenda agenda, GUIMain guiMain) {
         if (agenda.amountOfLessons() > 0) {
             for (int amountLessons = 0; amountLessons < agenda.amountOfLessons(); amountLessons++) {
-                Label label = new Label(agenda.returnLessons().get(amountLessons).getSubject().toString()
-                        + " " + agenda.returnLessons().get(amountLessons).getClassroom().getLocation()
-                        + " " + agenda.returnLessons().get(amountLessons).getTeachersAsString()
-                        + " " + agenda.returnLessons().get(amountLessons).getGroupsAsString()
+                String teachers = "";
+                for(Teacher teacher: agenda.getLessons().get(amountLessons).getTeachers()){
+                    teachers+=" "+teacher.getTeacherNumber();
+                }
+                Label label = new Label(agenda.getLessons().get(amountLessons).getSubject().toString()
+                        + " " + agenda.getLessons().get(amountLessons).getClassroom().getLocation()
+                        + " " + teachers
+                        + " " + agenda.getLessons().get(amountLessons).getGroupsAsString()
                 );
 
                 Button button = new Button("Delete");

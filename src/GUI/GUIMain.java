@@ -1,6 +1,7 @@
 package GUI;
 
 import Data.*;
+import Data.Class;
 import GUI.Components.*;
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -9,6 +10,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.PixelReader;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -37,7 +39,6 @@ public class GUIMain extends Application {
     private Stage errorStage = new Stage();
     private Button btnSubmit;
     private FileController fileController = new FileController();
-    private boolean condition = true;
 
     public static void main(String[] args) {
         launch("Gui.java");
@@ -48,14 +49,18 @@ public class GUIMain extends Application {
         this.createView = new CreateView(agenda, this);
         this.viewScene = new Scene(createView);
         createViewWindow.setScene(viewScene);
+
     }
 
     public void update() {
         drawSchedule();
+
     }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        primaryStage.setWidth(1080);
+        primaryStage.setHeight(700);
         primaryStage.setScene(mainWindow);
         primaryStage.setTitle("School Planner");
         buttonhandler();
@@ -79,122 +84,69 @@ public class GUIMain extends Application {
         createLesson.getButtonCancelLesson().setOnAction(event -> createLessonWindow.close());
         //saves lesson to a object and closes window WIP!
         createLesson.getButtonSaveLesson().setOnAction(event -> {
-            boolean teachers = false;
-            boolean classroom = false;
-            boolean groups = false;
-            boolean subject = false;
-            boolean beginTime = false;
-            boolean endTime = false;
-            int popularity = 1;
 
-            if (getSelectedTeachers().size() > 0){
-                teachers = true;
-            }
-            else{
-                System.out.println("Choose Teacher!");
-            }
 
-            if (!(createLesson.getClassroomComboBox().getSelectionModel().isEmpty())){
-                classroom = true;
-            }
-            else {
-                System.out.println("Choose classroom!");
-            }
+            try{
 
-            if(getSelectedGroups().size() > 0){
-                groups = true;
-            }
-            else {
-                System.out.println("Select group(s)!");
-            }
+                boolean oneOfMillionConditions = true;
+                ArrayList<Teacher> teachers = getSelectedTeachers(this.agenda);
+                System.out.println(teachers);
+                Interval lessonInterval = new Interval(createLesson.getChosenStartTime(),createLesson.getChosenEndTime());
+                ArrayList<Group> groups = getSelectedGroups();
+                Classroom classroom = createLesson.getChosenClasroom();
+                int popularity = createLesson.getPopularity();
+                Subject subject = createLesson.getChosenSubject();
 
-            if (!(createLesson.getSubjectComboBox().getSelectionModel().isEmpty())){
-                subject = true;
-            }
-            else{
-                System.out.println("Choose subject!");
-            }
-
-            if(!(createLesson.getComboStartTime().getSelectionModel().isEmpty())){
-                beginTime = true;
-            }
-            else{
-                System.out.println("Choose begin time!");
-            }
-
-            if(!(createLesson.getComboEndTime().getSelectionModel().isEmpty())){
-                endTime = true;
-            }
-            else{
-                System.out.println("Choose end time!");
-            }
-
-            if(createLesson.getChosenStartTime()!= null
-                    && createLesson.getChosenEndTime()!= null
-                    && (createLesson.getChosenEndTime().isAfter(createLesson.getChosenStartTime())
-                    || createLesson.getChosenEndTime().isEqual(createLesson.getChosenStartTime()))) {
-                Interval interval = new Interval(createLesson.getChosenStartTime(), createLesson.getChosenEndTime());
-
-                getSelectedTeachers().forEach((key, value) -> {
-                    if (!(value.isAvailable(interval))) {
-                        this.condition = false;
-//                        System.out.println("Teacher " + value + " is not available at this time");
-                        createErrorStage(new Label("Teacher is nog available at this time"));
+                for (Teacher teacher: teachers) {
+                    if (!teacher.isAvailable(lessonInterval)) {
+                        createErrorStage(new Label(teacher + "is not availabe at this time"));
                         errorStage.show();
-                        update();
-                        updateScene();
-                        createLessonWindow.close();
-                    } else {
-                        this.condition = true;
+                        oneOfMillionConditions = false;
                     }
+                }
+                for(Group group: groups) {
+                    if (!group.isAvailable(lessonInterval)) {
+                        createErrorStage(new Label(group + "is not availabe at this time"));
+                        errorStage.show();
+                        oneOfMillionConditions = false;
+                    }
+                }
+                if (!classroom.isAvailable(lessonInterval)){
+                    oneOfMillionConditions = false;
+                    createErrorStage(new Label(classroom + "is not availabe at this time"));
+                }
+
+                if(oneOfMillionConditions){
+
+                teachers.forEach(teacher -> {
+                    teacher.makeUnavailable(lessonInterval);
                 });
 
-                if (!(createLesson.getChosenClasroom().isAvailable(interval))) {
-                    this.condition = false;
-//                    System.out.println(createLesson.getChosenClasroom() + " is not available at " + interval);
-                    createErrorStage(new Label("Classroom is not available at this time"));
-                    this.errorStage.show();
-                }
-                else {
-                    this.condition = true;
-                }
-
-                getSelectedGroups().forEach(group -> {
-                    if (!(group.isAvailable(interval))) {
-                        this.condition = false;
-                        System.out.println(group + " is already planned at " + interval);
-                        createErrorStage(new Label("Group is not available at this time"));
-                        this.errorStage.show();
-                    }
-                    else {
-                        this.condition = true;
-                    }
+                groups.forEach(group -> {
+                    group.makeUnavailable(lessonInterval);
                 });
 
-                if (teachers && classroom && groups && subject && beginTime && endTime && this.condition && popularity != 0) {
-                    //TODO: fix the addLesson->deleteLesson -> addLesson (not possible) BUG!
-                    agenda.returnLessons().add(new Lesson(getSelectedTeachers(), createLesson.getChosenClasroom(), getSelectedGroups(), createLesson.getChosenSubject(), interval, popularity));
-                    updateScene();
-                    update();
-                    createLessonWindow.close();
-                    createLesson.getChosenClasroom().makeUnavailable(interval);
-                    for (Group selectedGroup : getSelectedGroups()) {
-                        selectedGroup.makeUnavailable(interval);
-                    }
-                    getSelectedTeachers().forEach((key, value) -> {
-                        agenda.getTeachers().get(key).makeUnavailable(interval);
-                    });
+                classroom.makeUnavailable(lessonInterval);
+
+                Lesson lesson = new Lesson(teachers,classroom,groups,subject,lessonInterval,popularity);
+                agenda.addLesson(lesson);
+                createLessonWindow.close();
+                update();
+                updateScene();
                 }
+
+
+
             }
+            catch (Exception exception){
+                createErrorStage(new Label("Begin time can not be after end time"));
+                errorStage.show();
+                exception.printStackTrace();
+            }
+
         });
 
-        //opens window to add groups WIP!
-        createLesson.getButtonGroup().setOnAction(event -> {
-            createGroupWindow2.setScene(groupWindow);
-            createGroupWindow2.setTitle("Select group(s):");
-            createGroupWindow2.show();
-            update();
-        });
+
 
         //will open windows explorer to save object to file.
         gui.getBtnSaveSchedule().setOnAction(event -> {
@@ -210,10 +162,12 @@ public class GUIMain extends Application {
 
         // will let you select a lesson to view/change, will load in all information.
         gui.getBtnViewLesson().setOnAction(event -> {
+
             createViewWindow.setScene(viewScene);
             createViewWindow.setTitle("Change/View");
             createViewWindow.show();
             update();
+            System.out.println(agenda.getLessons().size());
         });
 
         gui.getBtnAddTeacher().setOnAction(e -> {
@@ -259,16 +213,35 @@ public class GUIMain extends Application {
             Scene scene = new Scene(gridPane);
 
             btnSubmit.setOnAction(event -> {
-                Teacher newTeacher = new Teacher(txtFirstName.getText(), txtAdditive.getText(), txtLastName.getText(), Integer.parseInt(txtAge.getText()),
-                        0, 0, txtTeachNumber.getText());
-                agenda.addTeacher(newTeacher);
-                createTeacherWindow.update();
-                createViewWindow.close();
+                if(!txtFirstName.getText().isEmpty()
+                        && !txtLastName.getText().isEmpty()
+                        && !txtAge.getText().isEmpty()
+                        && !txtTeachNumber.getText().isEmpty()) {
+                    try{
+                        Teacher newTeacher = new Teacher(txtFirstName.getText(), txtAdditive.getText(), txtLastName.getText(), Integer.parseInt(txtAge.getText()),
+                                0, 0, txtTeachNumber.getText());
+                        createViewWindow.close();
+
+                        agenda.addTeacher(newTeacher);
+                        createTeacherWindow.update();
+
+
+                    }
+                    catch (Exception exception){
+                        createErrorStage(new Label("Age has to be a numeric value"));
+                        this.errorStage.show();
+                    }
+                }
+                else {
+                    createErrorStage(new Label("Enter all needed values"));
+                    this.errorStage.show();
+
+                }
             });
 
             createViewWindow.setScene(scene);
             createViewWindow.show();
-            update();
+           // update();
         });
 
         gui.getBtnAddClassroom().setOnAction(event -> {
@@ -299,12 +272,31 @@ public class GUIMain extends Application {
             gridpane.add(btnSubmit, 3, labelArrayList.size() + 1);
 
             btnSubmit.setOnAction(e -> {
-                Classroom newClassroom = new Classroom(agenda.getClassrooms().size(), Integer.parseInt(txtSeat.getText()), txtLocation.getText(), true, true);
-                agenda.addClassroom(newClassroom);
-                gui.addClassroomGrid();
-                System.out.println(agenda.getClassrooms());
-                createLesson.update();
-                createViewWindow.close();
+
+                if(!(txtSeat.getText().isEmpty()) && !(txtLocation.getText().isEmpty())){
+                    try{
+                        Integer.parseInt(txtSeat.getText());
+                        System.out.println(agenda.getClassrooms().size());
+                        Classroom newClassroom = new Classroom(agenda.getClassrooms().size() +1, Integer.parseInt(txtSeat.getText()), txtLocation.getText(), true, true);
+                        agenda.addClassroom(newClassroom);
+                        gui.addClassroomGrid();
+                        createLesson.update();
+                        createViewWindow.close();
+                    }
+                    catch (Exception exception){
+                        createErrorStage(new Label("Capacity has to be a numeric value"));
+                        this.errorStage.show();
+                    }
+
+                }
+                else {
+                    createErrorStage(new Label("Enter classroom and/or capacity"));
+                    this.errorStage.show();
+
+                }
+
+
+
             });
 
             Scene scene = new Scene(gridpane);
@@ -331,10 +323,21 @@ public class GUIMain extends Application {
             gridpane.add(btnSubmit, 3, 0);
 
             btnSubmit.setOnAction(e -> {
-                Subject newSubject = new Subject(subjectTextField.getText());
-                agenda.addSubject(newSubject);
-                createLesson.update();
-                createViewWindow.close();
+
+                if(!(subjectTextField.getText().isEmpty())) {
+                    Subject newSubject = new Subject(subjectTextField.getText());
+                    agenda.addSubject(newSubject);
+                    createLesson.update();
+                    createViewWindow.close();
+
+
+                }
+                else{
+                    Label errorLabel = new Label("You can not create an empty subject");
+                    createErrorStage(errorLabel);
+                    this.errorStage.show();
+
+                }
             });
 
             Scene scene = new Scene(gridpane);
@@ -348,20 +351,35 @@ public class GUIMain extends Application {
 
         });
 
+        createLesson.getButtonGroup().setOnAction(event -> {
+            createGroupWindow2.setScene(groupWindow);
+            createGroupWindow2.setTitle("Select group(s):");
+            createGroupWindow2.show();
+            update();
+        });
+
         createGroupWindow.getSaveGroupsButton().setOnAction(event -> {
             createGroupWindow2.close();
             update();
+            System.out.println(getSelectedGroups());
         });
 
         createLesson.getButtonTeachers().setOnAction(event -> {
             createTeacherWindowStage.setScene(teacherWindow);
             createTeacherWindowStage.setTitle("Select Teacher(s):");
             createTeacherWindowStage.show();
+            update();
+
+
         });
 
         createTeacherWindow.getSaveTeachersButton().setOnAction(event -> {
             createTeacherWindowStage.close();
             update();
+            System.out.println(getSelectedTeachers(this.agenda));
+            for(Classroom classroom: agenda.getClassrooms()){
+                System.out.println(classroom.getNumber());
+            }
         });
     }
 
@@ -371,23 +389,24 @@ public class GUIMain extends Application {
         for (CheckBox checkBox : createGroupWindow.getCheckBoxes()) {
             if (checkBox.isSelected()) {
                 selected.add(agenda.getGroups().get(i));
+
             }
             i++;
         }
         return selected;
     }
 
-    public HashMap<String, Teacher> getSelectedTeachers() {
-        HashMap<String,Teacher> selected = new HashMap<>();
+    public ArrayList<Teacher> getSelectedTeachers(Agenda agenda) {
+        ArrayList<Teacher> selected = new ArrayList<>();
         int i = 0;
-        String number = "";
         for (CheckBox checkBox : createTeacherWindow.getCheckBoxes()) {
             if (checkBox.isSelected()) {
-                number = checkBox.toString().substring(checkBox.toString().length()-4,checkBox.toString().length()-1);
-                selected.put(number, agenda.getTeachers().get(number));
+                selected.add(agenda.getTeachers().get(i));
+                System.out.println(i);  //TODO WHYYYYYYYYYYYYYYYYYYYY IT BEGINS AT 7
             }
             i++;
         }
+
         return selected;
     }
 
@@ -430,9 +449,7 @@ public class GUIMain extends Application {
         });
     }
 
-    public void setCondition(Boolean condition){
-        this.condition = condition;
-    }
+
 
     public void createErrorStage(Label label) {
         this.btnSubmit = new Button("OK");
