@@ -50,7 +50,13 @@ public class Camera {
     }
 
     public void mouseScroll(ScrollEvent e) {
-        zoom *= (1 + e.getDeltaY()/250.0f);
-        resizable.draw(g2d);
+        if(zoom>0.3 && zoom<1.3) {
+            zoom *= (1 + e.getDeltaY() / 250.0f);
+            resizable.draw(g2d);
+        }else if(zoom<0.3){
+            zoom = 0.31;
+        }else if(zoom>1.3){
+            zoom = 1.29;
+        }
     }
 }

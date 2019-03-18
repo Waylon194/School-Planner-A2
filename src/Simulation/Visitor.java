@@ -1,13 +1,14 @@
 package Simulation;
 
+import org.json.simple.parser.ParseException;
+
 import javax.imageio.ImageIO;
 import java.awt.*;
-import java.awt.geom.AffineTransform;
-import java.awt.geom.Ellipse2D;
-import java.awt.geom.Point2D;
+import java.awt.geom.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Visitor {
 	private Point2D position;
@@ -34,6 +35,23 @@ public class Visitor {
 		this.target = new Point2D.Double(400,400);
 	}
 
+	public boolean hasCollision() throws IOException, ParseException {
+
+		ArrayList<Integer> layerData = new ArrayList<>(new Tileset().getLayerData(5, 6));
+		for (int x = 0; x < 100-1; x++) {
+			for (int y = 0; y < 100-1; y++) {
+				if (!(layerData.get(x  * 100 + y) == 0)) {
+					Area currBlock = new Area(new Rectangle2D.Double(x*32, y*32, 32,32));
+					if (currBlock.contains(this.position)) {
+						return true;
+					}
+				}
+			}
+		}
+
+		return false;
+	}
+
 
 	public void update(ArrayList<Visitor> visitors)
 	{
@@ -44,10 +62,16 @@ public class Visitor {
 		boolean hasCollision = false;
 		for(Visitor visitor : visitors)
 		{
-			if(visitor != this && visitor.hasCollision(newPosition))
-			{
-				hasCollision = true;
-				break;
+			try {
+				if(visitor != this && (visitor.hasCollision(newPosition) || hasCollision()))
+				{
+					hasCollision = true;
+					break;
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			} catch (ParseException e) {
+				e.printStackTrace();
 			}
 		}
 

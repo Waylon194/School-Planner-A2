@@ -14,9 +14,10 @@ import java.util.Queue;
 public class PathFinder extends JPanel {
     public HashMap<Point2D, Integer> distanceMap;
     private ArrayList<Integer> layerData;
+
     {
         try {
-            layerData = new ArrayList<>(new Tileset().getLayerData(4, 5));
+            layerData = new ArrayList<>(new Tileset().getLayerData(5, 6));
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ParseException e) {
@@ -33,11 +34,10 @@ public class PathFinder extends JPanel {
     boolean fillValue;
 
     PathFinder() {
-        for (int i = 0; i < 1000; i++)
-            map[(int) (Math.random() * 100)][(int) (Math.random() * 100)] = true; // map randomizer
+//        for (int i = 0; i < 1000; i++)
+//            map[(int) (Math.random() * 100)][(int) (Math.random() * 100)] = true; // map randomizer
         for (int i = 0; i < 100; i++)
             map[0][i] = map[99][i] = map[i][0] = map[i][99] = true; // map border init
-        calculateDistanceMap(30, 30);
     }
 
     public void paintComponent(Graphics g) {
@@ -76,16 +76,16 @@ public class PathFinder extends JPanel {
 
     public void calculateDistanceMap(int targetX, int targetY) {
         distanceMap = new HashMap<>();
-        ArrayList<Point> walkableTilesList = new ArrayList<>();
-        for (int x = 0; x < 100; x++) {
-            for (int y = 0; y < 100; y++) {
-                if (!(this.layerData.get(x * y) == 0)) {
-                    walkableTilesList.add(new Point(x, y));
+        ArrayList<Point> collisionTilesList = new ArrayList<>();
+        for (int x = 0; x < 100 - 1; x++) {
+            for (int y = 0; y < 100 - 1; y++) {
+                if (!(this.layerData.get(y * 100 + x) == 0)) {
+                    collisionTilesList.add(new Point(x, y));
                 }
             }
         }
-//        System.out.println(walkableTilesList);
-//        System.out.println(walkableTilesList.size());
+//        System.out.println(collisionTilesList);
+//        System.out.println(collisionTilesList.size());
 
         for (int x = 0; x < 100; x++)
             for (int y = 0; y < 100; y++)
@@ -101,16 +101,19 @@ public class PathFinder extends JPanel {
             Point2D p = points.poll();
 
             for (int x = -1; x <= 1; x++) {
+                if (p.getX() + x < 0 || p.getX() >= 100) {
+                    continue;
+                }
                 for (int y = -1; y <= 1; y++) {
                     // Check new point is inside field
-
-                    if (!walkableTilesList.contains(p)) {
-                        //if (p.getX() + x < 0 || p.getX() >= 100 || p.getY() + y < 0 || p.getY() + y >= 100 || Math.abs(x) == Math.abs(y)) {
-                            continue;
-                        //}
+                    if (p.getY() + y < 0 || p.getY() + y >= 100 || Math.abs(x) == Math.abs(y)) {
+                        continue;
                     }
 
                     double d = distance[(int) p.getX()][(int) p.getY()] + Math.sqrt(x * x + y * y);
+                    if (collisionTilesList.contains(p)) {
+                        d = Integer.MAX_VALUE;
+                    }
                     if (d < distance[(int) p.getX() + x][(int) p.getY() + y] && !map[(int) p.getX() + x][(int) p.getY() + y]) {
                         distance[(int) p.getX() + x][(int) p.getY() + y] = d;
                         points.offer(new Point(((Point) p).x + x, ((Point) p).y + y));
