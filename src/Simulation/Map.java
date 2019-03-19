@@ -50,7 +50,7 @@ public class Map {
                     if (value < 2715) {
                         AffineTransform tx = new AffineTransform();
                         tx.translate(x * scaleFactor, y * scaleFactor);
-                        graphics.drawImage(tileset.getTile((int) value - 1), tx, null);
+                        graphics.drawImage(tileset.getTile((int) value -1), tx, null);
                     } else {
                         AffineTransform tx = new AffineTransform();
                         tx.translate(x * scaleFactor, y * scaleFactor);

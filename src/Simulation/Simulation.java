@@ -41,7 +41,7 @@ public class Simulation extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        this.canvas = new Canvas(3840, 2160);
+        this.canvas = new Canvas(3840, 3840);
         this.stage = primaryStage;
         FXGraphics2D g2d = new FXGraphics2D(canvas.getGraphicsContext2D());
         camera = new Camera(canvas, graphics -> {
@@ -81,7 +81,7 @@ public class Simulation extends Application {
 
         visitors = new ArrayList<>();
 
-        while(visitors.size() < 200) {
+        while(visitors.size() < 300) {
             double x = Math.random()*1920;
             double y = Math.random()*1080;
             boolean hasCollision = false;

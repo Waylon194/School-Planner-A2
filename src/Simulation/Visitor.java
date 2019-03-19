@@ -33,7 +33,7 @@ public class Visitor {
 		this.speed += Math.random();
 		this.angle = Math.random()*2*Math.PI;
 
-		this.target = new Point2D.Double(400,400);
+		this.target = new Point2D.Double(673.5+986,185.5+261);
 	}
 
 	public boolean hasCollision() throws IOException, ParseException {

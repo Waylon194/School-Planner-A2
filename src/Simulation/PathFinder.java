@@ -10,6 +10,7 @@ import java.awt.geom.Point2D;
 import java.io.IOException;
 import java.util.*;
 import java.util.List;
+import java.util.Map;
 
 public class PathFinder extends JPanel {
     public Map<Point2D,Integer> distanceMap;
