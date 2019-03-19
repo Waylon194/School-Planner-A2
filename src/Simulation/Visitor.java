@@ -16,7 +16,8 @@ public class Visitor {
 
 	private double speed = 5;
 	private BufferedImage image;
-
+	double frameTime = 0.1;
+	int frame = 0;
 	private Point2D target;
 
 
@@ -53,25 +54,19 @@ public class Visitor {
 	}
 
 
-	public void update(ArrayList<Visitor> visitors)
+	public void update(ArrayList<Visitor> visitors, double deltaTime)
 	{
 		Point2D newPosition = new Point2D.Double(this.position.getX() + this.speed * Math.cos(angle),
-																			this.position.getY() + this.speed * Math.sin(angle));
+				this.position.getY() + this.speed * Math.sin(angle));
 
 
 		boolean hasCollision = false;
 		for(Visitor visitor : visitors)
 		{
-			try {
-				if(visitor != this && (visitor.hasCollision(newPosition) || hasCollision()))
-				{
-					hasCollision = true;
-					break;
-				}
-			} catch (IOException e) {
-				e.printStackTrace();
-			} catch (ParseException e) {
-				e.printStackTrace();
+			if(visitor != this && visitor.hasCollision(newPosition))
+			{
+				hasCollision = true;
+				break;
 			}
 		}
 
@@ -102,6 +97,13 @@ public class Visitor {
 			angle+=0.1;
 		else
 			this.angle = targetAngle;
+
+		frameTime -= deltaTime;
+		if(frameTime < 0)
+		{
+			frameTime = 1/30.0;
+			frame = (frame+1)%8;
+		}
 
 	}
 
