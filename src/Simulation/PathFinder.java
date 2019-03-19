@@ -133,6 +133,8 @@ public class PathFinder extends JPanel {
     public void calculateDistanceMap(int targetX, int targetY) {
         distanceMap = new HashMap<>();
         ArrayList<Point> collisionTilesList = new ArrayList<>();
+        double d;
+
         for (int x = 0; x < 100-1; x++) {
             for (int y = 0; y < 100-1; y++) {
                 if (this.collision.get(y * 100 + x) > 0) {
@@ -156,6 +158,11 @@ public class PathFinder extends JPanel {
 
         while (!points.isEmpty()) {
             Point2D p = points.poll();
+            if (collisionTilesList.contains(p)) {
+                d = Integer.MAX_VALUE;
+                distanceMap.put(p,(int)d);
+                continue;
+            }
 
             for (int x = -1; x <= 1; x++) {
                 if (p.getX() + x < 0 || p.getX() >= 100) {
@@ -167,12 +174,7 @@ public class PathFinder extends JPanel {
                         continue;
                     }
 
-                    double d = distance[(int) p.getX()][(int) p.getY()] + Math.sqrt(x * x + y * y);
-
-                    if (collisionTilesList.contains(p)) {
-                        d = Integer.MAX_VALUE;
-                        distanceMap.put(p,(int)d);
-                    }
+                     d = distance[(int) p.getX()][(int) p.getY()] + Math.sqrt(x * x + y * y);
 
                     if (d < distance[(int) p.getX() + x][(int) p.getY() + y] && !map[(int) p.getX() + x][(int) p.getY() + y]) {
 
