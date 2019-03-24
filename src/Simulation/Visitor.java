@@ -6,7 +6,10 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.geom.*;
 import java.awt.image.BufferedImage;
+import java.awt.image.BufferedImageOp;
+import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.AnnotatedArrayType;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -19,21 +22,61 @@ public class Visitor {
 	double frameTime = 0.1;
 	int frame = 0;
 	private Point2D target;
+	private int currentFrame;
+	private BufferedImage[] tilesGeorge;
+
+	private BufferedImage[] walkRight;
+	private BufferedImage[] walkLeft;
+	private BufferedImage[] walkForward;
+	private BufferedImage[] walkBackward;
 
 
-	public Visitor(Point2D position)
-	{
+	public Visitor(Point2D position) {
+		this.currentFrame = 0;
 		this.position = position;
 		this.angle = 0;
 		try {
-			image = ImageIO.read(this.getClass().getResource("/visitor.png"));
+			BufferedImage imageGeorge = ImageIO.read(new File("Resources/Character/george.png"));
+
+			tilesGeorge = new BufferedImage[16];
+
+
+			walkRight = new BufferedImage[4];
+			walkForward = new BufferedImage[4];
+			walkBackward = new BufferedImage[4];
+			walkLeft = new BufferedImage[4];
+
+
+			for (int i = 0; i < 16; i++) {
+				tilesGeorge[i] = imageGeorge.getSubimage(48 * (i % 4), 48 * (i / 4), 48, 48);
+			}
+			walkRight[0] = tilesGeorge[3];
+			walkRight[1] = tilesGeorge[7];
+			walkRight[2] = tilesGeorge[11];
+			walkRight[3] = tilesGeorge[15];
+
+			walkLeft[0] = tilesGeorge[1];
+			walkLeft[1] = tilesGeorge[5];
+			walkLeft[2] = tilesGeorge[9];
+			walkLeft[3] = tilesGeorge[13];
+
+			walkForward[0] = tilesGeorge[2];
+			walkForward[1] = tilesGeorge[6];
+			walkForward[2] = tilesGeorge[10];
+			walkForward[3] = tilesGeorge[14];
+
+			walkBackward[0] = tilesGeorge[0];
+			walkBackward[1] = tilesGeorge[4];
+			walkBackward[2] = tilesGeorge[8];
+			walkBackward[3] = tilesGeorge[12];
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		this.speed += Math.random();
 		this.angle = Math.random()*2*Math.PI;
 
-		this.target = new Point2D.Double(673.5+986,185.5+261);
+		this.target = new Point2D.Double(0,0);
 	}
 
 	public boolean hasCollision() throws IOException, ParseException {
@@ -54,8 +97,10 @@ public class Visitor {
 	}
 
 
-	public void update(ArrayList<Visitor> visitors, double deltaTime)
-	{
+	public void update(ArrayList<Visitor> visitors, double deltaTime) {
+		if(currentFrame<3){
+			currentFrame++;
+		}else currentFrame =0;
 		Point2D newPosition = new Point2D.Double(this.position.getX() + this.speed * Math.cos(angle),
 				this.position.getY() + this.speed * Math.sin(angle));
 
@@ -108,26 +153,32 @@ public class Visitor {
 	}
 
 
-	public void draw(Graphics2D g)
-	{
+	public void draw(Graphics2D g) {
 		AffineTransform tx = new AffineTransform();
 		tx.translate(position.getX()-32, position.getY()-32);
 		tx.rotate(angle, 32, 32);
+		System.out.println(angle);
 
-		g.drawImage(image, tx, null);
+		if(angle>-Math.PI/2&& angle<0) {
+			g.drawImage(walkRight[currentFrame], tx, null);
+		}
+		else if(angle>-Math.PI && angle<-Math.PI/2) {
+			g.drawImage(walkForward[currentFrame], tx, null);
+		}
+		else if(angle>Math.PI/2) {
+			g.drawImage(walkLeft[currentFrame], tx, null);
+		}
+		else {
+			g.drawImage(walkBackward[currentFrame],tx,null);
 
-		g.draw(new Ellipse2D.Double(position.getX()-16, position.getY()-16,32,32));
+		}
+
 
 	}
 
 
-	public boolean hasCollision(Visitor otherVisitor)
-	{
-		return otherVisitor.position.distance(position) < 64;
-	}
-	public boolean hasCollision(Point2D otherPosition)
-	{
-		return otherPosition.distance(position) < 64;
+	public boolean hasCollision(Point2D otherPosition) {
+		return otherPosition.distance(position) < 32;
 	}
 
 

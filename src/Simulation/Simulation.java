@@ -71,6 +71,10 @@ public class Simulation extends Application {
 
             }
         }.start();
+        canvas.setOnMouseMoved(e -> {
+            for(Visitor visitor : visitors)
+                visitor.setTarget(new Point2D.Double(e.getX(), e.getY()));
+        });
 
 
     }
@@ -81,9 +85,9 @@ public class Simulation extends Application {
 
         visitors = new ArrayList<>();
 
-        while(visitors.size() < 300) {
-            double x = Math.random()*1920;
-            double y = Math.random()*1080;
+        while(visitors.size() < 1) {
+            double x = 2000;
+            double y =0;
             boolean hasCollision = false;
             for(Visitor visitor : visitors)
                 if(visitor.hasCollision(new Point2D.Double(x,y)))
