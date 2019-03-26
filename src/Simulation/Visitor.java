@@ -10,6 +10,7 @@ import java.awt.image.BufferedImageOp;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.AnnotatedArrayType;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -23,6 +24,7 @@ public class Visitor {
 	int frame = 0;
 	private Point2D target;
 	private int currentFrame;
+	private ArrayList<Area> collisionAreas;
 	private BufferedImage[] tilesGeorge;
 
 	private BufferedImage[] walkRight;
@@ -36,8 +38,8 @@ public class Visitor {
 		this.position = position;
 		this.angle = 0;
 		try {
+			this.collisionAreas = hasCollisionBlock();
 			BufferedImage imageGeorge = ImageIO.read(new File("Resources/Character/george.png"));
-
 			tilesGeorge = new BufferedImage[16];
 
 
@@ -70,31 +72,45 @@ public class Visitor {
 			walkBackward[2] = tilesGeorge[8];
 			walkBackward[3] = tilesGeorge[12];
 
-		} catch (IOException e) {
+		} catch (IOException | ParseException e) {
 			e.printStackTrace();
 		}
 		this.speed += Math.random();
 		this.angle = Math.random()*2*Math.PI;
 
-		this.target = new Point2D.Double(0,0);
+		this.target = new Point2D.Double(500,500);
 	}
 
-	public boolean hasCollision() throws IOException, ParseException {
+	public ArrayList<Area> hasCollisionBlock() throws IOException, ParseException {
 
 		ArrayList<Integer> layerData = new ArrayList<>(new Tileset().getLayerData(5, 6));
-		for (int x = 0; x < 100-1; x++) {
-			for (int y = 0; y < 100-1; y++) {
-				if (!(layerData.get(x  * 100 + y) == 0)) {
-					Area currBlock = new Area(new Rectangle2D.Double(x*32, y*32, 32,32));
-					if (currBlock.contains(this.position)) {
-						return true;
-					}
-				}
-			}
-		}
 
-		return false;
+
+		ArrayList<Area> collisionLayer = new ArrayList<>();
+		int i = 0;
+		int x = 0;
+		int y = 0;
+		for(Integer integer: layerData) {
+			if (!(integer == 0)) {
+				collisionLayer.add(new Area(new Rectangle2D.Double(x * 32, y * 32, 32, 32)));
+			}
+			if ((i != 0) && ((i + 1) % 100 == 0) && i != 9999) {
+				x = 0;
+				y++;
+			} else if (i == 9999) {
+				x = 0;
+				y = 0;
+
+			} else {
+				x++;
+			}
+			i++;
+		}
+		return collisionLayer;
 	}
+
+
+
 
 
 	public void update(ArrayList<Visitor> visitors, double deltaTime) {
@@ -108,6 +124,15 @@ public class Visitor {
 		boolean hasCollision = false;
 		for(Visitor visitor : visitors)
 		{
+			//TODO check collision with walls, etc...
+			/*
+			for(Area area: collisionAreas){
+				if(visitor.hasCollision(area.getBounds().getLocation())){
+					hasCollision = true;
+					break;
+
+				}
+			}*/
 			if(visitor != this && visitor.hasCollision(newPosition))
 			{
 				hasCollision = true;
@@ -123,8 +148,6 @@ public class Visitor {
 		{
 			this.angle += 0.2;
 		}
-
-
 
 
 		Point2D diff = new Point2D.Double(target.getX() - this.position.getX(), target.getY() - this.position.getY());
@@ -157,7 +180,7 @@ public class Visitor {
 		AffineTransform tx = new AffineTransform();
 		tx.translate(position.getX()-32, position.getY()-32);
 		tx.rotate(angle, 32, 32);
-		System.out.println(angle);
+
 
 		if(angle>-Math.PI/2&& angle<0) {
 			g.drawImage(walkRight[currentFrame], tx, null);
