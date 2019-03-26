@@ -1,23 +1,18 @@
 package Simulation;
 
-import javafx.scene.image.Image;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+
 import javax.imageio.ImageIO;
-import javax.imageio.ImageWriter;
-import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.awt.image.ImageObserver;
-import java.awt.image.ImageProducer;
-import java.awt.image.WritableRenderedImage;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
-import static java.lang.Math.toIntExact;
+import java.util.List;
 
 @SuppressWarnings("deprecation")
 public class Tileset {
@@ -90,17 +85,26 @@ public class Tileset {
         return (long) this.layers.get(layer)[tileValue];
     }
 
-    public ArrayList<Integer> getLayerData (int firstLayer, int secondLayer) {
+    public ArrayList<Integer> getLayerData(int firstLayer, int secondLayer) {
 
         ArrayList<Integer> layerDataList = new ArrayList<>();
 
         for (int layer = firstLayer; layer < secondLayer; layer++) {
             for (int tile = 0; tile < 10000; tile++) {
                 long value = getValue(tile, layer);
-                layerDataList.add((int)value);
+                layerDataList.add((int) value);
             }
         }
         return layerDataList;
+    }
+
+    public List<Integer> getLayer(int layer) throws IOException, ParseException {
+        Object[] objects = layers.get(layer);
+        List<Integer> layerData = new ArrayList<>();
+        for (Object object : objects) {
+            layerData.add((int) (long) object);
+        }
+        return layerData;
     }
 
 }
