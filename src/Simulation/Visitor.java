@@ -24,7 +24,7 @@ public class Visitor {
     int frame = 0;
     private Point2D target;
     private int currentFrame;
-    private List<Area> collisionAreas;
+    private ArrayList<Area> collisionAreas;
     private BufferedImage[] tilesGeorge;
 
     private BufferedImage[] walkRight;
