@@ -4,15 +4,11 @@ import org.json.simple.parser.ParseException;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
-import java.awt.geom.AffineTransform;
-import java.awt.geom.Area;
-import java.awt.geom.Ellipse2D;
-import java.awt.geom.Point2D;
+import java.awt.geom.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
@@ -26,11 +22,16 @@ public class Visitor {
     int frame = 0;
     private Point2D target;
     private int currentFrame;
-    private List<Area> collisionAreas;
+
+
     private BufferedImage[] tilesGeorge;
     private PathFinder p;
     private Queue<Point> path;
     private Point current;
+    private List<Area> walls;
+    private Area hitBox;
+    private Point2D mainTarget;
+
 
     private BufferedImage[] walkRight;
     private BufferedImage[] walkLeft;
@@ -38,15 +39,17 @@ public class Visitor {
     private BufferedImage[] walkBackward;
 
 
-    public Visitor(Point2D position, PathFinder p) throws IOException, ParseException {
+    public Visitor(Point2D position, PathFinder p, Simulation sim) throws IOException, ParseException {
         this.p = p;
+        this.walls = sim.getWalls();
         this.currentFrame = 0;
         this.position = position;
         this.angle = 0;
         this.target = new Point2D.Double(18 * c, 22 * c);
+        this.mainTarget = target;
         this.path = p.createPath(position, target);
+        this.hitBox = new Area(new Ellipse2D.Double(this.position.getX()-16 , this.position.getY(), 24, 24));
         try {
-            this.collisionAreas = hasCollisionBlock();
             BufferedImage imageGeorge = ImageIO.read(new File("Resources/Character/george.png"));
             tilesGeorge = new BufferedImage[16];
 
@@ -80,66 +83,62 @@ public class Visitor {
             walkBackward[2] = tilesGeorge[8];
             walkBackward[3] = tilesGeorge[12];
 
-        } catch (IOException | ParseException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
         this.speed = 0;
         this.current = path.poll();
-        target = new Point2D.Double(current.getX()*c,current.getY()*c);
+        target = new Point2D.Double(current.getX() * c, current.getY() * c);
     }
+
 
     public Point2D getPosition() {
         return position;
     }
 
-    public List<Area> hasCollisionBlock() throws IOException, ParseException {
-        List<Point> otherVisitors = new ArrayList<>();
-        List<Area> hasCollision = new ArrayList<>();
-
-        if (otherVisitors.contains(this.position))
-            hasCollision.add(new Area(new Ellipse2D.Double(this.position.getX() + 16, this.position.getY(), 32, 32)));
-
-        return hasCollision;
-    }
-
 
     public void update(ArrayList<Visitor> visitors, double deltaTime) {
-        target = new Point2D.Double(current.getX()*c,current.getY()*c);
-        if (position.distance(target) < c)
+
+        //implementation of the pathing
+        target = new Point2D.Double(current.getX() * c, current.getY() * c);
+        if (position.distance(target) < 20)
             if (path.isEmpty())
-            speed = 0;
+                speed = 0;
             else current = path.poll();
-        else speed = 2;
+        else speed = 3;
 
-
+        // switches animation frame and calculates new position
         if (currentFrame < 3) {
             currentFrame++;
         } else currentFrame = 0;
         Point2D newPosition = new Point2D.Double(this.position.getX() + this.speed * Math.cos(angle),
                 this.position.getY() + this.speed * Math.sin(angle));
 
+        //updates hitbox
+        hitBox = new Area(new Ellipse2D.Double(this.position.getX()-16, this.position.getY(), 24, 24));
 
+        //checks collision with visitors and walls
         boolean hasCollision = false;
+        for (Area wall : walls) {
+            if (wallCollition(newPosition,wall)) {
+                hasCollision = true;
+                break;
+            }
+        }
         for (Visitor visitor : visitors) {
             //TODO check collision with walls, etc...
-			/*
-			for(Area area: collisionAreas){
-				if(visitor.hasCollision(area.getBounds().getLocation())){
-					hasCollision = true;
-					break;
-
-				}
-			}*/
             if (visitor != this && visitor.hasCollision(newPosition)) {
                 hasCollision = true;
                 break;
             }
         }
-
         if (!hasCollision) {
             this.position = newPosition;
         } else {
-            this.angle += 0.2;
+            if (target.getX()-position.getX() > 0)
+            this.angle += 1;
+            else this.angle -= 1;
+            setTarget(new Point2D.Double(this.position.getX()+10,this.position.getY()));
         }
 
 
@@ -164,9 +163,7 @@ public class Visitor {
             frameTime = 1 / 30.0;
             frame = (frame + 1) % 8;
         }
-
     }
-
 
     public void draw(Graphics2D g) {
         AffineTransform tx = new AffineTransform();
@@ -184,8 +181,19 @@ public class Visitor {
             g.drawImage(walkBackward[currentFrame], tx, null);
 
         }
+        //debug
+        g.setColor(Color.BLUE);
+        g.fill(hitBox);
+        g.setColor(Color.RED);
+        g.fill(new Ellipse2D.Double(target.getX(),target.getY(),10,10));
 
 
+    }
+
+    public boolean wallCollition(Point2D newPos,Area v) {
+        Area a = v;
+        Area b = new Area(new Rectangle2D.Double(newPos.getX(),newPos.getY(),20,20));
+        return a.intersects(b.getBounds2D());
     }
 
 
@@ -196,6 +204,6 @@ public class Visitor {
 
     public void setTarget(Point2D target) {
         this.target = target;
-        this.path = p.createPath(this.position, target);
+//        this.path = p.createPath(this.position, target);
     }
 }
