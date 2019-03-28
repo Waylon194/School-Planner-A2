@@ -42,13 +42,13 @@ public class Visitor {
     private BufferedImage[] walkBackward;
 
 
-    public Visitor(Point2D position, PathFinder p, Simulation sim) throws IOException, ParseException {
+    public Visitor(Point2D position, PathFinder p, Simulation sim, Point2D target) throws IOException, ParseException {
         this.p = p;
         this.walls = sim.getWalls();
         this.currentFrame = 0;
         this.position = position;
         this.angle = 0;
-        this.target = new Point2D.Double(18 * c, 22 * c);
+        this.target = target;
         this.mainTarget = target;
         this.path = p.createPath(position, target);
         this.hitBox = new Area(new Ellipse2D.Double(this.position.getX(), this.position.getY(), 24, 24));

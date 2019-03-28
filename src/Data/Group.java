@@ -47,4 +47,8 @@ public class Group implements Serializable {
     public void makeUnavailable(Interval interval) {
         this.unavailable.add(interval);
     }
+
+    public int getGroupSize(){
+        return this.students.size();
+    }
 }
