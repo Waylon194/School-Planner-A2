@@ -102,10 +102,10 @@ public class Simulation extends Application {
             visitor.draw(graphics);
         }
         // debug
-        walls.forEach(e->{
-            graphics.setColor(Color.BLACK);
-            graphics.fill(e);
-        });
+//        walls.forEach(e->{
+//            graphics.setColor(Color.BLACK);
+//            graphics.fill(e);
+//        });
     }
 
     private List<Area> createWallArea() {

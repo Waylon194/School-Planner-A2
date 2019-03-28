@@ -22,6 +22,7 @@ public class Visitor {
     int frame = 0;
     private Point2D target;
     private int currentFrame;
+    private double turn = 1;
 
 
     private BufferedImage[] tilesGeorge;
@@ -48,7 +49,7 @@ public class Visitor {
         this.target = new Point2D.Double(18 * c, 22 * c);
         this.mainTarget = target;
         this.path = p.createPath(position, target);
-        this.hitBox = new Area(new Ellipse2D.Double(this.position.getX()-16 , this.position.getY(), 24, 24));
+        this.hitBox = new Area(new Ellipse2D.Double(this.position.getX(), this.position.getY(), 24, 24));
         try {
             BufferedImage imageGeorge = ImageIO.read(new File("Resources/Character/george.png"));
             tilesGeorge = new BufferedImage[16];
@@ -101,27 +102,32 @@ public class Visitor {
 
         //implementation of the pathing
         target = new Point2D.Double(current.getX() * c, current.getY() * c);
-        if (position.distance(target) < 20)
+        if (position.distance(target) < 16)
             if (path.isEmpty())
-                speed = 0;
+                if (mainTarget == null)
+                    speed = 0;
+                else setMainTarget(new Point2D.Double(36 * c, 11 * c));
             else current = path.poll();
-        else speed = 3;
+        else speed = 1.5;
 
         // switches animation frame and calculates new position
         if (currentFrame < 3) {
             currentFrame++;
         } else currentFrame = 0;
-        Point2D newPosition = new Point2D.Double(this.position.getX() + this.speed * Math.cos(angle),
+        Point2D newPosition = new Point2D.Double(
+                this.position.getX() + this.speed * Math.cos(angle),
                 this.position.getY() + this.speed * Math.sin(angle));
 
         //updates hitbox
-        hitBox = new Area(new Ellipse2D.Double(this.position.getX()-16, this.position.getY(), 24, 24));
+        hitBox = new Area(new Ellipse2D.Double(this.position.getX(), this.position.getY(), 24, 24));
 
         //checks collision with visitors and walls
         boolean hasCollision = false;
+        Point2D wallPos = null;
         for (Area wall : walls) {
-            if (wallCollition(newPosition,wall)) {
+            if (wallCollition(newPosition, wall)) {
                 hasCollision = true;
+                wallPos = new Point2D.Double(wall.getBounds2D().getCenterX(), wall.getBounds2D().getCenterY());
                 break;
             }
         }
@@ -135,10 +141,11 @@ public class Visitor {
         if (!hasCollision) {
             this.position = newPosition;
         } else {
-            if (target.getX()-position.getX() > 0)
-            this.angle += 1;
-            else this.angle -= 1;
-            setTarget(new Point2D.Double(this.position.getX()+10,this.position.getY()));
+            if (target.getX() - position.getX() > 0)
+                this.angle += turn;
+            else this.angle -= turn;
+            if (wallPos != null)
+                setTarget(stuckSolver(wallPos));
         }
 
 
@@ -182,17 +189,25 @@ public class Visitor {
 
         }
         //debug
-        g.setColor(Color.BLUE);
-        g.fill(hitBox);
         g.setColor(Color.RED);
-        g.fill(new Ellipse2D.Double(target.getX(),target.getY(),10,10));
+        g.fill(new Ellipse2D.Double(target.getX(), target.getY(), 10, 10));
 
 
     }
 
-    public boolean wallCollition(Point2D newPos,Area v) {
+    private Point2D stuckSolver(Point2D wallPos) {
+        System.out.println("x: " + (this.position.getX() + (wallPos.getX() - position.getX())));
+        System.out.println("y: " + (this.position.getY() + (wallPos.getY() - position.getY())));
+        if (wallPos != null)
+            return new Point2D.Double(
+                    this.position.getX() - (wallPos.getX() - position.getX()),
+                    this.position.getY() - (wallPos.getY() - position.getY()));
+        else return this.position;
+    }
+
+    public boolean wallCollition(Point2D newPos, Area v) {
         Area a = v;
-        Area b = new Area(new Rectangle2D.Double(newPos.getX(),newPos.getY(),20,20));
+        Area b = new Area(new Rectangle2D.Double(newPos.getX(), newPos.getY(), 20, 20));
         return a.intersects(b.getBounds2D());
     }
 
@@ -201,9 +216,12 @@ public class Visitor {
         return otherPosition.distance(position) < 32;
     }
 
+    public void setMainTarget(Point2D mainTarget) {
+        this.mainTarget = mainTarget;
+        path = p.createPath(this.position, mainTarget);
+    }
 
     public void setTarget(Point2D target) {
         this.target = target;
-//        this.path = p.createPath(this.position, target);
     }
 }

@@ -90,8 +90,11 @@ public class PathFinder extends JPanel {
     public void calculatePath(int targetX, int targetY) {
         Point current = new Point(targetX, targetY);
         Queue<Point> points = new LinkedList<>();
+        double currentDistance;
         points.offer(current);
-        double currentDistance = distanceMap.get(current);
+        if (distanceMap.get(current) != null)
+            currentDistance = distanceMap.get(current);
+        else currentDistance = 0;
         path = new ArrayList<>();
         path.add(current);
 
