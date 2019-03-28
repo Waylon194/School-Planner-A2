@@ -23,6 +23,8 @@ public class PathFinder extends JPanel {
 
     int targetX;
     int targetY;
+    private Point2D position;
+    private Point2D target;
 
 
     PathFinder() throws IOException, ParseException {
@@ -30,16 +32,18 @@ public class PathFinder extends JPanel {
         walls = collisionLayer();
         for (int i = 0; i < 100; i++)
             map[0][i] = map[99][i] = map[i][0] = map[i][99] = true; // map border init
+    }
 
-        //TODO Dit moet weg in de echte code anders klopt de targetX en targetY niet dan voert hij altijd de distancemap voor dit punt uit
-        calculateDistanceMap(45, 18);
-        calculatePath(18, 20);
+    public Queue<Point> createPath(Point2D start, Point2D target) {
+        calculateDistanceMap((int) target.getX() / 32, (int) target.getY() / 32);
+        calculatePath((int) start.getX() / 32, (int) start.getY() / 32);
+
+        return new LinkedList<>(path);
     }
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
-        Color color;
 
         int w = getWidth() / 100;
         int h = getHeight() / 100;
@@ -72,9 +76,7 @@ public class PathFinder extends JPanel {
                         g2.fillRect(x * w, y * h, w, h);
                 }
             }
-
         }
-
     }
 
     public static void main(String[] args) throws IOException, ParseException {
@@ -117,7 +119,6 @@ public class PathFinder extends JPanel {
                 }
             }
         }
-        System.out.println(path);
     }
 
     public List<Point> collisionLayer() {
@@ -188,5 +189,13 @@ public class PathFinder extends JPanel {
                 }
             }
         }
+    }
+
+    public void setTarget(Point2D target) {
+        this.target = target;
+    }
+
+    public void setPos(Point2D position) {
+        this.position = position;
     }
 }

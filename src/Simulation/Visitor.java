@@ -12,33 +12,39 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 public class Visitor {
     private Point2D position;
     private double angle;
-
+    private int c = 32;
     private double speed = 5;
     private BufferedImage image;
     double frameTime = 0.1;
     int frame = 0;
     private Point2D target;
     private int currentFrame;
-    private ArrayList<Area> collisionAreas;
+    private List<Area> collisionAreas;
     private BufferedImage[] tilesGeorge;
+    private PathFinder p;
+    private Queue<Point> path;
+    private Point current;
 
     private BufferedImage[] walkRight;
     private BufferedImage[] walkLeft;
     private BufferedImage[] walkForward;
     private BufferedImage[] walkBackward;
-    private PathFinder pathFinder;
 
 
-    public Visitor(Point2D position) throws IOException, ParseException {
-        this.pathFinder = new PathFinder();
+    public Visitor(Point2D position, PathFinder p) throws IOException, ParseException {
+        this.p = p;
         this.currentFrame = 0;
         this.position = position;
         this.angle = 0;
+        this.target = new Point2D.Double(18 * c, 22 * c);
+        this.path = p.createPath(position, target);
         try {
             this.collisionAreas = hasCollisionBlock();
             BufferedImage imageGeorge = ImageIO.read(new File("Resources/Character/george.png"));
@@ -77,18 +83,20 @@ public class Visitor {
         } catch (IOException | ParseException e) {
             e.printStackTrace();
         }
-        this.speed += Math.random();
-        this.angle = Math.random() * 2 * Math.PI;
+        this.speed = 0;
+        this.current = path.poll();
+        target = new Point2D.Double(current.getX()*c,current.getY()*c);
+    }
 
-        this.target = new Point2D.Double(500, 500);
+    public Point2D getPosition() {
+        return position;
     }
 
     public List<Area> hasCollisionBlock() throws IOException, ParseException {
         List<Point> otherVisitors = new ArrayList<>();
-        List<Point> collisionLayer = pathFinder.getWalls();
         List<Area> hasCollision = new ArrayList<>();
 
-        if (collisionLayer.contains(this.position) || otherVisitors.contains(this.position))
+        if (otherVisitors.contains(this.position))
             hasCollision.add(new Area(new Ellipse2D.Double(this.position.getX() + 16, this.position.getY(), 32, 32)));
 
         return hasCollision;
@@ -96,6 +104,14 @@ public class Visitor {
 
 
     public void update(ArrayList<Visitor> visitors, double deltaTime) {
+        target = new Point2D.Double(current.getX()*c,current.getY()*c);
+        if (position.distance(target) < c)
+            if (path.isEmpty())
+            speed = 0;
+            else current = path.poll();
+        else speed = 2;
+
+
         if (currentFrame < 3) {
             currentFrame++;
         } else currentFrame = 0;
@@ -180,5 +196,6 @@ public class Visitor {
 
     public void setTarget(Point2D target) {
         this.target = target;
+        this.path = p.createPath(this.position, target);
     }
 }

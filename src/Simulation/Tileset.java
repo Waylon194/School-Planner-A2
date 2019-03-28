@@ -85,20 +85,10 @@ public class Tileset {
         return (long) this.layers.get(layer)[tileValue];
     }
 
-    public ArrayList<Integer> getLayerData(int firstLayer, int secondLayer) {
 
-        ArrayList<Integer> layerDataList = new ArrayList<>();
-
-        for (int layer = firstLayer; layer < secondLayer; layer++) {
-            for (int tile = 0; tile < 10000; tile++) {
-                long value = getValue(tile, layer);
-                layerDataList.add((int) value);
-            }
-        }
-        return layerDataList;
-    }
 
     public List<Integer> getLayer(int layer) throws IOException, ParseException {
+
         Object[] objects = layers.get(layer);
         List<Integer> layerData = new ArrayList<>();
         for (Object object : objects) {

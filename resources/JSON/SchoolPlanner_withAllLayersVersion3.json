@@ -344,7 +344,7 @@
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.2.2",
- "tileheight":30,
+ "tileheight":32,
  "tilesets":[
         {
          "firstgid":1,
