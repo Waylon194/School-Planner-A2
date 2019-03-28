@@ -16,13 +16,14 @@ public class Visitor {
     private Point2D position;
     private double angle;
     private int c = 32;
-    private double speed = 5;
+    private double speed;
     private BufferedImage image;
     double frameTime = 0.1;
     int frame = 0;
     private Point2D target;
     private int currentFrame;
-    private double turn = 1;
+    private double turn = .5;
+    private double sValue = 1.5;
 
 
     private BufferedImage[] tilesGeorge;
@@ -32,6 +33,7 @@ public class Visitor {
     private List<Area> walls;
     private Area hitBox;
     private Point2D mainTarget;
+    private double timeElapsed = 0;
 
 
     private BufferedImage[] walkRight;
@@ -104,11 +106,9 @@ public class Visitor {
         target = new Point2D.Double(current.getX() * c, current.getY() * c);
         if (position.distance(target) < 16)
             if (path.isEmpty())
-                if (mainTarget == null)
-                    speed = 0;
-                else setMainTarget(new Point2D.Double(36 * c, 11 * c));
+                speed = 0;
             else current = path.poll();
-        else speed = 1.5;
+        else speed = sValue;
 
         // switches animation frame and calculates new position
         if (currentFrame < 3) {
@@ -125,16 +125,19 @@ public class Visitor {
         boolean hasCollision = false;
         Point2D wallPos = null;
         for (Area wall : walls) {
-            if (wallCollition(newPosition, wall)) {
+            if (wallCollision(newPosition, wall)) {
                 hasCollision = true;
                 wallPos = new Point2D.Double(wall.getBounds2D().getCenterX(), wall.getBounds2D().getCenterY());
                 break;
             }
         }
         for (Visitor visitor : visitors) {
-            //TODO check collision with walls, etc...
             if (visitor != this && visitor.hasCollision(newPosition)) {
                 hasCollision = true;
+                while (visitor.hasCollision(this.position))
+                    this.position = new Point2D.Double(
+                            this.position.getX(),
+                            this.position.getY()+1);
                 break;
             }
         }
@@ -143,15 +146,15 @@ public class Visitor {
         } else {
             if (target.getX() - position.getX() > 0)
                 this.angle += turn;
-            else this.angle -= turn;
+            else
+                this.angle -= turn;
             if (wallPos != null)
-                setTarget(stuckSolver(wallPos));
-        }
+                WallCorrection(stuckSolver(wallPos));
 
+        }
 
         Point2D diff = new Point2D.Double(target.getX() - this.position.getX(), target.getY() - this.position.getY());
         double targetAngle = Math.atan2(diff.getY(), diff.getX());
-
         double angleDiff = targetAngle - angle;
         while (angleDiff > Math.PI)
             angleDiff -= 2 * Math.PI;
@@ -170,6 +173,10 @@ public class Visitor {
             frameTime = 1 / 30.0;
             frame = (frame + 1) % 8;
         }
+    }
+
+    public double getSValue() {
+        return this.sValue;
     }
 
     public void draw(Graphics2D g) {
@@ -200,12 +207,12 @@ public class Visitor {
         System.out.println("y: " + (this.position.getY() + (wallPos.getY() - position.getY())));
         if (wallPos != null)
             return new Point2D.Double(
-                    this.position.getX() - (wallPos.getX() - position.getX()),
-                    this.position.getY() - (wallPos.getY() - position.getY()));
+                    wallPos.getX() + 16 - (wallPos.getX() + position.getX()),
+                    wallPos.getY() - (wallPos.getY() + position.getY()));
         else return this.position;
     }
 
-    public boolean wallCollition(Point2D newPos, Area v) {
+    public boolean wallCollision(Point2D newPos, Area v) {
         Area a = v;
         Area b = new Area(new Rectangle2D.Double(newPos.getX(), newPos.getY(), 20, 20));
         return a.intersects(b.getBounds2D());
@@ -213,7 +220,7 @@ public class Visitor {
 
 
     public boolean hasCollision(Point2D otherPosition) {
-        return otherPosition.distance(position) < 32;
+        return otherPosition.distance(position) < 24;
     }
 
     public void setMainTarget(Point2D mainTarget) {
@@ -221,7 +228,7 @@ public class Visitor {
         path = p.createPath(this.position, mainTarget);
     }
 
-    public void setTarget(Point2D target) {
+    public void WallCorrection(Point2D target) {
         this.target = target;
     }
 }

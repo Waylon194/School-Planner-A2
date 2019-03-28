@@ -76,18 +76,10 @@ public class Simulation extends Application {
             double x = 36 * c;
             double y = 48 * c;
             visitors.add(new Visitor(new Point2D.Double(x, y), pathFinder, this));
-            x = 69 * c;
-            y = 38 * c;
             visitors.add(new Visitor(new Point2D.Double(x, y), pathFinder, this));
-            x = 49 * c;
-            y = 14 * c;
             visitors.add(new Visitor(new Point2D.Double(x, y), pathFinder, this));
-            x = 47 * c;
-            y = 14 * c;
             visitors.add(new Visitor(new Point2D.Double(x, y), pathFinder, this));
-            x = 69 * c;
-            y = 37 * c;
-            visitors.add(new Visitor(new Point2D.Double(x, y), pathFinder, this));
+
 
         }
     }
