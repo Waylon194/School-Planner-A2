@@ -39,6 +39,7 @@ public class Simulation extends Application {
     private Timer timer;
     private ArrayList<Space> spaces;
     private AnimationTimer animationTimer;
+    private TimerTask task;
 
     public Simulation() throws Exception {
     }
@@ -85,13 +86,20 @@ public class Simulation extends Application {
         canvas.setOnMouseClicked(e -> {
             if (e.getButton().equals(MouseButton.SECONDARY))
               this.speedFactor++;
-              if(this.speedFactor == 5) {
+              if(this.speedFactor == 3) {
                   speedFactor = 1;
               }
+
 
             visitors.forEach(visitor -> {
                 visitor.setSpeedFactor(speedFactor) ;
             });
+          this.timer.cancel();
+            try {
+                startTimer();
+            } catch (InterruptedException e1) {
+                e1.printStackTrace();
+            }
         });
 
 
@@ -168,14 +176,14 @@ public class Simulation extends Application {
     }
 
     public void startTimer() throws InterruptedException {
-        TimerTask task = new TimerTask() {
+        this.task = new TimerTask() {
             public void run() {
                updateKlonk();
                handleVisitors();
             }
         };
         this.timer = new Timer("Timer");
-        this.timer.scheduleAtFixedRate(task, 0, 100L/speedFactor);
+        this.timer.scheduleAtFixedRate(task, 0, (1000L)/speedFactor);
         this.animationTimer.start();
     }
 
