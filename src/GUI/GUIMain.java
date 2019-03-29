@@ -47,7 +47,7 @@ public class GUIMain extends Application {
     private boolean classHasLessons = false;
     private boolean subjectUsed = false;
     private Stage primaryStage;
-    private Simulation sim = new Simulation();
+    private Simulation sim;
 
 
     FileChooser fileChooser = new FileChooser();
@@ -87,12 +87,20 @@ public class GUIMain extends Application {
 
         gui.getTabSimulate().setOnSelectionChanged(e -> {
             if (gui.getTabSimulate().isSelected()){
+
                 try {
-                    sim.startSim(primaryStage);
+                    sim = new Simulation();
+                    sim.startSim(primaryStage,this.agenda);
                     gui.getTabSimulate().setContent(sim.getCanvas());
+                    this.agenda.getLessons().forEach(lesson -> {
+                        System.out.println(lesson.toString());
+                    });
                 } catch (Exception e1) {
                     e1.printStackTrace();
                 }
+            }
+            else {
+                sim.timerOnCloseEvent();
             }
         });
 

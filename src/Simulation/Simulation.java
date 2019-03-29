@@ -1,6 +1,7 @@
 package Simulation;
 
 import Data.Agenda;
+import Data.Room;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -16,7 +17,6 @@ import java.awt.*;
 import java.awt.geom.Area;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
-import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.List;
 
@@ -36,61 +36,53 @@ public class Simulation extends Application {
     private int minutes;
     private int hours;
     private Timer timer;
+    private ArrayList<Space> spaces;
+    private AnimationTimer animationTimer;
 
 
 
 
     public Simulation() throws Exception {
-
-        this.tileset = new Tileset();
-        this.agenda = new Agenda();
-        this.speedFactor = 1;
-        this.minutes = 0;
-        this.hours = 8;
-
     }
 
 
 
-    public void startSim(Stage primaryStage) throws Exception {
+    public void startSim(Stage primaryStage, Agenda agenda) throws Exception {
+        this.agenda = agenda;
         init();
-        this.canvas = new Canvas(1280, 720);
 
-        this.stage = primaryStage;
+        this.canvas = new Canvas(1280, 720);
         FXGraphics2D g2d = new FXGraphics2D(canvas.getGraphicsContext2D());
-        camera = new Camera(canvas, graphics -> {
+        this.stage = primaryStage;
+        this.camera = new Camera(canvas, graphics -> {
             draw(graphics);
         }, g2d);
-        map = new Map(this, this.camera);
-
-        new AnimationTimer() {
+        this.map = new Map(this, this.camera);
+        this.animationTimer = new AnimationTimer() {
             long last = -1;
             @Override
             public void handle(long now) {
                 if (last == -1)
                     last = now;
                 update((now - last) / 1.0e9);
-                last = now;
+                this.last = now;
                 draw(g2d);
                 primaryStage.setTitle(getTimeAsString());
             }
-        }.start();
-
+        };
+        this.startTimer();
+        //cancels the timer when the application is closed.
         primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
             public void handle(WindowEvent t) {
                 Platform.exit();
-                timer.cancel();
-
+                timerOnCloseEvent();
             }
-
         });
-        this.startTimer();
 
 
 
-
-
+        //TODO change this to keyboard listener.
         canvas.setOnMouseClicked(e -> {
             System.out.println(speedFactor);
               this.speedFactor++;
@@ -102,8 +94,6 @@ public class Simulation extends Application {
             visitors.forEach(visitor -> {
                 visitor.setSpeedFactor(speedFactor) ;
             });
-
-
         });
 
 
@@ -111,7 +101,7 @@ public class Simulation extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-      startSim(primaryStage);
+        startSim(primaryStage, this.agenda);
         primaryStage.setScene(new Scene(new Group(canvas)));
         primaryStage.setTitle("Simulation");
         primaryStage.show();
@@ -121,10 +111,11 @@ public class Simulation extends Application {
         pathFinder = new PathFinder();
         walls = createWallArea();
         visitors = new ArrayList<>();
-
-
-
-
+        this.tileset = new Tileset();
+        this.spaces = tileset.getSpaces();
+        this.speedFactor = 1;
+        this.minutes = 50;
+        this.hours = 8;
 
     }
 
@@ -132,8 +123,7 @@ public class Simulation extends Application {
     public void draw(FXGraphics2D graphics) {
         graphics.setBackground(Color.pink);
         graphics.clearRect(0, 0, (int) stage.getWidth(), (int) stage.getHeight());
-
-        map.draw(graphics);
+        this.map.draw(graphics);
         for (Visitor visitor : visitors) {
             visitor.draw(graphics);
         }
@@ -147,7 +137,7 @@ public class Simulation extends Application {
     }
 
     private List<Area> createWallArea() {
-        List<Point> a = pathFinder.getWalls();
+        List<Point> a = this.pathFinder.getWalls();
         List<Area> b = new ArrayList<>();
         a.forEach(e -> b.add(new Area(new Rectangle2D.Double(e.getX() * c, e.getY() * c, c, c))));
         return b;
@@ -158,8 +148,8 @@ public class Simulation extends Application {
 
         this.canvas.setHeight(stage.getHeight());
         this.canvas.setWidth(stage.getWidth());
-        for (Visitor visitor : visitors)
-            visitor.update(visitors, deltaTime);
+        for (Visitor visitor : this.visitors)
+            visitor.update(this.visitors, deltaTime);
     }
 
 
@@ -168,7 +158,7 @@ public class Simulation extends Application {
 
 
     public ArrayList<Visitor> getVisitors() {
-        return visitors;
+        return this.visitors;
     }
 
     public static void main(String[] args) {
@@ -181,7 +171,7 @@ public class Simulation extends Application {
     }
 
     public List<Area> getWalls() {
-        return walls;
+        return this.walls;
     }
 
     public void startTimer() throws InterruptedException {
@@ -192,19 +182,20 @@ public class Simulation extends Application {
             }
         };
         this.timer = new Timer("Timer");
-        timer.scheduleAtFixedRate(task, 0, 1000L/speedFactor);
-
+        this.timer.scheduleAtFixedRate(task, 0, 100L/speedFactor);
+        this.animationTimer.start();
     }
 
+
+
     public void updateKlonk(){
-        minutes++;
-        if(minutes%60==0){
-            hours++;
-            minutes=0;
+        this.minutes++;
+        if(this.minutes%60==0){
+            this.hours++;
+            this.minutes=0;
         }
-        if(hours%24==0) {
-            hours++;
-            minutes=0;
+        if(this.hours%24==0) {
+            this.hours = 0;
         }
     }
 
@@ -212,7 +203,7 @@ public class Simulation extends Application {
     public String getTimeAsString(){
         String hour;
         String minutes;
-        if(hours<10){
+        if(this.hours<10){
             hour = "0"+Integer.toString(hours);
         }else hour = Integer.toString(hours);
 
@@ -222,10 +213,9 @@ public class Simulation extends Application {
         return hour+":"+minutes;
     }
 
-
     public void handleVisitors(){
 
-        if(hours==8 && minutes == 5){
+        if(hours==8 && minutes == 55){
             double x = 35;
             double y = 70;
 
@@ -239,36 +229,51 @@ public class Simulation extends Application {
                 }
                 y=69;
                 x+=2;
-
-
             }
         }
 
-        agenda.getLessons().forEach(lesson -> {
-            System.out.println(lesson.getInterval().getStart().minuteOfDay().toString());
+        if(minutes==00){
+            checkHour(this.hours);
+        }
+
+    }
+
+    private void checkHour(int hours) {
+        this.agenda.getLessons().forEach(lesson -> {
+            if (this.hours == lesson.getInterval().getStart().getHourOfDay()){
+                this.spaces.forEach(space -> {
+                    if (space.getName().equals(lesson.getClassroom().getLocation())){
+                        visitors.forEach(visitor -> {
+                            visitor.setMainTarget(new Point2D.Double(space.getX()+0.5*space.getWidht(),space.getY()+0.5*space.getHeight()));
+                        });
+                    }
+                });
+            }
         });
-
-        if(hours==8 && minutes==10){
-            double x = 32;
-            double y = 9;
-
-            for(Visitor visitor: visitors){
-                visitor.setMainTarget(new Point2D.Double(x*c,y*c));
-                x+=2;
-            }
-        }
-        if(hours==8 && minutes==30){
-            double x = 36;
-            double y = 70;
-            visitors.forEach(visitor -> {
-                visitor.setMainTarget(new Point2D.Double(x*c,y*c));
-            });
-        }
 
 
 
 
     }
+
+    public void timerOnCloseEvent(){
+        this.timer.cancel();
+        this.hours = 8;
+        this.minutes = 0;
+        this.animationTimer.stop();
+        try {
+            finalize();
+        } catch (Throwable throwable) {
+            throwable.printStackTrace();
+        }
+    }
+
+    protected void finalize() throws Throwable {
+        super.finalize();
+    }
+
+
+
 
 
 
