@@ -28,6 +28,7 @@ public class GUIMain extends Application {
     private CreateGroupWindow createGroupWindow = new CreateGroupWindow(agenda);
     private CreateTeacherWindow createTeacherWindow = new CreateTeacherWindow(agenda);
 
+    private Stage primaryStage = new Stage();
     private Stage createLessonWindow = new Stage();
     private Stage createGroupWindow2 = new Stage();
     private Stage createViewWindow = new Stage();
@@ -40,9 +41,13 @@ public class GUIMain extends Application {
     private Scene teacherWindow = new Scene(createTeacherWindow);
     private FileController fileController = new FileController();
     private boolean condition = true;
+    private Simulation sim = new Simulation();
 
 
     FileChooser fileChooser = new FileChooser();
+
+    public GUIMain() throws Exception {
+    }
 
 
     public static void main(String[] args) {
@@ -64,6 +69,7 @@ public class GUIMain extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         primaryStage.setScene(mainWindow);
+        this.primaryStage = primaryStage;
         primaryStage.setTitle("School Planner");
         buttonhandler();
         update();
@@ -71,7 +77,20 @@ public class GUIMain extends Application {
     }
 
     public void buttonhandler()  {
+<<<<<<< HEAD
 
+=======
+        gui.getTab1().setOnSelectionChanged(e -> {
+            if (gui.getTab1().isSelected()){
+                try {
+                    sim.startSim(primaryStage);
+                    gui.getTab1().setContent(sim.getCanvas());
+                } catch (Exception e1) {
+                    e1.printStackTrace();
+                }
+            }
+        });
+>>>>>>> Development
 
         createLessonWindow.initModality(Modality.APPLICATION_MODAL);
         createGroupWindow2.initModality(Modality.APPLICATION_MODAL);

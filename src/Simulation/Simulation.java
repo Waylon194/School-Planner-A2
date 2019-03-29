@@ -50,23 +50,21 @@ public class Simulation extends Application {
 
     }
 
+<<<<<<< HEAD
     @Override
     public void start(Stage primaryStage) throws Exception {
         this.canvas = new Canvas(1980, 1080);
+=======
+    public void startSim(Stage primaryStage) throws Exception {
+        init();
+        this.canvas = new Canvas(1280, 720);
+>>>>>>> Development
         this.stage = primaryStage;
         FXGraphics2D g2d = new FXGraphics2D(canvas.getGraphicsContext2D());
         camera = new Camera(canvas, graphics -> {
-
             draw(graphics);
-
         }, g2d);
         map = new Map(this, this.camera);
-
-
-        primaryStage.setScene(new Scene(new Group(canvas)));
-        primaryStage.setTitle("Simulation");
-        primaryStage.show();
-
 
         new AnimationTimer() {
             long last = -1;
@@ -114,14 +112,41 @@ public class Simulation extends Application {
 
     }
 
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+      startSim(primaryStage);
+        primaryStage.setScene(new Scene(new Group(canvas)));
+        primaryStage.setTitle("Simulation");
+        primaryStage.show();
+    }
+
     public void init() throws Exception {
         pathFinder = new PathFinder();
         walls = createWallArea();
         visitors = new ArrayList<>();
 
+<<<<<<< HEAD
 
        // visitors.get(0).setMainTarget(newTarget);
 
+=======
+        while (visitors.size() < 2) {
+            double x = 36 * c;
+            double y = 70 * c;
+            visitors.add(new Visitor(new Point2D.Double(x, y), pathFinder, this));
+            x = 69 * c;
+            y = 38 * c;
+            visitors.add(new Visitor(new Point2D.Double(x, y), pathFinder, this));
+            x = 49 * c;
+            y = 14 * c;
+            visitors.add(new Visitor(new Point2D.Double(x, y), pathFinder, this));
+            x = 47 * c;
+            y = 14 * c;
+            visitors.add(new Visitor(new Point2D.Double(x, y), pathFinder, this));
+            x = 69 * c;
+            y = 37 * c;
+            visitors.add(new Visitor(new Point2D.Double(x, y), pathFinder, this));
+>>>>>>> Development
 
     }
 
@@ -134,11 +159,14 @@ public class Simulation extends Application {
         for (Visitor visitor : visitors) {
             visitor.draw(graphics);
         }
+<<<<<<< HEAD
          //debug
         walls.forEach(e->{
             graphics.setColor(Color.BLACK);
             graphics.fill(e);
         });
+=======
+>>>>>>> Development
     }
 
     private List<Area> createWallArea() {
@@ -150,7 +178,13 @@ public class Simulation extends Application {
 
 
     public void update(double deltaTime) {
+<<<<<<< HEAD
         for (Visitor visitor : visitors) {
+=======
+        this.canvas.setHeight(stage.getHeight());
+        this.canvas.setWidth(stage.getWidth());
+        for (Visitor visitor : visitors)
+>>>>>>> Development
             visitor.update(visitors, deltaTime);
             }
         }

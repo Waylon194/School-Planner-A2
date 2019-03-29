@@ -16,16 +16,8 @@ public class PathFinder extends JPanel {
     private List<Integer> collision;
     private List<Point> path;
     private List<Point> walls;
-
-
     boolean[][] map = new boolean[100][100];
     double[][] distance = new double[100][100];
-
-    int targetX;
-    int targetY;
-    private Point2D position;
-    private Point2D target;
-
 
     PathFinder() throws IOException, ParseException {
         collision = new Tileset().getLayer(5);
@@ -37,46 +29,7 @@ public class PathFinder extends JPanel {
     public Queue<Point> createPath(Point2D start, Point2D target) {
         calculateDistanceMap((int) target.getX() / 32, (int) target.getY() / 32);
         calculatePath((int) start.getX() / 32, (int) start.getY() / 32);
-
         return new LinkedList<>(path);
-    }
-
-    public void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        Graphics2D g2 = (Graphics2D) g;
-
-        int w = getWidth() / 100;
-        int h = getHeight() / 100;
-        for (int x = 0; x < 100; x++) {
-            for (int y = 0; y < 100; y++) {
-                if (map[x][y]) {
-                    g2.setColor(Color.black);
-                } else {
-                    float dist = (float) distance[x][y] / 100;
-                    if (dist > 1)
-                        dist = 1;
-                    g2.setColor(new Color(dist, 1 - dist, 0.0f));
-                }
-                g2.fillRect(x * w, y * h, w, h);
-                g2.setColor(Color.black);
-                g2.drawString("" + distanceMap.get(new Point(x, y)), x * w, y * h);
-            }
-        }
-
-        g2.setColor(Color.green);
-        g2.fillRect(targetX * w, targetY * h, w, h);
-
-        for (int x = 0; x < 99; x++) {
-            for (int y = 0; y < 99; y++) {
-                g2.setColor(Color.black);
-                Point cur = new Point(x, y);
-                for (Point e : path) {
-                    if (e.equals(cur))
-
-                        g2.fillRect(x * w, y * h, w, h);
-                }
-            }
-        }
     }
 
     public static void main(String[] args) throws IOException, ParseException {
@@ -140,10 +93,6 @@ public class PathFinder extends JPanel {
         return collision;
     }
 
-    public List<Point> getPath() {
-        return path;
-    }
-
     public List<Point> getWalls() {
         return walls;
     }
@@ -194,11 +143,4 @@ public class PathFinder extends JPanel {
         }
     }
 
-    public void setTarget(Point2D target) {
-        this.target = target;
-    }
-
-    public void setPos(Point2D position) {
-        this.position = position;
-    }
 }

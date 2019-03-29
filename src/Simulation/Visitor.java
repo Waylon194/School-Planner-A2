@@ -14,6 +14,7 @@ public class Visitor {
     private Point2D position;
     private double angle;
     private int c = 32;
+    private double size = 1;
     private double speed;
     double frameTime = 0.1;
     private double simSpeed = 2;
@@ -34,7 +35,11 @@ public class Visitor {
     private BufferedImage[] walkBackward;
 
 
+<<<<<<< HEAD
     public Visitor(Point2D position, PathFinder p, Simulation sim, Point2D target) {
+=======
+    public Visitor(Point2D position, PathFinder p, Simulation sim) {
+>>>>>>> Development
 
         this.p = p;
         this.walls = sim.getWalls();
@@ -94,7 +99,7 @@ public class Visitor {
 
         //implementation of the pathing
         target = new Point2D.Double(current.getX() * c, current.getY() * c);
-        if (position.distance(target) < 16)
+        if (position.distance(target) < 16 + simSpeed)
             if (path.isEmpty())
                 speed = 0;
             else current = path.poll();
@@ -124,7 +129,11 @@ public class Visitor {
                 while (visitor.hasCollision(this.position))
                     this.position = new Point2D.Double(
                             this.position.getX(),
+<<<<<<< HEAD
                             this.position.getY());
+=======
+                            this.position.getY() + 1);
+>>>>>>> Development
                 break;
             }
         }
@@ -146,7 +155,6 @@ public class Visitor {
             angleDiff -= 2 * Math.PI;
         while (angleDiff < -Math.PI)
             angleDiff += 2 * Math.PI;
-
         if (angleDiff < -0.1)
             angle -= 0.2 * simSpeed;
         else if (angleDiff > 0.1)
@@ -167,9 +175,10 @@ public class Visitor {
 
     public void draw(Graphics2D g) {
         AffineTransform tx = new AffineTransform();
-        tx.translate(position.getX() - 32, position.getY() - 32);
-        tx.rotate(angle, 32, 32);
+        tx.translate(position.getX() - 24*size, position.getY() - 24*size);
+        tx.scale(size,size);
 
+<<<<<<< HEAD
 
         if(angle < (-Math.PI / 4) && (angle > (7 * -Math.PI) / 4)) {
             g.drawImage(walkRight[currentFrame], tx, null);
@@ -179,7 +188,16 @@ public class Visitor {
             g.drawImage(walkLeft[currentFrame], tx, null);
         } else {
             g.drawImage(walkBackward[currentFrame], tx, null);
+=======
+        if (angle < 0) {
+            tx.rotate(angle - Math.PI / 2, 24, 24);
+            g.drawImage(walkBackward[currentFrame], tx, null);
+        } else {
+            tx.rotate(angle - 3 * Math.PI / 2, 24, 24);
+            g.drawImage(walkForward[currentFrame], tx, null);
+>>>>>>> Development
         }
+
         //debug
         g.setColor(Color.RED);
         g.fill(new Ellipse2D.Double(target.getX(), target.getY(), 10, 10));
@@ -201,7 +219,7 @@ public class Visitor {
 
 
     public boolean hasCollision(Point2D otherPosition) {
-        return otherPosition.distance(position) < 24;
+        return otherPosition.distance(position) < 24*size;
     }
 
     public void setMainTarget(Point2D mainTarget) {

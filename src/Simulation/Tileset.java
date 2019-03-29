@@ -86,8 +86,7 @@ public class Tileset {
     }
 
 
-
-    public List<Integer> getLayer(int layer) throws IOException, ParseException {
+    public List<Integer> getLayer(int layer) {
 
         Object[] objects = layers.get(layer);
         List<Integer> layerData = new ArrayList<>();
