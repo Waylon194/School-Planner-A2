@@ -81,7 +81,7 @@ public class PathFinder extends JPanel {
         List<Point> a = new ArrayList<>();
         for (int x = 0; x < 99; x++) {
             for (int y = 0; y < 99; y++) {
-                if (this.collision.get(y * 100 + x) > 0) {
+                if (this.collision.get(y * 100 + x) ==1873) {
                     a.add(new Point(x, y));
                 }
             }
