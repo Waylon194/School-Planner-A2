@@ -9,6 +9,7 @@ import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.input.MouseButton;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import org.jfree.fx.FXGraphics2D;
@@ -84,9 +85,8 @@ public class Simulation extends Application {
 
         //TODO change this to keyboard listener.
         canvas.setOnMouseClicked(e -> {
-            System.out.println(speedFactor);
+            if (e.getButton().equals(MouseButton.SECONDARY))
               this.speedFactor++;
-
               if(this.speedFactor == 5) {
                   speedFactor = 1;
               }
