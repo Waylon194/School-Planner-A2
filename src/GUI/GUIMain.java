@@ -77,9 +77,7 @@ public class GUIMain extends Application {
     }
 
     public void buttonhandler()  {
-<<<<<<< HEAD
 
-=======
         gui.getTab1().setOnSelectionChanged(e -> {
             if (gui.getTab1().isSelected()){
                 try {
@@ -90,7 +88,7 @@ public class GUIMain extends Application {
                 }
             }
         });
->>>>>>> Development
+
 
         createLessonWindow.initModality(Modality.APPLICATION_MODAL);
         createGroupWindow2.initModality(Modality.APPLICATION_MODAL);

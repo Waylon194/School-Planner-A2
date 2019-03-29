@@ -34,12 +34,7 @@ public class Visitor {
     private BufferedImage[] walkForward;
     private BufferedImage[] walkBackward;
 
-
-<<<<<<< HEAD
     public Visitor(Point2D position, PathFinder p, Simulation sim, Point2D target) {
-=======
-    public Visitor(Point2D position, PathFinder p, Simulation sim) {
->>>>>>> Development
 
         this.p = p;
         this.walls = sim.getWalls();
@@ -129,11 +124,8 @@ public class Visitor {
                 while (visitor.hasCollision(this.position))
                     this.position = new Point2D.Double(
                             this.position.getX(),
-<<<<<<< HEAD
-                            this.position.getY());
-=======
+
                             this.position.getY() + 1);
->>>>>>> Development
                 break;
             }
         }
@@ -177,8 +169,7 @@ public class Visitor {
         AffineTransform tx = new AffineTransform();
         tx.translate(position.getX() - 24*size, position.getY() - 24*size);
         tx.scale(size,size);
-
-<<<<<<< HEAD
+/*<<<<<<< HEAD
 
         if(angle < (-Math.PI / 4) && (angle > (7 * -Math.PI) / 4)) {
             g.drawImage(walkRight[currentFrame], tx, null);
@@ -188,14 +179,14 @@ public class Visitor {
             g.drawImage(walkLeft[currentFrame], tx, null);
         } else {
             g.drawImage(walkBackward[currentFrame], tx, null);
-=======
+=======*/
         if (angle < 0) {
             tx.rotate(angle - Math.PI / 2, 24, 24);
             g.drawImage(walkBackward[currentFrame], tx, null);
         } else {
             tx.rotate(angle - 3 * Math.PI / 2, 24, 24);
             g.drawImage(walkForward[currentFrame], tx, null);
->>>>>>> Development
+
         }
 
         //debug
