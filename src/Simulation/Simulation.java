@@ -1,6 +1,8 @@
 package Simulation;
 
 import Data.Agenda;
+import Data.Classroom;
+import Data.Lesson;
 import Data.Room;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
@@ -49,6 +51,14 @@ public class Simulation extends Application {
     public void startSim(Stage primaryStage, Agenda agenda) throws Exception {
         this.agenda = agenda;
         init();
+
+        for(Classroom classroom: this.agenda.getClassrooms()){
+            System.out.println(classroom.getLocation());
+        }
+        System.out.println("------------");
+        for (Space space: this.spaces){
+            System.out.println(space.getName());
+        }
 
         this.canvas = new Canvas(1280, 720);
         FXGraphics2D g2d = new FXGraphics2D(canvas.getGraphicsContext2D());
@@ -240,23 +250,29 @@ public class Simulation extends Application {
     }
 
     private void checkHour(int hours) {
-        this.agenda.getLessons().forEach(lesson -> {
-            if (this.hours == lesson.getInterval().getStart().getHourOfDay()){
+        boolean free = true;
+        for(Lesson lesson: agenda.getLessons()){
+            if (this.hours == lesson.getInterval().getStart().getHourOfDay()) {
+                free = false;
                 this.spaces.forEach(space -> {
-                    if (space.getName().equals(lesson.getClassroom().getLocation())){
-                        visitors.forEach(visitor -> {
-                            visitor.setMainTarget(new Point2D.Double(space.getX()+0.5*space.getWidht(),space.getY()+0.5*space.getHeight()));
-                        });
+                    if (space.getName().equals(lesson.getClassroom().getLocation())) {
+                        double xConst = 0.1;
+                        for (Visitor visitor : this.visitors) {
+                            visitor.setMainTarget(new Point2D.Double(space.getX() + xConst * space.getWidht(), space.getY() + 0.5 * space.getHeight()));
+                            xConst += 0.1;
+                        }
                     }
                 });
             }
         }
-        if(hours==8 && minutes==30){
-            double x = 36;
-            double y = 70;
-            visitors.forEach(visitor -> {
-                visitor.setMainTarget(new Point2D.Double(x*c,y*c));
-            });
+
+        if(free){
+            double xConst = 0.1;
+            for(Visitor visitor:this.visitors){
+                visitor.setMainTarget(new Point2D.Double(spaces.get(0).getX() +xConst*spaces.get(0).getWidht(), spaces.get(0).getY()+0.5*spaces.get(0).getHeight()));
+                xConst+=0.1;
+            }
+
         }
 
 

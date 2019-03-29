@@ -103,7 +103,7 @@ public class Agenda implements Serializable {
         Classroom classroom = new Classroom(1, 20, "LA201", false, false);
         Classroom classroom1 = new Classroom(2, 20, "LA302", false, false);
         Classroom classroom2 = new Classroom(3, 20, "LA115", false, false);
-        Classroom classroom3 = new Classroom(4, 20, "LX401b", false, false);
+        Classroom classroom3 = new Classroom(4, 20, "LX401B", false, false);
         Classroom classroom4 = new Classroom(5, 20, "LD221", false, false);
         Classroom classroom5 = new Classroom(6, 20, "LD406", false, false);
         Classroom classroom6 = new Classroom(7, 20, "LA226", false, false);
