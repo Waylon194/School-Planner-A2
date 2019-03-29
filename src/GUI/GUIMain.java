@@ -2,6 +2,7 @@ package GUI;
 
 import Data.*;
 import GUI.Components.*;
+import Simulation.Simulation;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.CheckBox;
@@ -45,7 +46,7 @@ public class GUIMain extends Application {
 
 
     public static void main(String[] args) {
-        launch("Gui.java");
+        launch("GUIMain.java");
     }
 
 
@@ -70,6 +71,8 @@ public class GUIMain extends Application {
     }
 
     public void buttonhandler()  {
+
+
         createLessonWindow.initModality(Modality.APPLICATION_MODAL);
         createGroupWindow2.initModality(Modality.APPLICATION_MODAL);
         createViewWindow.initModality(Modality.APPLICATION_MODAL);

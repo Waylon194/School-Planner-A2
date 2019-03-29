@@ -59,7 +59,7 @@ public class Gui extends TabPane {
     private final Label label16;
     private final Label label17;
     private final Tab tab0;
-    private final Tab tab1;
+    private  Tab tab1;
     private final AnchorPane anchorPane0;
     private final VBox vBox;
     private final Button button;
@@ -83,6 +83,11 @@ public class Gui extends TabPane {
     public Button getButton2() {
         return button2;
     }
+
+    public Tab getTab(){
+        return tab1;
+    }
+
 
     Rectangle rectangle;
 
@@ -484,5 +489,8 @@ public class Gui extends TabPane {
         tab1.setText("Simulate");
         getTabs().add(tab1);
 
+
     }
+
+
 }

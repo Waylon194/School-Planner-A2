@@ -1,7 +1,5 @@
 package Simulation;
 
-import org.json.simple.parser.ParseException;
-
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.geom.*;
@@ -17,32 +15,27 @@ public class Visitor {
     private double angle;
     private int c = 32;
     private double speed;
-    private BufferedImage image;
     double frameTime = 0.1;
+    private double simSpeed = 2;
     int frame = 0;
     private Point2D target;
     private int currentFrame;
-    private double turn = .5;
-    private double sValue = 1.5;
-
-
+    private double turn = 1;
+    private double sValue = 1.5 * simSpeed;
+    private Point2D mainTarget;
     private BufferedImage[] tilesGeorge;
     private PathFinder p;
     private Queue<Point> path;
     private Point current;
     private List<Area> walls;
-    private Area hitBox;
-    private Point2D mainTarget;
-    private double timeElapsed = 0;
-
-
     private BufferedImage[] walkRight;
     private BufferedImage[] walkLeft;
     private BufferedImage[] walkForward;
     private BufferedImage[] walkBackward;
 
 
-    public Visitor(Point2D position, PathFinder p, Simulation sim, Point2D target) throws IOException, ParseException {
+    public Visitor(Point2D position, PathFinder p, Simulation sim, Point2D target) {
+
         this.p = p;
         this.walls = sim.getWalls();
         this.currentFrame = 0;
@@ -51,17 +44,17 @@ public class Visitor {
         this.target = target;
         this.mainTarget = target;
         this.path = p.createPath(position, target);
-        this.hitBox = new Area(new Ellipse2D.Double(this.position.getX(), this.position.getY(), 24, 24));
+        this.current = path.poll();
+        this.target = new Point2D.Double(current.getX() * c, current.getY() * c);
+
         try {
             BufferedImage imageGeorge = ImageIO.read(new File("Resources/Character/george.png"));
             tilesGeorge = new BufferedImage[16];
-
 
             walkRight = new BufferedImage[4];
             walkForward = new BufferedImage[4];
             walkBackward = new BufferedImage[4];
             walkLeft = new BufferedImage[4];
-
 
             for (int i = 0; i < 16; i++) {
                 tilesGeorge[i] = imageGeorge.getSubimage(48 * (i % 4), 48 * (i / 4), 48, 48);
@@ -89,9 +82,6 @@ public class Visitor {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        this.speed = 0;
-        this.current = path.poll();
-        target = new Point2D.Double(current.getX() * c, current.getY() * c);
     }
 
 
@@ -111,15 +101,12 @@ public class Visitor {
         else speed = sValue;
 
         // switches animation frame and calculates new position
-        if (currentFrame < 3) {
+        if (currentFrame < 3&&speed!= 0) {
             currentFrame++;
         } else currentFrame = 0;
         Point2D newPosition = new Point2D.Double(
                 this.position.getX() + this.speed * Math.cos(angle),
                 this.position.getY() + this.speed * Math.sin(angle));
-
-        //updates hitbox
-        hitBox = new Area(new Ellipse2D.Double(this.position.getX(), this.position.getY(), 24, 24));
 
         //checks collision with visitors and walls
         boolean hasCollision = false;
@@ -137,7 +124,7 @@ public class Visitor {
                 while (visitor.hasCollision(this.position))
                     this.position = new Point2D.Double(
                             this.position.getX(),
-                            this.position.getY()+1);
+                            this.position.getY());
                 break;
             }
         }
@@ -150,7 +137,6 @@ public class Visitor {
                 this.angle -= turn;
             if (wallPos != null)
                 WallCorrection(stuckSolver(wallPos));
-
         }
 
         Point2D diff = new Point2D.Double(target.getX() - this.position.getX(), target.getY() - this.position.getY());
@@ -162,9 +148,9 @@ public class Visitor {
             angleDiff += 2 * Math.PI;
 
         if (angleDiff < -0.1)
-            angle -= 0.1;
+            angle -= 0.2 * simSpeed;
         else if (angleDiff > 0.1)
-            angle += 0.1;
+            angle += 0.2 * simSpeed;
         else
             this.angle = targetAngle;
 
@@ -185,29 +171,24 @@ public class Visitor {
         tx.rotate(angle, 32, 32);
 
 
-        if (angle > -Math.PI / 2 && angle < 0) {
+        if(angle < (-Math.PI / 4) && (angle > (7 * -Math.PI) / 4)) {
             g.drawImage(walkRight[currentFrame], tx, null);
-        } else if (angle > -Math.PI && angle < -Math.PI / 2) {
+        } else if (angle < (3 * -Math.PI) / 4 && angle > (-Math.PI / 4)) {
             g.drawImage(walkForward[currentFrame], tx, null);
-        } else if (angle > Math.PI / 2) {
+        } else if (angle > (3 * -Math.PI) / 4 && angle < (5 * -Math.PI) / 4) {
             g.drawImage(walkLeft[currentFrame], tx, null);
         } else {
             g.drawImage(walkBackward[currentFrame], tx, null);
-
         }
         //debug
         g.setColor(Color.RED);
         g.fill(new Ellipse2D.Double(target.getX(), target.getY(), 10, 10));
-
-
     }
 
     private Point2D stuckSolver(Point2D wallPos) {
-        System.out.println("x: " + (this.position.getX() + (wallPos.getX() - position.getX())));
-        System.out.println("y: " + (this.position.getY() + (wallPos.getY() - position.getY())));
         if (wallPos != null)
             return new Point2D.Double(
-                    wallPos.getX() + 16 - (wallPos.getX() + position.getX()),
+                    wallPos.getX() - (wallPos.getX() + position.getX()),
                     wallPos.getY() - (wallPos.getY() + position.getY()));
         else return this.position;
     }
@@ -231,4 +212,8 @@ public class Visitor {
     public void WallCorrection(Point2D target) {
         this.target = target;
     }
+    public void setSpeedFactor(int speedFactor){
+        this.simSpeed = speedFactor;
+    }
+
 }

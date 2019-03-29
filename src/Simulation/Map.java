@@ -22,7 +22,7 @@ public class Map {
 
     public void redrawCache()
     {
-        cacheImage = new BufferedImage(3840, 2160, BufferedImage.TYPE_INT_ARGB);
+        cacheImage = new BufferedImage(3840, 3840, BufferedImage.TYPE_INT_ARGB);
         Graphics2D imageGraphics = cacheImage.createGraphics();
         drawCache(imageGraphics);
     }
