@@ -178,8 +178,6 @@ public class Visitor {
             g.drawImage(walkForward[currentFrame], tx, null);
         }
 
-        System.out.println(angle);
-
         //debug
         g.setColor(Color.RED);
         g.fill(new Ellipse2D.Double(target.getX(), target.getY(), 10, 10));

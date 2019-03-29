@@ -112,6 +112,8 @@ public class Simulation extends Application {
 
 
     public void update(double deltaTime) {
+        this.canvas.setHeight(stage.getHeight());
+        this.canvas.setWidth(stage.getWidth());
         for (Visitor visitor : visitors)
             visitor.update(visitors, deltaTime);
     }
