@@ -2,13 +2,19 @@ package Data;
 
 import java.io.Serializable;
 
-public enum Subject implements Serializable {
-   MATH,
-   PROGRAMMING,
-   WORKSHOP,
-   HWI,
-   GRAPHICS3D,
-   GRAPHICS2D,
-   NETWORKS,
-   OPERATINGSYSTEMS
+public class Subject implements Serializable {
+   private String name;
+
+
+   public Subject(String name){
+      this.name = name;
+   }
+
+   @Override
+   public String toString(){
+      return this.name;
+   }
+
+
+
 }

@@ -1,18 +1,16 @@
 package Data;
 
-
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
+
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class Agenda implements Serializable {
-
-    private Map<String,Teacher> teachers;
+    private ArrayList<Teacher> teachers;
     private ArrayList<Class> classes;
     private ArrayList<Classroom> classrooms;
     private ArrayList<Lesson> lessons;
@@ -22,13 +20,9 @@ public class Agenda implements Serializable {
     private ArrayList<Subject> subjects;
     private ArrayList<DateTime> times;
 
-
-
-
     public Agenda() {
-
-        Subject values[] = Subject.values();
-        this.teachers = new HashMap<String,Teacher>();
+        this.subjects=  new ArrayList<>();
+        this.teachers = new ArrayList<>();
         this.classes = new ArrayList<>();
         this.classrooms = new ArrayList<>();
         this.lessons = new ArrayList<>();
@@ -39,47 +33,38 @@ public class Agenda implements Serializable {
         this.students = new ArrayList<>();
 
 
-        for (Subject value : values) {
-            this.subjects.add(value);
-        }
-
 
         final DateTime NINE = new DateTime(2019, 1, 1, 9, 0, 0);
         final DateTime TEN = new DateTime(2019, 1, 1, 10, 0, 0);
         final DateTime ELEVEN = new DateTime(2019, 1, 1, 11, 0, 0);
-        final DateTime TWELEVE = new DateTime(2019, 1, 1, 12, 0, 0);
+        final DateTime TWELVE = new DateTime(2019, 1, 1, 12, 0, 0);
         final DateTime ONE = new DateTime(2019, 1, 1, 13, 0, 0);
         final DateTime TWO = new DateTime(2019, 1, 1, 14, 0, 0);
         final DateTime THREE = new DateTime(2019, 1, 1, 15, 0, 0);
         final DateTime FOUR = new DateTime(2019, 1, 1, 16, 0, 0);
         final DateTime FIVE = new DateTime(2019, 1, 1, 17, 0, 0);
 
-
-
         this.times.add(NINE);
         this.times.add(TEN);
         this.times.add(ELEVEN);
-        this.times.add(TWELEVE);
+        this.times.add(TWELVE);
         this.times.add(ONE);
         this.times.add(TWO);
         this.times.add(THREE);
         this.times.add(FOUR);
         this.times.add(FIVE);
 
-
         final Interval FIRST_LESSON = new Interval(NINE, TEN);
         final Interval SECOND_LESSON = new Interval(TEN, ELEVEN);
-        final Interval THIRD_LESSON = new Interval(ELEVEN, TWELEVE);
-        final Interval FOURTH_LESSON = new Interval(TWELEVE, ONE);
+        final Interval THIRD_LESSON = new Interval(ELEVEN, TWELVE);
+        final Interval FOURTH_LESSON = new Interval(TWELVE, ONE);
         final Interval FIFTH_LESSON = new Interval(ONE, TWO);
         final Interval SIXTH_LESSON = new Interval(TWO, THREE);
         final Interval SEVENTH_LESSON = new Interval(THREE, FOUR);
         final Interval EIGHT_LESSON = new Interval(FOUR, FIVE);
 
-
         Student kees = new Student("Kees", "de", "Bruin", 19, 0, 0, 108);
         Student stijn = new Student("Stijn", "de", "Bruin", 19, 0, 0, 109);
-        Student niffauw = new Student("Niffauw", "a", "Bruin", 19, 0, 0, 110);
         Student sarah = new Student("Sarah", "de", "Vos", 20, 0, 0, 111);
         Student lydia = new Student("Lydia", "de", "Vos", 18, 0, 0, 112);
         Student hans = new Student("Hans", "a", "Bruin", 21, 0, 0, 113);
@@ -93,7 +78,6 @@ public class Agenda implements Serializable {
 
         this.students.add(kees);
         this.students.add(stijn);
-        this.students.add(niffauw);
         this.students.add(sarah);
         this.students.add(lydia);
         this.students.add(hans);
@@ -105,19 +89,16 @@ public class Agenda implements Serializable {
         this.students.add(anna);
         this.students.add(lisane);
 
-
-        Teacher maurice = new Teacher("Maurice", "", "Snoeren", 45, 0, 0, "100", Subject.PROGRAMMING);
-        Teacher johan = new Teacher("Johan", "", "Fakka", 43, 0, 0, "110", Subject.GRAPHICS2D);
-        Teacher hansen = new Teacher("Hansen", "van", "Bergen", 40, 0, 0, "130", Subject.GRAPHICS3D);
-        Teacher etienne = new Teacher("Etienne", "van", "Goosens", 43, 0, 0, "140", Subject.WORKSHOP);
-        Teacher pieter = new Teacher("Pieter", "Kop", "Jansen", 41, 0, 0, "150", Subject.MATH);
-        Teacher jessica = new Teacher("Jessica", "van der", "Heijden", 42, 0, 0, "160", Subject.HWI);
-        Teacher peter = new Teacher("Peter", "", "Kailuhu", 50, 0, 0, "170", Subject.PROGRAMMING);
+        Teacher maurice = new Teacher("Maurice", "", "Snoeren", 45, 0, 0, "100");
+        Teacher johan = new Teacher("Johan", "", "Talboom", 43, 0, 0, "110");
+        Teacher hansen = new Teacher("Hansen", "van", "Bergen", 40, 0, 0, "130");
+        Teacher etienne = new Teacher("Etienne", "van", "Goosens", 43, 0, 0, "140");
+        Teacher pieter = new Teacher("Pieter", "Kop", "Jansen", 41, 0, 0, "150");
+        Teacher jessica = new Teacher("Jessica", "van der", "Heijden", 42, 0, 0, "160");
+        Teacher peter = new Teacher("Peter", "", "Kailuhu", 50, 0, 0, "170");
 
         Group a2 = new Group(studentRandomizer('a'), "A2", maurice);
         Group b1 = new Group(studentRandomizer('b'), "B1", pieter);
-
-
 
         Classroom classroom = new Classroom(1, 20, "LA201", false, false);
         Classroom classroom1 = new Classroom(2, 20, "LA302", false, false);
@@ -131,19 +112,17 @@ public class Agenda implements Serializable {
         Data.Class classe = new Data.Class(groups, "12TIAV");
 
         //teachers
-        this.teachers.put(maurice.getTeacherNumber(),maurice);
-        this.teachers.put(johan.getTeacherNumber(),johan);
-        this.teachers.put(hansen.getTeacherNumber(),hansen);
-        this.teachers.put(etienne.getTeacherNumber(),etienne);
-        this.teachers.put(peter.getTeacherNumber(),peter);
-        this.teachers.put(pieter.getTeacherNumber(),pieter);
-        this.teachers.put(jessica.getTeacherNumber(),jessica);
-
+        this.teachers.add(maurice);
+        this.teachers.add(johan);
+        this.teachers.add(hansen);
+        this.teachers.add(etienne);
+        this.teachers.add(pieter);
+        this.teachers.add(jessica);
+        this.teachers.add(peter);
 
         //groups of
         this.groups.add(a2);
         this.groups.add(b1);
-
 
         //class with 2 groups or more
         this.classes.add(classe);
@@ -167,20 +146,19 @@ public class Agenda implements Serializable {
         this.intervals.add(SIXTH_LESSON);
         this.intervals.add(SEVENTH_LESSON);
         this.intervals.add(EIGHT_LESSON);
+
+        Subject calculus = new Subject("CALCULUS");
+        Subject linearAlgebra = new Subject("LINEAR ALGEBRA");
+
+        this.subjects.add(calculus);
+        this.subjects.add(linearAlgebra);
+
+
     }
-
-
-
-
-    public ArrayList<Lesson> returnLessons() {
-        return this.lessons;
-    }
-
 
 
     public void addTeacher(Teacher teacher) {
-        this.teachers.put(teacher.getTeacherNumber(),teacher);
-
+      this.teachers.add(teacher);
     }
 
     public void addClass(Class schoolClass) {
@@ -194,8 +172,11 @@ public class Agenda implements Serializable {
     public void addLesson(Lesson lesson) {
         this.lessons.add(lesson);
     }
-    // TODO: 17-02-19 fix student array 
-   public void addStudents(Student student) {
+
+
+
+    // TODO: 17-02-19 fix student array
+    public void addStudents(Student student) {
         this.students.add(student);
     }
 
@@ -207,7 +188,7 @@ public class Agenda implements Serializable {
         this.subjects.add(subject);
     }
 
-    public Map<String, Teacher> getTeachers() {
+    public ArrayList<Teacher> getTeachers() {
         return teachers;
     }
 
@@ -222,10 +203,6 @@ public class Agenda implements Serializable {
     public ArrayList<Lesson> getLessons() {
         return lessons;
     }
-
-//    public ArrayList<Student> getStudents() {
-//        return students;
-//    }
 
     public ArrayList<Interval> getIntervals() {
         return intervals;
@@ -261,36 +238,37 @@ public class Agenda implements Serializable {
         return this.times;
     }
 
+    //TODO Redo the method!
     public int getAmountOfTeachers(){
         return this.teachers.size();
     }
 
     public ArrayList<Student> studentRandomizer(char a){
-
         ArrayList<Student> klass = new ArrayList<>();
-
-        if (a=='a'){
-
-            for(int i = 0;i<students.size();i++){
-                if(i%3==0)
-                klass.add(students.get(i));
-            }
-
-            return klass;
-        } else if (a=='b'){
-            for(int i = 0;i<students.size();i++){
-                if(i%2==0)
+        if (a == 'a'){
+            for(int i = 0; i < students.size(); i++){
+                if(i % 3 == 0) {
                     klass.add(students.get(i));
+                }
             }
             return klass;
-        }else return klass;
+        }
+        else if (a == 'b'){
+            for(int i = 0; i < students.size(); i++){
+                if(i % 2 == 0) {
+                    klass.add(students.get(i));
+                }
+            }
+            return klass;
+        }
+        else {
+            return klass;
+        }
     }
 
     public ArrayList<Group> groupRandomizer(char a){
         ArrayList<Group> classs = new ArrayList<>();
-
         classs.add(groups.get(0));
         return classs;
-
     }
 }
