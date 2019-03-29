@@ -4,6 +4,7 @@ import Data.Group;
 import Data.Lesson;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
@@ -66,7 +67,11 @@ public class Gui extends TabPane {
     private final Button button0;
     private final Button button1;
     private final Button button2;
+    private Canvas simulator = new Canvas();
 
+    public Canvas getSimulator() {
+        return simulator;
+    }
 
     public Button getButton() {
         return button;
@@ -86,6 +91,10 @@ public class Gui extends TabPane {
 
     Rectangle rectangle;
 
+    public Tab getTab1() {
+        return tab1;
+    }
+
     public void drawLesson(int lesson, int classRoom) {
         rectangle = new Rectangle();
         GridPane.setColumnIndex(rectangle, classRoom);
@@ -103,8 +112,9 @@ public class Gui extends TabPane {
         String groups = "";
         for (Group group : lesson.getGroups()) {
            groups += group.getGroupName()+" ";
-
         }
+
+
 
         Label label = new Label("" + lesson.getTeachersAsString() + '\n' + lesson.getSubject()+'\n'+groups);
        // Label label1 = new Label("" + lesson.getTeachersAsString() + '\n' + lesson.getSubject()+'\n'+groups);
@@ -480,8 +490,8 @@ public class Gui extends TabPane {
         anchorPane0.getChildren().add(vBox);
         getTabs().add(tab0);
 
-
         tab1.setText("Simulate");
+        tab1.setContent(simulator);
         getTabs().add(tab1);
 
     }
