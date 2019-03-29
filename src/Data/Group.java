@@ -47,6 +47,10 @@ public class Group implements Serializable, Availability {
         this.unavailable.add(interval);
     }
 
+    public int getGroupSize(){
+        return this.students.size();
+    }
+
     @Override
     public void makeAvailable(int i) {
         this.unavailable.remove(i);

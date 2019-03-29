@@ -239,6 +239,10 @@ public class Agenda implements Serializable {
     }
 
     //TODO Redo the method!
+    public int getAmountOfTeachers(){
+        return this.teachers.size();
+    }
+
     public ArrayList<Student> studentRandomizer(char a){
         ArrayList<Student> klass = new ArrayList<>();
         if (a == 'a'){
