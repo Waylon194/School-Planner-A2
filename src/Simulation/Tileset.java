@@ -33,7 +33,7 @@ public class Tileset {
         try {
 
             this.tiles = new BufferedImage[2715];
-            this.jsonFile = new File("Resources/JSON/SchoolPlanner_withAllLayersVersion3.json");
+            this.jsonFile = new File("Resources/JSON/tiledJSON2.json");
             this.fileReader = new FileReader(jsonFile);
             this.jsonObject = (JSONObject) jsonParser.parse(fileReader);
 

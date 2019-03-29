@@ -201,7 +201,7 @@ public class Visitor {
 
 
     public boolean hasCollision(Point2D otherPosition) {
-        return otherPosition.distance(position) < 14*size;
+        return otherPosition.distance(position) < 24*size;
     }
 
     public void setMainTarget(Point2D mainTarget) {

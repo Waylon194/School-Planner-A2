@@ -146,11 +146,11 @@ public class Simulation extends Application {
             visitor.draw(graphics);
         }
 
-        /*    //debug
+           //debug
         walls.forEach(e->{
             graphics.setColor(Color.BLACK);
             graphics.fill(e);
-        });*/
+        });
 
     }
 
@@ -234,19 +234,17 @@ public class Simulation extends Application {
     public void handleVisitors(){
 
         if(hours==8 && minutes == 55){
-            double x = 35;
-            double y = 70;
+            double x = 0.1;
+            double y = 0.3;
 
             int amountOfGroups = this.agenda.getAmountOfGroups();
             for(int i = 0; i<amountOfGroups; i++){
                 int groupSize = agenda.getGroups().get(i).getGroupSize();
                 for(int j = 0; j<groupSize; j++){
-                    Point2D spawnPoint = new Point2D.Double(x*c,y*c);
+                    Point2D spawnPoint = new Point2D.Double(spaces.get(1).getX() +x*spaces.get(1).getWidht(), spaces.get(1).getY()+y*spaces.get(1).getHeight());
                     visitors.add(new Visitor(spawnPoint,pathFinder,this,spawnPoint));
-                    y-=2;
+                    x+=0.1;
                 }
-                y=69;
-                x+=2;
             }
         }
 
@@ -265,7 +263,7 @@ public class Simulation extends Application {
                     if (space.getName().equals(lesson.getClassroom().getLocation())) {
                         double xConst = 0.1;
                         for (Visitor visitor : this.visitors) {
-                            visitor.setMainTarget(new Point2D.Double(space.getX() + xConst * space.getWidht(), space.getY() + 0.5 * space.getHeight()));
+                            visitor.setMainTarget(new Point2D.Double(space.getX() + xConst * space.getWidht(), space.getY() + 0.3 * space.getHeight()));
                             xConst += 0.1;
                         }
                     }
