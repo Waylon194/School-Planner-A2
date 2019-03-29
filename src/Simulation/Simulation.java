@@ -37,9 +37,6 @@ public class Simulation extends Application {
     private int hours;
     private Timer timer;
 
-
-
-
     public Simulation() throws Exception {
 
         this.tileset = new Tileset();
@@ -49,8 +46,6 @@ public class Simulation extends Application {
         this.hours = 8;
 
     }
-
-
 
     public void startSim(Stage primaryStage) throws Exception {
         init();
@@ -87,10 +82,6 @@ public class Simulation extends Application {
         });
         this.startTimer();
 
-
-
-
-
         canvas.setOnMouseClicked(e -> {
             if (e.getButton().equals(MouseButton.SECONDARY))
               this.speedFactor++;
@@ -120,22 +111,18 @@ public class Simulation extends Application {
         pathFinder = new PathFinder();
         walls = createWallArea();
         visitors = new ArrayList<>();
-
-
-
-
-
     }
 
 
     public void draw(FXGraphics2D graphics) {
         graphics.setBackground(Color.pink);
         graphics.clearRect(0, 0, (int) stage.getWidth(), (int) stage.getHeight());
-
         map.draw(graphics);
-        for (Visitor visitor : visitors) {
-            visitor.draw(graphics);
-        }
+        try {
+            for (Visitor visitor : visitors) {
+                visitor.draw(graphics);
+            }
+        }catch (ConcurrentModificationException e){}
 
         /*    //debug
         walls.forEach(e->{
@@ -157,14 +144,11 @@ public class Simulation extends Application {
 
         this.canvas.setHeight(stage.getHeight());
         this.canvas.setWidth(stage.getWidth());
-        for (Visitor visitor : visitors)
-            visitor.update(visitors, deltaTime);
+        try {
+            for (Visitor visitor : visitors)
+                visitor.update(visitors, deltaTime);
+        }catch (ConcurrentModificationException e){}
     }
-
-
-
-
-
 
     public ArrayList<Visitor> getVisitors() {
         return visitors;
@@ -263,12 +247,5 @@ public class Simulation extends Application {
                 visitor.setMainTarget(new Point2D.Double(x*c,y*c));
             });
         }
-
-
-
-
     }
-
-
-
 }

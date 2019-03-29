@@ -24,52 +24,36 @@ public class Visitor {
     private int currentFrame;
     private double turn = 1;
     private double sValue = 1.5 * simSpeed + random * simSpeed;
-    private Point2D mainTarget;
     private BufferedImage[] tilesGeorge;
     private PathFinder p;
     private Queue<Point> path;
     private Point current;
     private List<Area> walls;
-    private BufferedImage[] walkRight;
-    private BufferedImage[] walkLeft;
     private BufferedImage[] walkForward;
     private BufferedImage[] walkBackward;
 
     public Visitor(Point2D position, PathFinder p, Simulation sim, Point2D target) {
-
         this.p = p;
         this.walls = sim.getWalls();
         this.currentFrame = 0;
         this.position = position;
         this.angle = 0;
         this.target = target;
-        this.mainTarget = target;
         this.path = p.createPath(position, target);
         this.current = path.poll();
         this.target = new Point2D.Double(current.getX() * c, current.getY() * c);
 
         try {
             BufferedImage imageGeorge = ImageIO.read(new File("Resources/Character/george.png"));
-            tilesGeorge = new BufferedImage[16];
 
-            walkRight = new BufferedImage[4];
+            tilesGeorge = new BufferedImage[16];
             walkForward = new BufferedImage[4];
             walkBackward = new BufferedImage[4];
-            walkLeft = new BufferedImage[4];
+
 
             for (int i = 0; i < 16; i++) {
                 tilesGeorge[i] = imageGeorge.getSubimage(48 * (i % 4), 48 * (i / 4), 48, 48);
             }
-            walkRight[0] = tilesGeorge[3];
-            walkRight[1] = tilesGeorge[7];
-            walkRight[2] = tilesGeorge[11];
-            walkRight[3] = tilesGeorge[15];
-
-            walkLeft[0] = tilesGeorge[1];
-            walkLeft[1] = tilesGeorge[5];
-            walkLeft[2] = tilesGeorge[9];
-            walkLeft[3] = tilesGeorge[13];
-
             walkForward[0] = tilesGeorge[2];
             walkForward[1] = tilesGeorge[6];
             walkForward[2] = tilesGeorge[10];
@@ -79,7 +63,6 @@ public class Visitor {
             walkBackward[1] = tilesGeorge[4];
             walkBackward[2] = tilesGeorge[8];
             walkBackward[3] = tilesGeorge[12];
-
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -95,7 +78,7 @@ public class Visitor {
 
         //implementation of the pathing
         target = new Point2D.Double(current.getX() * c, current.getY() * c);
-        if (position.distance(target) < 16 + simSpeed)
+        if (position.distance(target) < 16)
             if (path.isEmpty())
                 speed = 0;
             else current = path.poll();
@@ -205,7 +188,6 @@ public class Visitor {
     }
 
     public void setMainTarget(Point2D mainTarget) {
-        this.mainTarget = mainTarget;
         path = p.createPath(this.position, mainTarget);
     }
 
