@@ -103,13 +103,13 @@
          "name":"kantine",
          "objects":[
                 {
-                 "height":261,
+                 "height":261.0,
                  "id":6,
                  "name":"",
                  "rotation":0,
                  "type":"",
                  "visible":true,
-                 "width":986,
+                 "width":986.0,
                  "x":673.5,
                  "y":185.5
                 }],
@@ -131,8 +131,8 @@
                  "rotation":0,
                  "type":"",
                  "visible":true,
-                 "width":213,
-                 "x":424,
+                 "width":213.0,
+                 "x":424.0,
                  "y":516.5
                 }],
          "opacity":1,
@@ -147,15 +147,15 @@
          "name":"SecondToilet",
          "objects":[
                 {
-                 "height":292,
+                 "height":292.0,
                  "id":9,
                  "name":"",
                  "rotation":0,
                  "type":"",
                  "visible":true,
-                 "width":215,
+                 "width":215.0,
                  "x":2148.5,
-                 "y":515
+                 "y":515.0
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -176,8 +176,8 @@
                  "type":"",
                  "visible":true,
                  "width":215.5,
-                 "x":2148,
-                 "y":998
+                 "x":2148.0,
+                 "y":998.0
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -191,15 +191,15 @@
          "name":"LA201",
          "objects":[
                 {
-                 "height":296,
+                 "height":296.0,
                  "id":10,
                  "name":"",
                  "rotation":0,
                  "type":"",
                  "visible":true,
-                 "width":410,
-                 "x":674,
-                 "y":513
+                 "width":410.0,
+                 "x":674.0,
+                 "y":513.0
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -219,7 +219,7 @@
                  "rotation":0,
                  "type":"",
                  "visible":true,
-                 "width":209,
+                 "width":209.0,
                  "x":422.5,
                  "y":997.5
                 }],
@@ -235,7 +235,7 @@
          "name":"LA115",
          "objects":[
                 {
-                 "height":251,
+                 "height":251.0,
                  "id":13,
                  "name":"",
                  "rotation":0,
@@ -243,7 +243,7 @@
                  "visible":true,
                  "width":400.5,
                  "x":679.5,
-                 "y":1002
+                 "y":1002.0
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -263,7 +263,7 @@
                  "rotation":0,
                  "type":"",
                  "visible":true,
-                 "width":394,
+                 "width":394.0,
                  "x":1258.5,
                  "y":516.5
                 }],
@@ -279,14 +279,14 @@
          "name":"LD221",
          "objects":[
                 {
-                 "height":258,
+                 "height":258.0,
                  "id":16,
                  "name":"",
                  "rotation":0,
                  "type":"",
                  "visible":true,
-                 "width":399,
-                 "x":1255,
+                 "width":399.0,
+                 "x":1255.0,
                  "y":996.5
                 }],
          "opacity":1,
@@ -301,15 +301,15 @@
          "name":"LD406",
          "objects":[
                 {
-                 "height":255,
+                 "height":255.0,
                  "id":17,
                  "name":"",
                  "rotation":0,
                  "type":"",
                  "visible":true,
-                 "width":407,
+                 "width":407.0,
                  "x":1701.5,
-                 "y":998
+                 "y":998.0
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -323,14 +323,14 @@
          "name":"LD226",
          "objects":[
                 {
-                 "height":279,
+                 "height":279.0,
                  "id":18,
                  "name":"",
                  "rotation":0,
                  "type":"",
                  "visible":true,
-                 "width":396,
-                 "x":1700,
+                 "width":396.0,
+                 "x":1700.0,
                  "y":521.5
                 }],
          "opacity":1,
