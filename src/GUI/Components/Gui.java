@@ -49,21 +49,6 @@ public class Gui extends TabPane {
         return simulator;
     }
 
-    public Button getButton() {
-        return button;
-    }
-
-    public Button getButton0() {
-        return button0;
-    }
-
-    public Button getButton1() {
-        return button1;
-    }
-
-    public Button getButton2() {
-        return button2;
-    }
 
     Rectangle rectangle;
     private Agenda agenda;
@@ -79,6 +64,8 @@ public class Gui extends TabPane {
 
         this.classroomLabelArray = new ArrayList<>();
         this.timeLabelArray = new ArrayList<>();
+
+        tabSimulate.setContent(simulator);
 
         tabAnchorPane = new AnchorPane();
         anchorPane0 = new AnchorPane();
@@ -151,11 +138,11 @@ public class Gui extends TabPane {
         rowConstraints.setVgrow(javafx.scene.layout.Priority.SOMETIMES);
         gridPane.getRowConstraints().add(rowConstraints);
 
-        for(Classroom classroom : agenda.getClassrooms()) {
+        for (Classroom classroom : agenda.getClassrooms()) {
             this.classroomLabelArray.add(new Label("     " + classroom.getLocation()));
         }
 
-        for(int i = 0; i < agenda.getClassrooms().size(); i++) {
+        for (int i = 0; i < agenda.getClassrooms().size(); i++) {
             RowConstraints row = new RowConstraints(75, 75, 75);
             gridPane.getRowConstraints().add(row);
 
@@ -163,11 +150,11 @@ public class Gui extends TabPane {
             gridPane.getColumnConstraints().add(column);
         }
 
-        for(int i = 0; i < this.timeLabelArray.size() - 1; i++) {
+        for (int i = 0; i < this.timeLabelArray.size() - 1; i++) {
             gridPane.add(this.timeLabelArray.get(i), 0, i + 1);
         }
 
-        for(int i = 0; i < this.classroomLabelArray.size(); i++) {
+        for (int i = 0; i < this.classroomLabelArray.size(); i++) {
             gridPane.add(this.classroomLabelArray.get(i), i + 1, 0);
         }
 
@@ -244,7 +231,7 @@ public class Gui extends TabPane {
         btnChangeSubject.setPadding(new Insets(10));
 
         vBoxLeftRow.getChildren().addAll(btnViewLesson, btnSaveSchedule, btnOpenSchedule);
-        vBoxMiddleRow.getChildren().addAll(btnAddTeacher, btnAddLesson, btnAddClassroom,btnAddSubject);
+        vBoxMiddleRow.getChildren().addAll(btnAddTeacher, btnAddLesson, btnAddClassroom, btnAddSubject);
         vBoxRightRow.getChildren().addAll(btnChangeTeacher, btnChangeLesson, btnChangeClassroom, btnChangeSubject);
         vBoxMiddleRow.setSpacing(10);
 
@@ -257,6 +244,10 @@ public class Gui extends TabPane {
         getTabs().addAll(tabViewEdit, tabAgenda, tabSimulate);
 
         children.addAll(gridPane.getChildren());
+    }
+
+    public Tab getTabSimulate() {
+        return tabSimulate;
     }
 
     public Button getBtnAddLesson() {
@@ -283,24 +274,32 @@ public class Gui extends TabPane {
         return btnAddClassroom;
     }
 
-    public Button getBtnAddSubject(){
+    public Button getBtnAddSubject() {
         return btnAddSubject;
     }
 
-    public Button getBtnChangeLesson() { return btnChangeLesson;}
+    public Button getBtnChangeLesson() {
+        return btnChangeLesson;
+    }
 
-    public Button getBtnChangeTeacher() { return btnChangeTeacher; }
+    public Button getBtnChangeTeacher() {
+        return btnChangeTeacher;
+    }
 
-    public Button getBtnChangeClassroom() { return btnChangeClassroom; }
+    public Button getBtnChangeClassroom() {
+        return btnChangeClassroom;
+    }
 
-    public Button getBtnChangeSubject() { return btnChangeSubject; }
+    public Button getBtnChangeSubject() {
+        return btnChangeSubject;
+    }
 
 
     public void drawLesson(int lesson, int classRoom) {
         rectangle = new Rectangle();
         rectangle.setSmooth(true);
         rectangle.setFill(Color.BEIGE);
-        rectangle.setHeight(gridPane.getRowConstraints().get(classRoom-1).getPrefHeight());
+        rectangle.setHeight(gridPane.getRowConstraints().get(classRoom - 1).getPrefHeight());
         rectangle.setStroke(javafx.scene.paint.Color.BLACK);
         rectangle.setStrokeType(javafx.scene.shape.StrokeType.INSIDE);
         rectangle.setWidth(gridPane.getColumnConstraints().get(classRoom).getPrefWidth());
@@ -311,14 +310,14 @@ public class Gui extends TabPane {
 
     public void drawLessonBlock(int startTime, int classRoom, int duration, Lesson lesson) {
         String groups = "";
-        System.out.println("Classroom: "+classRoom);
+        System.out.println("Classroom: " + classRoom);
         for (Group group : lesson.getGroups()) {
             groups += group.getGroupName() + " ";
 
         }
         String teachers = "";
-        for(Teacher teacher: lesson.getTeachers()){
-            teachers+=" "+teacher.getLastName();
+        for (Teacher teacher : lesson.getTeachers()) {
+            teachers += " " + teacher.getLastName();
         }
         Label label = new Label("" + lesson.getTeachers() + '\n' + lesson.getSubject() + '\n' + groups);
 
@@ -340,14 +339,14 @@ public class Gui extends TabPane {
         String clrName = "   " + agenda.getClassrooms().get(agenda.getClassrooms().size() - 1).getLocation();
         gridPane.add(new Label(clrName), currentColumnms, 0);
         gridPane.setPrefWidth(gridPane.getWidth());
-        children.add(gridPane.getChildren().get(gridPane.getChildren().size()-1));
+        children.add(gridPane.getChildren().get(gridPane.getChildren().size() - 1));
     }
-}
 
     public AnchorPane getanchorPane() {
         return this.anchorPane0;
     }
+
     public void clear() {
-       gridPane.getChildren().retainAll(children);
+        gridPane.getChildren().retainAll(children);
     }
 }

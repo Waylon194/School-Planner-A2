@@ -11,6 +11,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.joda.time.Hours;
@@ -45,6 +46,8 @@ public class GUIMain extends Application {
     private boolean teachHasLessons = false;
     private boolean classHasLessons = false;
     private boolean subjectUsed = false;
+    private Stage primaryStage;
+    private Simulation sim = new Simulation();
 
 
     FileChooser fileChooser = new FileChooser();
@@ -82,11 +85,11 @@ public class GUIMain extends Application {
 
     public void buttonhandler()  {
 
-        gui.getTab1().setOnSelectionChanged(e -> {
-            if (gui.getTab1().isSelected()){
+        gui.getTabSimulate().setOnSelectionChanged(e -> {
+            if (gui.getTabSimulate().isSelected()){
                 try {
                     sim.startSim(primaryStage);
-                    gui.getTab1().setContent(sim.getCanvas());
+                    gui.getTabSimulate().setContent(sim.getCanvas());
                 } catch (Exception e1) {
                     e1.printStackTrace();
                 }
