@@ -8,6 +8,7 @@ import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.input.MouseButton;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import org.jfree.fx.FXGraphics2D;
@@ -16,7 +17,6 @@ import java.awt.*;
 import java.awt.geom.Area;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
-import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.List;
 
@@ -92,9 +92,8 @@ public class Simulation extends Application {
 
 
         canvas.setOnMouseClicked(e -> {
-            System.out.println(speedFactor);
+            if (e.getButton().equals(MouseButton.SECONDARY))
               this.speedFactor++;
-
               if(this.speedFactor == 5) {
                   speedFactor = 1;
               }

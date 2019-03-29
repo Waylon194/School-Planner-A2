@@ -12,17 +12,18 @@ import java.util.Queue;
 
 public class Visitor {
     private Point2D position;
+    private double random = Math.random()/2;
     private double angle;
     private int c = 32;
     private double size = 1;
     private double speed;
     double frameTime = 0.1;
-    private double simSpeed = 2;
+    private double simSpeed = 1;
     int frame = 0;
     private Point2D target;
     private int currentFrame;
     private double turn = 1;
-    private double sValue = 1.5 * simSpeed;
+    private double sValue = 1.5 * simSpeed + random * simSpeed;
     private Point2D mainTarget;
     private BufferedImage[] tilesGeorge;
     private PathFinder p;
@@ -169,17 +170,7 @@ public class Visitor {
         AffineTransform tx = new AffineTransform();
         tx.translate(position.getX() - 24*size, position.getY() - 24*size);
         tx.scale(size,size);
-/*<<<<<<< HEAD
 
-        if(angle < (-Math.PI / 4) && (angle > (7 * -Math.PI) / 4)) {
-            g.drawImage(walkRight[currentFrame], tx, null);
-        } else if (angle < (3 * -Math.PI) / 4 && angle > (-Math.PI / 4)) {
-            g.drawImage(walkForward[currentFrame], tx, null);
-        } else if (angle > (3 * -Math.PI) / 4 && angle < (5 * -Math.PI) / 4) {
-            g.drawImage(walkLeft[currentFrame], tx, null);
-        } else {
-            g.drawImage(walkBackward[currentFrame], tx, null);
-=======*/
         if (angle < 0) {
             tx.rotate(angle - Math.PI / 2, 24, 24);
             g.drawImage(walkBackward[currentFrame], tx, null);
