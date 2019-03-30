@@ -1,10 +1,6 @@
 package Simulation;
 
-import Data.Agenda;
-import Data.Classroom;
-import Data.Lesson;
-import Data.Room;
-import Data.Group;
+import Data.*;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -156,7 +152,7 @@ public class Simulation extends Application {
             visitor.draw(graphics);
         }
 
-           //debug
+          //debug
         walls.forEach(e->{
             graphics.setColor(Color.BLACK);
             graphics.fill(e);
@@ -247,20 +243,44 @@ public class Simulation extends Application {
             double x = 0.1;
             double y = 0.3;
 
+            /**
+             * spaces[0] = kantine
+             * spaces[1] = spawn
+             * spaces[2] = WC2
+             * spaces[3] = WC1
+             * spaces[4] = TeachersRoom
+             *
+             */
+
             int amountOfGroups = this.agenda.getAmountOfGroups();
             for(int i = 0; i<amountOfGroups; i++){
                 int groupSize = agenda.getGroups().get(i).getGroupSize();
                 for(int j = 0; j<groupSize; j++){
-                    Point2D spawnPoint = new Point2D.Double(spaces.get(1).getX() +x*spaces.get(1).getWidht(), spaces.get(1).getY()+y*spaces.get(1).getHeight());
+                    Point2D spawnPoint = new Point2D.Double(spaces.get(2).getX() +x*spaces.get(2).getWidht(), spaces.get(2).getY()+y*spaces.get(2).getHeight());
                     if(i==0) {
                         A2.add(new Visitor(spawnPoint, pathFinder, this, spawnPoint));
-                    }else if(i==1){
+                    }
+                    else if(i==1){
                         B1.add(new Visitor(spawnPoint, pathFinder, this, spawnPoint));
-                    }else C1.add(new Visitor(spawnPoint, pathFinder, this, spawnPoint));
+                    }
+                    else C1.add(new Visitor(spawnPoint, pathFinder, this, spawnPoint));
                     x+=0.1;
                 }
                 x=0.2;
-                y+=0.5;
+                y+=0.2;
+            }
+
+            int amountOfTeachers = this.agenda.getAmountOfTeachers();
+            x = 0.05;
+            y = 0.9;
+            for(int i = 0; i<amountOfTeachers; i++){
+                Point2D spawnPoint = new Point2D.Double(spaces.get(4).getX() +x*spaces.get(4).getWidht(), spaces.get(4).getY()+y*spaces.get(4).getHeight());
+                teachers.add(new Visitor(spawnPoint, pathFinder, this, spawnPoint));
+                x+=0.15;
+                //y+=0.1;
+
+
+
             }
 
             this.visitors.addAll(A2);
@@ -279,11 +299,8 @@ public class Simulation extends Application {
         boolean bFree = true;
         boolean cFree = true;
 
-
         for(Lesson lesson: agenda.getLessons()){
             ArrayList<Group> groups = lesson.getGroups();
-
-
             if (this.hours+1 == lesson.getInterval().getStart().getHourOfDay()) {
                 for(Space space: this.spaces){
                     if (space.getName().equals(lesson.getClassroom().getLocation())) {
@@ -296,13 +313,16 @@ public class Simulation extends Application {
                                     xConst += 0.1;
                                 }
                                 xConst = 0.1;
-                            } else if (group.getGroupName().equals("B1")) {
+                            }
+                            else if (group.getGroupName().equals("B1")) {
                                 bFree = false;
                                 for (Visitor visitor : B1) {
                                     visitor.setMainTarget(new Point2D.Double(space.getX() + xConst * space.getWidht(), space.getY() + 0.7 * space.getHeight()));
                                     xConst += 0.1;
                                 }
-                            } else if (group.getGroupName().equals("C1")) {
+                                xConst = 0.1;
+                            }
+                            else if (group.getGroupName().equals("C1")) {
                                 cFree = false;
                                 for (Visitor visitor : C1) {
                                     visitor.setMainTarget(new Point2D.Double(space.getX() + xConst * space.getWidht(), space.getY() + 0.7 * space.getHeight()));
@@ -316,44 +336,47 @@ public class Simulation extends Application {
         }
 
 
-/*
-        for(Lesson lesson: agenda.getLessons()){
+        double xConst = 0.1;
+        double yConst = 0.9;
+        for(Lesson lesson:agenda.getLessons()){
             if (this.hours+1 == lesson.getInterval().getStart().getHourOfDay()) {
-                free = false;
-                this.spaces.forEach(space -> {
+                for(Space space: this.spaces) {
                     if (space.getName().equals(lesson.getClassroom().getLocation())) {
-                        double xConst = 0.1;
-                        for (Visitor visitor : this.visitors) {
-                            visitor.setMainTarget(new Point2D.Double(space.getX() + xConst * space.getWidht(), space.getY() + 0.7 * space.getHeight()));
-                            xConst += 0.1;
-                        }
+                           for(int i = 0; i<agenda.getAmountOfTeachers(); i++){
+                               if(lesson.getTeachers().contains(agenda.getTeachers().get(i))){
+                                   this.teachers.get(i).setMainTarget(new Point2D.Double(space.getX() + xConst * space.getWidht(), space.getY() + 0.2 * space.getHeight()));
+
+                               }
+                               else this.teachers.get(i).setMainTarget(new Point2D.Double(spaces.get(4).getX() +xConst*spaces.get(4).getWidht(), spaces.get(4).getY()+yConst*spaces.get(4).getHeight()));
+                               xConst+=0.15;
+                               //yConst+=0.1;
+                           }
                     }
-                });
+                }
             }
-        }*/
-            double xConst = 0.1;
-            if(aFree) {
-                for (Visitor visitor : A2) {
+        }
+
+        xConst = 0.1;
+        if(aFree) {
+            for (Visitor visitor : A2) {
                     visitor.setMainTarget(new Point2D.Double(spaces.get(0).getX() + xConst * spaces.get(0).getWidht(), spaces.get(0).getY() + 0.3 * spaces.get(0).getHeight()));
                     xConst += 0.1;
-                }
             }
-            if(bFree) {
-                xConst = 0.1;
-                for (Visitor visitor : B1) {
+        }
+        if(bFree) {
+            xConst = 0.1;
+            for (Visitor visitor : B1) {
                     visitor.setMainTarget(new Point2D.Double(spaces.get(0).getX() + xConst * spaces.get(0).getWidht(), spaces.get(0).getY() + 0.5 * spaces.get(0).getHeight()));
                     xConst += 0.1;
-                }
             }
-            if(cFree) {
-                xConst = 0.1;
-                for (Visitor visitor : C1) {
+        }
+        if(cFree) {
+            xConst = 0.1;
+            for (Visitor visitor : C1) {
                     visitor.setMainTarget(new Point2D.Double(spaces.get(0).getX() + xConst * spaces.get(0).getWidht(), spaces.get(0).getY() + 0.7 * spaces.get(0).getHeight()));
                     xConst += 0.1;
-                }
             }
-
-
+        }
     }
 
     public void timerOnCloseEvent(){
