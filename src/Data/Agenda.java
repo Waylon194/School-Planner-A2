@@ -97,8 +97,11 @@ public class Agenda implements Serializable {
         Teacher jessica = new Teacher("Jessica", "van der", "Heijden", 42, 0, 0, "160");
         Teacher peter = new Teacher("Peter", "", "Kailuhu", 50, 0, 0, "170");
 
-        Group a2 = new Group(studentRandomizer('a'), "A2", maurice);
-        Group b1 = new Group(studentRandomizer('b'), "B1", pieter);
+        Group A2 = new Group(studentRandomizer('a'), "A2", maurice);
+        Group B1 = new Group(studentRandomizer('b'), "B1", pieter);
+        Group C1 = new Group(studentRandomizer('a'), "C1", etienne);
+
+        this.groups.add(C1);
 
         Classroom classroom = new Classroom(1, 20, "LA201", false, false);
         Classroom classroom1 = new Classroom(2, 20, "LA302", false, false);
@@ -121,8 +124,8 @@ public class Agenda implements Serializable {
         this.teachers.add(peter);
 
         //groups of
-        this.groups.add(a2);
-        this.groups.add(b1);
+        this.groups.add(A2);
+        this.groups.add(B1);
 
         //class with 2 groups or more
         this.classes.add(classe);
