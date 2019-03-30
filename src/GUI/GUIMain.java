@@ -76,11 +76,17 @@ public class GUIMain extends Application {
         primaryStage.setWidth(855);
         primaryStage.setHeight(700);
         primaryStage.setScene(mainWindow);
+        mainWindow.getStylesheets().add("CSS/stylesheet.css");
+        windowScene.getStylesheets().add("CSS/stylesheet.css");
+        viewScene.getStylesheets().add("CSS/stylesheet.css");
+        groupWindow.getStylesheets().add("CSS/stylesheet.css");
+        teacherWindow.getStylesheets().add("CSS/stylesheet.css");
         this.primaryStage = primaryStage;
         primaryStage.setTitle("School Planner");
         buttonhandler();
         update();
         primaryStage.show();
+
     }
 
     public void buttonhandler()  {
