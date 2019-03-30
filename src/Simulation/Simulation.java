@@ -4,11 +4,11 @@ import Data.Agenda;
 import Data.Classroom;
 import Data.Lesson;
 import Data.Room;
+import Data.Group;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
-import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.input.MouseButton;
@@ -42,6 +42,10 @@ public class Simulation extends Application {
     private ArrayList<Space> spaces;
     private AnimationTimer animationTimer;
     private TimerTask task;
+    private ArrayList<Visitor> A2;
+    private ArrayList<Visitor> B1;
+    private ArrayList<Visitor> C1;
+    private ArrayList<Visitor> teachers;
 
 
 
@@ -120,20 +124,26 @@ public class Simulation extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         startSim(primaryStage, this.agenda);
-        primaryStage.setScene(new Scene(new Group(canvas)));
+        primaryStage.setScene(new Scene(new javafx.scene.Group(canvas)));
         primaryStage.setTitle("Simulation");
         primaryStage.show();
     }
 
     public void init() throws Exception {
-        pathFinder = new PathFinder();
-        walls = createWallArea();
-        visitors = new ArrayList<>();
+
+        this.pathFinder = new PathFinder();
+        this.walls = createWallArea();
+        this.visitors = new ArrayList<>();
         this.tileset = new Tileset();
         this.spaces = tileset.getSpaces();
         this.speedFactor = 1;
-        this.minutes = 50;
+        this.minutes = 0;
         this.hours = 8;
+        this.A2 = new ArrayList<Visitor>();
+        this.B1 = new ArrayList<Visitor>();
+        this.C1 = new ArrayList<Visitor>();
+        this.teachers = new ArrayList<Visitor>();
+
 
     }
 
@@ -233,7 +243,7 @@ public class Simulation extends Application {
 
     public void handleVisitors(){
 
-        if(hours==8 && minutes == 55){
+        if(hours==8 && minutes == 10){
             double x = 0.1;
             double y = 0.3;
 
@@ -242,45 +252,106 @@ public class Simulation extends Application {
                 int groupSize = agenda.getGroups().get(i).getGroupSize();
                 for(int j = 0; j<groupSize; j++){
                     Point2D spawnPoint = new Point2D.Double(spaces.get(1).getX() +x*spaces.get(1).getWidht(), spaces.get(1).getY()+y*spaces.get(1).getHeight());
-                    visitors.add(new Visitor(spawnPoint,pathFinder,this,spawnPoint));
+                    if(i==0) {
+                        A2.add(new Visitor(spawnPoint, pathFinder, this, spawnPoint));
+                    }else if(i==1){
+                        B1.add(new Visitor(spawnPoint, pathFinder, this, spawnPoint));
+                    }else C1.add(new Visitor(spawnPoint, pathFinder, this, spawnPoint));
                     x+=0.1;
                 }
+                x=0.2;
+                y+=0.5;
             }
-        }
 
-        if(minutes==00){
+            this.visitors.addAll(A2);
+            this.visitors.addAll(B1);
+            this.visitors.addAll(C1);
+            this.visitors.addAll(teachers);
+        }
+        if(minutes==40){
             checkHour(this.hours);
         }
 
     }
 
     private void checkHour(int hours) {
-        boolean free = true;
+        boolean aFree = true;
+        boolean bFree = true;
+        boolean cFree = true;
+
+
         for(Lesson lesson: agenda.getLessons()){
-            if (this.hours == lesson.getInterval().getStart().getHourOfDay()) {
+            ArrayList<Group> groups = lesson.getGroups();
+
+
+            if (this.hours+1 == lesson.getInterval().getStart().getHourOfDay()) {
+                for(Space space: this.spaces){
+                    if (space.getName().equals(lesson.getClassroom().getLocation())) {
+                        for (Group group : groups) {
+                            double xConst = 0.1;
+                            if (group.getGroupName().equals("A2")) {
+                                aFree = false;
+                                for (Visitor visitor : A2) {
+                                    visitor.setMainTarget(new Point2D.Double(space.getX() + xConst * space.getWidht(), space.getY() + 0.7 * space.getHeight()));
+                                    xConst += 0.1;
+                                }
+                                xConst = 0.1;
+                            } else if (group.getGroupName().equals("B1")) {
+                                bFree = false;
+                                for (Visitor visitor : B1) {
+                                    visitor.setMainTarget(new Point2D.Double(space.getX() + xConst * space.getWidht(), space.getY() + 0.7 * space.getHeight()));
+                                    xConst += 0.1;
+                                }
+                            } else if (group.getGroupName().equals("C1")) {
+                                cFree = false;
+                                for (Visitor visitor : C1) {
+                                    visitor.setMainTarget(new Point2D.Double(space.getX() + xConst * space.getWidht(), space.getY() + 0.7 * space.getHeight()));
+                                    xConst += 0.1;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+
+/*
+        for(Lesson lesson: agenda.getLessons()){
+            if (this.hours+1 == lesson.getInterval().getStart().getHourOfDay()) {
                 free = false;
                 this.spaces.forEach(space -> {
                     if (space.getName().equals(lesson.getClassroom().getLocation())) {
                         double xConst = 0.1;
                         for (Visitor visitor : this.visitors) {
-                            visitor.setMainTarget(new Point2D.Double(space.getX() + xConst * space.getWidht(), space.getY() + 0.3 * space.getHeight()));
+                            visitor.setMainTarget(new Point2D.Double(space.getX() + xConst * space.getWidht(), space.getY() + 0.7 * space.getHeight()));
                             xConst += 0.1;
                         }
                     }
                 });
             }
-        }
-
-        if(free){
+        }*/
             double xConst = 0.1;
-            for(Visitor visitor:this.visitors){
-                visitor.setMainTarget(new Point2D.Double(spaces.get(0).getX() +xConst*spaces.get(0).getWidht(), spaces.get(0).getY()+0.5*spaces.get(0).getHeight()));
-                xConst+=0.1;
+            if(aFree) {
+                for (Visitor visitor : A2) {
+                    visitor.setMainTarget(new Point2D.Double(spaces.get(0).getX() + xConst * spaces.get(0).getWidht(), spaces.get(0).getY() + 0.3 * spaces.get(0).getHeight()));
+                    xConst += 0.1;
+                }
             }
-
-        }
-
-
+            if(bFree) {
+                xConst = 0.1;
+                for (Visitor visitor : B1) {
+                    visitor.setMainTarget(new Point2D.Double(spaces.get(0).getX() + xConst * spaces.get(0).getWidht(), spaces.get(0).getY() + 0.5 * spaces.get(0).getHeight()));
+                    xConst += 0.1;
+                }
+            }
+            if(cFree) {
+                xConst = 0.1;
+                for (Visitor visitor : C1) {
+                    visitor.setMainTarget(new Point2D.Double(spaces.get(0).getX() + xConst * spaces.get(0).getWidht(), spaces.get(0).getY() + 0.7 * spaces.get(0).getHeight()));
+                    xConst += 0.1;
+                }
+            }
 
 
     }
