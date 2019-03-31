@@ -10,7 +10,7 @@ public class Person implements Serializable {
     private int xLocation;
     private int yLocation;
 
-    public Person ( String firstName, String additive, String lastName, int age, int xLocation, int yLocation ) {
+    public Person(String firstName, String additive, String lastName, int age, int xLocation, int yLocation) {
         this.age = age;
         this.firstName = firstName;
         this.additive = additive;
@@ -47,20 +47,18 @@ public class Person implements Serializable {
         int xDifference = moveToX - this.xLocation;
         int yDifference = moveToY - this.yLocation;
         //First move up or down
-        for (int xCounter = 0; xCounter < xDifference; xCounter++){
-            if (xDifference <= 0){
+        for (int xCounter = 0; xCounter < xDifference; xCounter++) {
+            if (xDifference <= 0) {
                 this.xLocation--;
-            }
-            else {
+            } else {
                 this.xLocation++;
             }
         }
         //Then move left or right
-        for (int yCounter = 0; yCounter < yDifference; yCounter++){
-            if (yDifference <= 0){
+        for (int yCounter = 0; yCounter < yDifference; yCounter++) {
+            if (yDifference <= 0) {
                 this.yLocation--;
-            }
-            else {
+            } else {
                 this.yLocation++;
             }
         }

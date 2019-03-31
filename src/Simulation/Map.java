@@ -2,8 +2,6 @@ package Simulation;
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;
-import java.awt.geom.Ellipse2D;
-import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 
 public class Map {
@@ -12,7 +10,8 @@ public class Map {
     Simulation simulation;
     Tileset tileset;
     Camera camera;
-    public Map(Simulation simulation,Camera camera) throws Exception
+
+    public Map(Simulation simulation, Camera camera) throws Exception
     {
         this.camera = camera;
         this.tileset = new Tileset();
@@ -32,8 +31,8 @@ public class Map {
     {
         AffineTransform affineTransform = new AffineTransform();
         graphics.setTransform(affineTransform);
-        graphics.clearRect(0, 0, (int)simulation.getCanvas().getWidth(),(int)simulation.getCanvas().getHeight());
-        graphics.setTransform(camera.getTransform((int) simulation.getCanvas().getWidth()/2, (int) simulation.getCanvas().getHeight()/2));
+        graphics.clearRect(0, 0, (int) simulation.getCanvas().getWidth(), (int) simulation.getCanvas().getHeight());
+        graphics.setTransform(camera.getTransform((int) simulation.getCanvas().getWidth() / 2, (int) simulation.getCanvas().getHeight() / 2));
         graphics.drawImage(cacheImage, affineTransform, null);
         graphics.setTransform(camera.getTransform((int) simulation.getCanvas().getWidth(), (int) simulation.getCanvas().getHeight()));
     }
@@ -50,7 +49,7 @@ public class Map {
                     if (value < 2715) {
                         AffineTransform tx = new AffineTransform();
                         tx.translate(x * scaleFactor, y * scaleFactor);
-                        graphics.drawImage(tileset.getTile((int) value -1), tx, null);
+                        graphics.drawImage(tileset.getTile((int) value - 1), tx, null);
                     } else {
                         AffineTransform tx = new AffineTransform();
                         tx.translate(x * scaleFactor, y * scaleFactor);

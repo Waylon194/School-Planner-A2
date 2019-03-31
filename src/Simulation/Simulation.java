@@ -1,6 +1,9 @@
 package Simulation;
 
-import Data.*;
+import Data.Agenda;
+import Data.Classroom;
+import Data.Group;
+import Data.Lesson;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -16,8 +19,10 @@ import java.awt.*;
 import java.awt.geom.Area;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
-import java.util.*;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class Simulation extends Application {
 
@@ -43,20 +48,20 @@ public class Simulation extends Application {
     private ArrayList<Visitor> C1;
     private ArrayList<Visitor> teachers;
 
+
     public Simulation() throws Exception {
     }
-
 
 
     public void startSim(Stage primaryStage, Agenda agenda) throws Exception {
         this.agenda = agenda;
         init();
 
-        for(Classroom classroom: this.agenda.getClassrooms()){
+        for (Classroom classroom : this.agenda.getClassrooms()) {
             System.out.println(classroom.getLocation());
         }
         System.out.println("------------");
-        for (Space space: this.spaces){
+        for (Space space : this.spaces) {
             System.out.println(space.getName());
         }
 
@@ -69,10 +74,10 @@ public class Simulation extends Application {
         this.map = new Map(this, this.camera);
         this.animationTimer = new AnimationTimer() {
             long last = -1;
+
             @Override
             public void handle(long now) {
-                if (last == -1)
-                    last = now;
+                if (last == -1) last = now;
                 update((now - last) / 1.0e9);
                 this.last = now;
                 draw(g2d);
@@ -91,20 +96,18 @@ public class Simulation extends Application {
 
 
 
-
-
+        //TODO change this to keyboard listener.
         canvas.setOnMouseClicked(e -> {
-            if (e.getButton().equals(MouseButton.SECONDARY))
-              this.speedFactor++;
-              if(this.speedFactor == 3) {
-                  speedFactor = 1;
-              }
+            if (e.getButton().equals(MouseButton.SECONDARY)) this.speedFactor++;
+            if (this.speedFactor == 3) {
+                speedFactor = 1;
+            }
 
 
             visitors.forEach(visitor -> {
-                visitor.setSpeedFactor(speedFactor) ;
+                visitor.setSpeedFactor(speedFactor);
             });
-          this.timer.cancel();
+            this.timer.cancel();
             try {
                 startTimer();
             } catch (InterruptedException e1) {
@@ -151,7 +154,7 @@ public class Simulation extends Application {
             visitor.draw(graphics);
         }
 
-          //debug
+        //debug
 //        walls.forEach(e->{
 //            graphics.setColor(Color.BLACK);
 //            graphics.fill(e);
@@ -177,6 +180,11 @@ public class Simulation extends Application {
         }
     }
 
+
+
+
+
+
     public ArrayList<Visitor> getVisitors() {
         return this.visitors;
     }
@@ -197,45 +205,44 @@ public class Simulation extends Application {
     public void startTimer() throws InterruptedException {
         this.task = new TimerTask() {
             public void run() {
-               updateKlonk();
-               handleVisitors();
+                updateKlonk();
+                handleVisitors();
             }
         };
         this.timer = new Timer("Timer");
-        this.timer.scheduleAtFixedRate(task, 0, (1000L)/speedFactor);
+        this.timer.scheduleAtFixedRate(task, 0, (1000L) / speedFactor);
         this.animationTimer.start();
     }
 
 
-
-    public void updateKlonk(){
+    public void updateKlonk() {
         this.minutes++;
-        if(this.minutes%60==0){
+        if (this.minutes % 60 == 0) {
             this.hours++;
-            this.minutes=0;
+            this.minutes = 0;
         }
-        if(this.hours%24==0) {
+        if (this.hours % 24 == 0) {
             this.hours = 0;
         }
     }
 
 
-    public String getTimeAsString(){
+    public String getTimeAsString() {
         String hour;
         String minutes;
-        if(this.hours<10){
-            hour = "0"+Integer.toString(hours);
-        }else hour = Integer.toString(hours);
+        if (this.hours < 10) {
+            hour = "0" + Integer.toString(hours);
+        } else hour = Integer.toString(hours);
 
-        if(this.minutes<10){
+        if (this.minutes < 10) {
             minutes = "0" + Integer.toString(this.minutes);
         } else minutes = Integer.toString(this.minutes);
-        return hour+":"+minutes;
+        return hour + ":" + minutes;
     }
 
-    public void handleVisitors(){
+    public void handleVisitors() {
 
-        if(hours==8 && minutes == 10){
+        if (hours == 8 && minutes == 10) {
             double x = 0.1;
             double y = 0.3;
 
@@ -249,32 +256,29 @@ public class Simulation extends Application {
              */
 
             int amountOfGroups = this.agenda.getAmountOfGroups();
-            for(int i = 0; i<amountOfGroups; i++){
+            for (int i = 0; i < amountOfGroups; i++) {
                 int groupSize = agenda.getGroups().get(i).getGroupSize();
-                for(int j = 0; j<groupSize; j++){
-                    Point2D spawnPoint = new Point2D.Double(spaces.get(2).getX() +x*spaces.get(2).getWidht(), spaces.get(2).getY()+y*spaces.get(2).getHeight());
-                    if(i==0) {
+                for (int j = 0; j < groupSize; j++) {
+                    Point2D spawnPoint = new Point2D.Double(spaces.get(2).getX() + x * spaces.get(2).getWidht(), spaces.get(2).getY() + y * spaces.get(2).getHeight());
+                    if (i == 0) {
                         A2.add(new Visitor(spawnPoint, pathFinder, this, spawnPoint));
-                    }
-                    else if(i==1){
+                    } else if (i == 1) {
                         B1.add(new Visitor(spawnPoint, pathFinder, this, spawnPoint));
-                    }
-                    else C1.add(new Visitor(spawnPoint, pathFinder, this, spawnPoint));
-                    x+=0.1;
+                    } else C1.add(new Visitor(spawnPoint, pathFinder, this, spawnPoint));
+                    x += 0.1;
                 }
-                x=0.2;
-                y+=0.2;
+                x = 0.2;
+                y += 0.2;
             }
 
             int amountOfTeachers = this.agenda.getAmountOfTeachers();
             x = 0.05;
             y = 0.9;
-            for(int i = 0; i<amountOfTeachers; i++){
-                Point2D spawnPoint = new Point2D.Double(spaces.get(4).getX() +x*spaces.get(4).getWidht(), spaces.get(4).getY()+y*spaces.get(4).getHeight());
+            for (int i = 0; i < amountOfTeachers; i++) {
+                Point2D spawnPoint = new Point2D.Double(spaces.get(4).getX() + x * spaces.get(4).getWidht(), spaces.get(4).getY() + y * spaces.get(4).getHeight());
                 teachers.add(new Visitor(spawnPoint, pathFinder, this, spawnPoint));
-                x+=0.15;
+                x += 0.15;
                 //y+=0.1;
-
 
 
             }
@@ -284,7 +288,7 @@ public class Simulation extends Application {
             this.visitors.addAll(C1);
             this.visitors.addAll(teachers);
         }
-        if(minutes==40){
+        if (minutes == 40) {
             checkHour(this.hours);
         }
 
@@ -295,10 +299,10 @@ public class Simulation extends Application {
         boolean bFree = true;
         boolean cFree = true;
 
-        for(Lesson lesson: agenda.getLessons()){
+        for (Lesson lesson : agenda.getLessons()) {
             ArrayList<Group> groups = lesson.getGroups();
-            if (this.hours+1 == lesson.getInterval().getStart().getHourOfDay()) {
-                for(Space space: this.spaces){
+            if (this.hours + 1 == lesson.getInterval().getStart().getHourOfDay()) {
+                for (Space space : this.spaces) {
                     if (space.getName().equals(lesson.getClassroom().getLocation())) {
                         for (Group group : groups) {
                             double xConst = 0.1;
@@ -309,16 +313,14 @@ public class Simulation extends Application {
                                     xConst += 0.1;
                                 }
                                 xConst = 0.1;
-                            }
-                            else if (group.getGroupName().equals("B1")) {
+                            } else if (group.getGroupName().equals("B1")) {
                                 bFree = false;
                                 for (Visitor visitor : B1) {
                                     visitor.setMainTarget(new Point2D.Double(space.getX() + xConst * space.getWidht(), space.getY() + 0.7 * space.getHeight()));
                                     xConst += 0.1;
                                 }
                                 xConst = 0.1;
-                            }
-                            else if (group.getGroupName().equals("C1")) {
+                            } else if (group.getGroupName().equals("C1")) {
                                 cFree = false;
                                 for (Visitor visitor : C1) {
                                     visitor.setMainTarget(new Point2D.Double(space.getX() + xConst * space.getWidht(), space.getY() + 0.7 * space.getHeight()));
@@ -334,46 +336,62 @@ public class Simulation extends Application {
 
         double xConst = 0.1;
         double yConst = 0.9;
-        for(Lesson lesson:agenda.getLessons()){
-            if (this.hours+1 == lesson.getInterval().getStart().getHourOfDay()) {
-                for(Space space: this.spaces) {
+        for (Lesson lesson : agenda.getLessons()) {
+            if (this.hours + 1 == lesson.getInterval().getStart().getHourOfDay()) {
+                for (Space space : this.spaces) {
                     if (space.getName().equals(lesson.getClassroom().getLocation())) {
-                           for(int i = 0; i<agenda.getAmountOfTeachers(); i++){
-                               if(lesson.getTeachers().contains(agenda.getTeachers().get(i))){
-                                   this.teachers.get(i).setMainTarget(new Point2D.Double(space.getX() + xConst * space.getWidht(), space.getY() + 0.2 * space.getHeight()));
+                        for (int i = 0; i < agenda.getAmountOfTeachers(); i++) {
+                            if (lesson.getTeachers().contains(agenda.getTeachers().get(i))) {
+                                this.teachers.get(i).setMainTarget(new Point2D.Double(space.getX() + xConst * space.getWidht(), space.getY() + 0.2 * space.getHeight()));
 
-                               }
-                               else this.teachers.get(i).setMainTarget(new Point2D.Double(spaces.get(4).getX() +xConst*spaces.get(4).getWidht(), spaces.get(4).getY()+yConst*spaces.get(4).getHeight()));
-                               xConst+=0.15;
-                               //yConst+=0.1;
-                           }
+                            } else
+                                this.teachers.get(i).setMainTarget(new Point2D.Double(spaces.get(4).getX() + xConst * spaces.get(4).getWidht(), spaces.get(4).getY() + yConst * spaces.get(4).getHeight()));
+                            xConst += 0.15;
+                            //yConst+=0.1;
+                        }
                     }
                 }
             }
         }
 
         xConst = 0.1;
-        if(aFree) {
+        if (aFree) {
             for (Visitor visitor : A2) {
-                    visitor.setMainTarget(new Point2D.Double(spaces.get(0).getX() + xConst * spaces.get(0).getWidht(), spaces.get(0).getY() + 0.3 * spaces.get(0).getHeight()));
-                    xConst += 0.1;
+                visitor.setMainTarget(new Point2D.Double(spaces.get(0).getX() + xConst * spaces.get(0).getWidht(), spaces.get(0).getY() + 0.3 * spaces.get(0).getHeight()));
+                xConst += 0.1;
             }
         }
-        if(bFree) {
+        if (bFree) {
             xConst = 0.1;
             for (Visitor visitor : B1) {
-                    visitor.setMainTarget(new Point2D.Double(spaces.get(0).getX() + xConst * spaces.get(0).getWidht(), spaces.get(0).getY() + 0.5 * spaces.get(0).getHeight()));
-                    xConst += 0.1;
+                visitor.setMainTarget(new Point2D.Double(spaces.get(0).getX() + xConst * spaces.get(0).getWidht(), spaces.get(0).getY() + 0.5 * spaces.get(0).getHeight()));
+                xConst += 0.1;
             }
         }
-        if(cFree) {
+        if (cFree) {
             xConst = 0.1;
             for (Visitor visitor : C1) {
-                    visitor.setMainTarget(new Point2D.Double(spaces.get(0).getX() + xConst * spaces.get(0).getWidht(), spaces.get(0).getY() + 0.7 * spaces.get(0).getHeight()));
-                    xConst += 0.1;
+                visitor.setMainTarget(new Point2D.Double(spaces.get(0).getX() + xConst * spaces.get(0).getWidht(), spaces.get(0).getY() + 0.7 * spaces.get(0).getHeight()));
+                xConst += 0.1;
             }
         }
     }
+
+    public void timerOnCloseEvent(){
+        this.timer.cancel();
+        this.hours = 8;
+        this.minutes = 0;
+        this.animationTimer.stop();
+        try {
+            finalize();
+        } catch (Throwable throwable) {
+            throwable.printStackTrace();
+        }
+    }
+
+
+
+
 
 
 

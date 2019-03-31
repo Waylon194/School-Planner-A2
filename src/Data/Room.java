@@ -25,30 +25,28 @@ public class Room implements Serializable {
         return location;
     }
 
-    public boolean empty(){
-        if (true){
+    public boolean empty() {
+        if (true) {
             return true;
-        }
-        else {
+        } else {
             return false;
         }
     }
 
-    public boolean isEmpty(){
+    public boolean isEmpty() {
         if (this.capacity == 0) {
             return true;
-        }
-        else{
+        } else {
             return false;
         }
     }
 
-    public String getAbbreviation(){
-       return ((this.location.substring(0,2)).toUpperCase() + this.number);
+    public String getAbbreviation() {
+        return ((this.location.substring(0, 2)).toUpperCase() + this.number);
     }
 
     @Override
-    public String toString () {
-        return (this.location + " "+ this.capacity+ " Capacity: "+ this.capacity);
+    public String toString() {
+        return (this.location + " " + this.capacity + " Capacity: " + this.capacity);
     }
 }
