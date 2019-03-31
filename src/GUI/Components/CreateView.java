@@ -28,7 +28,7 @@ public class CreateView extends GridPane {
                 ArrayList<Group> groupsToMakeAvailable = agenda.getLessons().get(amountLessons).getGroups();
 
                 button.setOnAction(event -> {
-                    System.out.println(agenda.amountOfLessons());
+
                     teachersToMakeAvailable.forEach(teacher -> {
                         teacher.makeAvailable(i);
                     });
@@ -37,7 +37,7 @@ public class CreateView extends GridPane {
                     });
                     agenda.getLessons().get(i).getClassroom().makeAvailable(i);
                     agenda.deleteLesson(i);
-                    System.out.println(agenda.amountOfLessons());
+
 
 
                     guiMain.updateScene();

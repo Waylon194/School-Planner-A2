@@ -95,9 +95,7 @@ public class GUIMain extends Application {
                     sim = new Simulation();
                     sim.startSim(primaryStage, this.agenda);
                     gui.getTabSimulate().setContent(sim.getCanvas());
-                    this.agenda.getLessons().forEach(lesson -> {
-                        System.out.println(lesson.toString());
-                    });
+
                 } catch (Exception e1) {
                     e1.printStackTrace();
                 }
@@ -126,7 +124,6 @@ public class GUIMain extends Application {
             try {
                 boolean oneOfMillionConditions = true;
                 ArrayList<Teacher> teachers = getSelectedTeachers(this.agenda);
-                System.out.println(teachers);
                 Interval lessonInterval = new Interval(createLesson.getChosenStartTime(), createLesson.getChosenEndTime());
                 ArrayList<Group> groups = getSelectedGroups();
                 Classroom classroom = createLesson.getChosenClasroom();
@@ -195,7 +192,6 @@ public class GUIMain extends Application {
             createViewWindow.setTitle("Change/View");
             createViewWindow.show();
             update();
-            System.out.println(agenda.getLessons().size());
         });
 
 //        gui.getBtnAddLesson().setOnAction(event -> {
@@ -326,7 +322,6 @@ public class GUIMain extends Application {
                 for (Interval interval : intervals) {
                     if (!selectedTeacher.isAvailable(interval)) {
                         teachHasLessons = true;
-                        System.out.println("This teacher has lessons");
                         break;
                     }
                 }
@@ -350,7 +345,6 @@ public class GUIMain extends Application {
                 for (Interval interval : intervals) {
                     if (!selectedTeacher.isAvailable(interval)) {
                         teachHasLessons = true;
-                        System.out.println("This teacher has lessons");
                         break;
                     }
                 }
@@ -416,7 +410,7 @@ public class GUIMain extends Application {
                 if (!(txtSeat.getText().isEmpty()) && !(txtLocation.getText().isEmpty())) {
                     try {
                         Integer.parseInt(txtSeat.getText());
-                        System.out.println(agenda.getClassrooms().size());
+
                         Classroom newClassroom = new Classroom(agenda.getClassrooms().size() + 1, Integer.parseInt(txtSeat.getText()), txtLocation.getText(), true, true);
                         agenda.addClassroom(newClassroom);
                         gui.addClassroomGrid();
@@ -495,7 +489,7 @@ public class GUIMain extends Application {
                         try {
                             int counter = 0;
                             Integer.parseInt(txtSeat.getText());
-                            System.out.println(agenda.getClassrooms().size());
+
                             Classroom newClassroom = new Classroom(agenda.getClassrooms().size() + 1, Integer.parseInt(txtSeat.getText()), lblLocation.getText(), true, true);
                             agenda.getClassrooms().remove(selectedClassroom);
                             agenda.getClassrooms().add(counter, newClassroom);
@@ -603,7 +597,7 @@ public class GUIMain extends Application {
         createGroupWindow.getSaveGroupsButton().setOnAction(event -> {
             createGroupWindow2.close();
             update();
-            System.out.println(getSelectedGroups());
+
         });
 
         createLesson.getButtonTeachers().setOnAction(event -> {
@@ -616,10 +610,6 @@ public class GUIMain extends Application {
         createTeacherWindow.getSaveTeachersButton().setOnAction(event -> {
             createTeacherWindowStage.close();
             update();
-            System.out.println(getSelectedTeachers(this.agenda));
-            for (Classroom classroom : agenda.getClassrooms()) {
-                System.out.println(classroom.getNumber());
-            }
         });
     }
 
@@ -642,7 +632,6 @@ public class GUIMain extends Application {
         for (CheckBox checkBox : createTeacherWindow.getCheckBoxes()) {
             if (checkBox.isSelected()) {
                 selected.add(agenda.getTeachers().get(i));
-                System.out.println(i);  //TODO WHYYYYYYYYYYYYYYYYYYYY IT BEGINS AT 7
             }
             i++;
         }

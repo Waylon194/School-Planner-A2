@@ -56,15 +56,6 @@ public class Simulation extends Application {
     public void startSim(Stage primaryStage, Agenda agenda) throws Exception {
         this.agenda = agenda;
         init();
-
-        for (Classroom classroom : this.agenda.getClassrooms()) {
-            System.out.println(classroom.getLocation());
-        }
-        System.out.println("------------");
-        for (Space space : this.spaces) {
-            System.out.println(space.getName());
-        }
-
         this.canvas = new Canvas(1280, 720);
         FXGraphics2D g2d = new FXGraphics2D(canvas.getGraphicsContext2D());
         this.stage = primaryStage;
