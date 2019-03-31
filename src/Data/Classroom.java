@@ -1,15 +1,16 @@
 package Data;
 
 import org.joda.time.Interval;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Classroom extends Room implements Serializable,Availability {
+public class Classroom extends Room implements Serializable, Availability {
     private boolean smartBoard;
     private boolean whiteBoard;
     private ArrayList<Interval> unavailable;
 
-    public Classroom (int number, int amountOfSeats, String location, boolean smartBoard, boolean whiteBoard) {
+    public Classroom(int number, int amountOfSeats, String location, boolean smartBoard, boolean whiteBoard) {
         super(number, amountOfSeats, location);
         this.smartBoard = smartBoard;
         this.whiteBoard = whiteBoard;
@@ -26,8 +27,8 @@ public class Classroom extends Room implements Serializable,Availability {
 
     @Override
     public boolean isAvailable(Interval at) {
-        for(Interval interval: unavailable) {
-            if (at.overlaps(interval)){
+        for (Interval interval : unavailable) {
+            if (at.overlaps(interval)) {
                 return false;
             }
         }
@@ -38,8 +39,9 @@ public class Classroom extends Room implements Serializable,Availability {
     public void makeUnavailable(Interval interval) {
         this.unavailable.add(interval);
     }
+
     @Override
-    public void makeAvailable(int i){
+    public void makeAvailable(int i) {
         this.unavailable.remove(i);
     }
 

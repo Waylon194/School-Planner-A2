@@ -1,7 +1,7 @@
 package GUI.Components;
 
-import Data.Classroom;
 import Data.Agenda;
+import Data.Classroom;
 import Data.Subject;
 import Data.Teacher;
 import javafx.scene.control.Button;
@@ -11,10 +11,6 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import org.joda.time.DateTime;
-
-import java.awt.*;
-import java.util.ArrayList;
-import java.util.Map;
 
 public class CreateLesson extends GridPane {
     private Agenda agenda;
@@ -80,7 +76,7 @@ public class CreateLesson extends GridPane {
         return subjectComboBox;
     }
 
-    public Button getButtonTeachers(){
+    public Button getButtonTeachers() {
         return this.buttonTeachers;
     }
 
@@ -229,14 +225,13 @@ public class CreateLesson extends GridPane {
         comboStartTime.setPrefHeight(25.0);
         comboStartTime.setPrefWidth(514.0);
 
-        for (DateTime time : agenda.getTimes()){
+        for (DateTime time : agenda.getTimes()) {
             int hour = time.getHourOfDay();
             int intMinute = time.getMinuteOfHour();
             String minute = "";
-            if (intMinute < 10){
+            if (intMinute < 10) {
                 minute += "0" + intMinute;
-            }
-            else {
+            } else {
                 minute = String.valueOf(intMinute);
             }
             //TODO: Change display time
@@ -252,9 +247,9 @@ public class CreateLesson extends GridPane {
             int hour = time.getHourOfDay();
             int intMinute = time.getMinuteOfHour();
             String minute = "";
-            if (intMinute<10){
+            if (intMinute < 10) {
                 minute += "0" + intMinute;
-            }else{
+            } else {
                 minute = String.valueOf(intMinute);
             }
 
@@ -264,7 +259,7 @@ public class CreateLesson extends GridPane {
         classroomComboBox.setPrefHeight(25.0);
         classroomComboBox.setPrefWidth(514.0);
 
-        for(Classroom classroom: agenda.getClassrooms()){
+        for (Classroom classroom : agenda.getClassrooms()) {
             classroomComboBox.getItems().add(classroom);
         }
 
@@ -273,7 +268,7 @@ public class CreateLesson extends GridPane {
         teacherComboBox.setPrefHeight(25.0);
         teacherComboBox.setPrefWidth(552.0);
 
-        for(Teacher teacher: agenda.getTeachers()){
+        for (Teacher teacher : agenda.getTeachers()) {
             teacherComboBox.getItems().add(teacher);
         }
 
@@ -282,7 +277,7 @@ public class CreateLesson extends GridPane {
         subjectComboBox.setPrefHeight(25.0);
         subjectComboBox.setPrefWidth(705.0);
 
-        for (Subject subject: agenda.getSubjects()){
+        for (Subject subject : agenda.getSubjects()) {
             subjectComboBox.getItems().add(subject);
         }
 
@@ -291,58 +286,54 @@ public class CreateLesson extends GridPane {
         popularityComboBox.setPrefHeight(25.0);
         popularityComboBox.setPrefWidth(705.0);
 
-        popularityComboBox.getItems().addAll(1,2,3,4,5,6,7,8,9,10);
+        popularityComboBox.getItems().addAll(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
 
         gridPane.getColumnConstraints().addAll(columnConstraints, columnConstraints0);
-        gridPane.getRowConstraints().addAll(rowConstraints, rowConstraints0, rowConstraints1,
-                rowConstraints2, rowConstraints3, rowConstraints4, rowConstraints5, subjectRow, popularityRow);
-        gridPane.getChildren().addAll(label, label0, label1, label2, label3, lblSubject ,lblPopularity, buttonGroup, buttonSaveLesson,
-                buttonCancelLesson, comboStartTime, comboEndTime, classroomComboBox, subjectComboBox, buttonTeachers,
-                popularityComboBox);
+        gridPane.getRowConstraints().addAll(rowConstraints, rowConstraints0, rowConstraints1, rowConstraints2, rowConstraints3, rowConstraints4, rowConstraints5, subjectRow, popularityRow);
+        gridPane.getChildren().addAll(label, label0, label1, label2, label3, lblSubject, lblPopularity, buttonGroup, buttonSaveLesson, buttonCancelLesson, comboStartTime, comboEndTime, classroomComboBox, subjectComboBox, buttonTeachers, popularityComboBox);
         getChildren().add(gridPane);
     }
 
-    public Classroom getChosenClasroom(){
+    public Classroom getChosenClasroom() {
         return (Classroom) classroomComboBox.getSelectionModel().getSelectedItem();
     }
-    public int getPopularity(){
+
+    public int getPopularity() {
         return (int) popularityComboBox.getSelectionModel().getSelectedItem();
     }
 
-    public Teacher getChosenTeacher(){
+    public Teacher getChosenTeacher() {
         return (Teacher) teacherComboBox.getSelectionModel().getSelectedItem();
     }
 
-    public Subject getChosenSubject(){
+    public Subject getChosenSubject() {
         return (Subject) subjectComboBox.getSelectionModel().getSelectedItem();
     }
 
-    public DateTime getChosenStartTime(){
-        if(!(comboStartTime.getSelectionModel().isEmpty())) {
+    public DateTime getChosenStartTime() {
+        if (!(comboStartTime.getSelectionModel().isEmpty())) {
             return (DateTime) comboStartTime.getSelectionModel().getSelectedItem();
-        }
-        else {
+        } else {
             return null;
         }
     }
 
-    public DateTime getChosenEndTime(){
-        if(!(comboEndTime.getSelectionModel().isEmpty())) {
+    public DateTime getChosenEndTime() {
+        if (!(comboEndTime.getSelectionModel().isEmpty())) {
             return (DateTime) comboEndTime.getSelectionModel().getSelectedItem();
-        }
-        else {
+        } else {
             return null;
         }
     }
 
     public void update() {
         classroomComboBox.getItems().clear();
-        for(Classroom classroom : agenda.getClassrooms()) {
+        for (Classroom classroom : agenda.getClassrooms()) {
             classroomComboBox.getItems().add(classroom);
         }
         subjectComboBox.getItems().clear();
 
-        for(Subject subject: agenda.getSubjects()){
+        for (Subject subject : agenda.getSubjects()) {
             subjectComboBox.getItems().add(subject);
         }
     }

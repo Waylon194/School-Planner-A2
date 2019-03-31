@@ -2,7 +2,10 @@ package Simulation;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
-import java.awt.geom.*;
+import java.awt.geom.AffineTransform;
+import java.awt.geom.Area;
+import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -96,8 +99,7 @@ public class Visitor {
         //implementation of the pathing
         target = new Point2D.Double(current.getX() * c, current.getY() * c);
         if (position.distance(target) < 16) {
-            if (path.isEmpty())
-                speed = 0;
+            if (path.isEmpty()) speed = 0;
             else current = path.poll();
         } else speed = sValue;
 
@@ -105,9 +107,7 @@ public class Visitor {
         if (currentFrame < 3 && speed != 0) {
             currentFrame++;
         } else currentFrame = 0;
-        Point2D newPosition = new Point2D.Double(
-                this.position.getX() + this.speed * Math.cos(angle),
-                this.position.getY() + this.speed * Math.sin(angle));
+        Point2D newPosition = new Point2D.Double(this.position.getX() + this.speed * Math.cos(angle), this.position.getY() + this.speed * Math.sin(angle));
 
         //checks collision with visitors and walls
         boolean hasCollision = false;
@@ -128,10 +128,8 @@ public class Visitor {
         if (!hasCollision) {
             this.position = newPosition;
         } else {
-            if (target.getX() - position.getX() > 0)
-                this.angle += turn;
-            else
-                this.angle -= turn;
+            if (target.getX() - position.getX() > 0) this.angle += turn;
+            else this.angle -= turn;
             if (wallPos != null) ;
             target = new Point2D.Double(target.getX() + position.getX() - target.getX() + 32, target.getY() + position.getY() - target.getY());
         }
@@ -139,16 +137,11 @@ public class Visitor {
         Point2D diff = new Point2D.Double(target.getX() - this.position.getX(), target.getY() - this.position.getY());
         double targetAngle = Math.atan2(diff.getY(), diff.getX());
         double angleDiff = targetAngle - angle;
-        while (angleDiff > Math.PI)
-            angleDiff -= 2 * Math.PI;
-        while (angleDiff < -Math.PI)
-            angleDiff += 2 * Math.PI;
-        if (angleDiff < -0.1)
-            angle -= 0.2 * simSpeed;
-        else if (angleDiff > 0.1)
-            angle += 0.2 * simSpeed;
-        else
-            this.angle = targetAngle;
+        while (angleDiff > Math.PI) angleDiff -= 2 * Math.PI;
+        while (angleDiff < -Math.PI) angleDiff += 2 * Math.PI;
+        if (angleDiff < -0.1) angle -= 0.2 * simSpeed;
+        else if (angleDiff > 0.1) angle += 0.2 * simSpeed;
+        else this.angle = targetAngle;
 
         frameTime -= deltaTime;
         if (frameTime < 0) {
@@ -179,7 +172,7 @@ public class Visitor {
 //        g.setColor(Color.RED);
 //        g.fill(new Ellipse2D.Double(target.getX(), target.getY(), 10, 10));
     }
-    
+
 
     public boolean wallCollision(Point2D newPos, Area v) {
         Area a = v;

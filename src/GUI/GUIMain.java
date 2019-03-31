@@ -7,9 +7,6 @@ import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
@@ -89,14 +86,14 @@ public class GUIMain extends Application {
 
     }
 
-    public void buttonhandler()  {
+    public void buttonhandler() {
 
         gui.getTabSimulate().setOnSelectionChanged(e -> {
-            if (gui.getTabSimulate().isSelected()){
+            if (gui.getTabSimulate().isSelected()) {
 
                 try {
                     sim = new Simulation();
-                    sim.startSim(primaryStage,this.agenda);
+                    sim.startSim(primaryStage, this.agenda);
                     gui.getTabSimulate().setContent(sim.getCanvas());
                     this.agenda.getLessons().forEach(lesson -> {
                         System.out.println(lesson.toString());
@@ -104,8 +101,7 @@ public class GUIMain extends Application {
                 } catch (Exception e1) {
                     e1.printStackTrace();
                 }
-            }
-            else {
+            } else {
                 sim.timerOnCloseEvent();
             }
         });
@@ -127,55 +123,54 @@ public class GUIMain extends Application {
         //saves lesson to a object and closes window WIP!
         createLesson.getButtonSaveLesson().setOnAction(event -> {
 
-            try{
+            try {
                 boolean oneOfMillionConditions = true;
                 ArrayList<Teacher> teachers = getSelectedTeachers(this.agenda);
                 System.out.println(teachers);
-                Interval lessonInterval = new Interval(createLesson.getChosenStartTime(),createLesson.getChosenEndTime());
+                Interval lessonInterval = new Interval(createLesson.getChosenStartTime(), createLesson.getChosenEndTime());
                 ArrayList<Group> groups = getSelectedGroups();
                 Classroom classroom = createLesson.getChosenClasroom();
                 int popularity = createLesson.getPopularity();
                 Subject subject = createLesson.getChosenSubject();
 
-                for (Teacher teacher: teachers) {
+                for (Teacher teacher : teachers) {
                     if (!teacher.isAvailable(lessonInterval)) {
                         createErrorStage(new Label(teacher + "is not available at this time"));
                         errorStage.show();
                         oneOfMillionConditions = false;
                     }
                 }
-                for(Group group: groups) {
+                for (Group group : groups) {
                     if (!group.isAvailable(lessonInterval)) {
                         createErrorStage(new Label(group + "is not available at this time"));
                         errorStage.show();
                         oneOfMillionConditions = false;
                     }
                 }
-                if (!classroom.isAvailable(lessonInterval)){
+                if (!classroom.isAvailable(lessonInterval)) {
                     oneOfMillionConditions = false;
                     createErrorStage(new Label(classroom + "is not available at this time"));
                 }
 
-                if(oneOfMillionConditions){
+                if (oneOfMillionConditions) {
 
-                teachers.forEach(teacher -> {
-                    teacher.makeUnavailable(lessonInterval);
-                });
+                    teachers.forEach(teacher -> {
+                        teacher.makeUnavailable(lessonInterval);
+                    });
 
-                groups.forEach(group -> {
-                    group.makeUnavailable(lessonInterval);
-                });
+                    groups.forEach(group -> {
+                        group.makeUnavailable(lessonInterval);
+                    });
 
-                classroom.makeUnavailable(lessonInterval);
+                    classroom.makeUnavailable(lessonInterval);
 
-                Lesson lesson = new Lesson(teachers,classroom,groups,subject,lessonInterval,popularity);
-                agenda.addLesson(lesson);
-                createLessonWindow.close();
-                update();
-                updateScene();
+                    Lesson lesson = new Lesson(teachers, classroom, groups, subject, lessonInterval, popularity);
+                    agenda.addLesson(lesson);
+                    createLessonWindow.close();
+                    update();
+                    updateScene();
                 }
-            }
-            catch (Exception exception){
+            } catch (Exception exception) {
                 createErrorStage(new Label("Begin time can not be after end time"));
                 errorStage.show();
                 exception.printStackTrace();
@@ -247,7 +242,7 @@ public class GUIMain extends Application {
             TextField txtTeachNumber = new TextField();
             txtFieldArray.add(txtTeachNumber);
 
-            for(int i = 0; i < labelArrayList.size(); i++) {
+            for (int i = 0; i < labelArrayList.size(); i++) {
                 gridPane.add(labelArrayList.get(i), 1, i);
                 gridPane.add(txtFieldArray.get(i), 2, i);
             }
@@ -260,24 +255,18 @@ public class GUIMain extends Application {
             Scene scene = new Scene(gridPane);
 
             btnSubmit.setOnAction(event -> {
-                if(!txtFirstName.getText().isEmpty()
-                        && !txtLastName.getText().isEmpty()
-                        && !txtAge.getText().isEmpty()
-                        && !txtTeachNumber.getText().isEmpty()) {
-                    try{
-                        Teacher newTeacher = new Teacher(txtFirstName.getText(), txtAdditive.getText(), txtLastName.getText(), Integer.parseInt(txtAge.getText()),
-                                0, 0, txtTeachNumber.getText());
+                if (!txtFirstName.getText().isEmpty() && !txtLastName.getText().isEmpty() && !txtAge.getText().isEmpty() && !txtTeachNumber.getText().isEmpty()) {
+                    try {
+                        Teacher newTeacher = new Teacher(txtFirstName.getText(), txtAdditive.getText(), txtLastName.getText(), Integer.parseInt(txtAge.getText()), 0, 0, txtTeachNumber.getText());
                         createViewWindow.close();
 
                         agenda.addTeacher(newTeacher);
                         createTeacherWindow.update();
-                    }
-                    catch (Exception exception){
+                    } catch (Exception exception) {
                         createErrorStage(new Label("Age has to be a numeric value"));
                         this.errorStage.show();
                     }
-                }
-                else {
+                } else {
                     createErrorStage(new Label("Enter all needed values"));
                     this.errorStage.show();
                 }
@@ -291,7 +280,7 @@ public class GUIMain extends Application {
             ArrayList<TextField> txtFieldArray = new ArrayList<>();
 
             ChoiceBox choiceBox = new ChoiceBox();
-            for(Teacher teacher : agenda.getTeachers()) {
+            for (Teacher teacher : agenda.getTeachers()) {
                 choiceBox.getItems().add(teacher);
             }
             choiceBox.setValue(choiceBox.getItems().get(0));
@@ -334,40 +323,39 @@ public class GUIMain extends Application {
             btnSubmit.setOnAction(event -> {
                 ArrayList<Interval> intervals = agenda.getIntervals();
 
-                for(Interval interval : intervals) {
-                    if(!selectedTeacher.isAvailable(interval)) {
+                for (Interval interval : intervals) {
+                    if (!selectedTeacher.isAvailable(interval)) {
                         teachHasLessons = true;
                         System.out.println("This teacher has lessons");
                         break;
                     }
                 }
 
-                if(teachHasLessons) {
+                if (teachHasLessons) {
                     teachHasLessons = false;
                     createErrorStage(new Label("This teacher has lessons planned"));
                     errorStage.show();
                 } else {
-                    Teacher newTeacher = new Teacher(txtFirstName.getText(), txtAdditive.getText(), txtLastName.getText(), Integer.parseInt(txtAge.getText()),
-                            0, 0, txtTeachNumber.getText());
+                    Teacher newTeacher = new Teacher(txtFirstName.getText(), txtAdditive.getText(), txtLastName.getText(), Integer.parseInt(txtAge.getText()), 0, 0, txtTeachNumber.getText());
                     agenda.addTeacher(newTeacher);
                     agenda.getTeachers().remove(selectedTeacher);
                 }
-                    createViewWindow.close();
-                    createTeacherWindow.update();
-                });
+                createViewWindow.close();
+                createTeacherWindow.update();
+            });
 
             btnRemoval.setOnAction(event -> {
                 ArrayList<Interval> intervals = agenda.getIntervals();
 
-                for(Interval interval : intervals) {
-                    if(!selectedTeacher.isAvailable(interval)) {
+                for (Interval interval : intervals) {
+                    if (!selectedTeacher.isAvailable(interval)) {
                         teachHasLessons = true;
                         System.out.println("This teacher has lessons");
                         break;
                     }
                 }
 
-                if(teachHasLessons) {
+                if (teachHasLessons) {
                     teachHasLessons = false;
                     createErrorStage(new Label("This teacher has lessons planned"));
                     errorStage.show();
@@ -379,7 +367,7 @@ public class GUIMain extends Application {
                 createTeacherWindow.update();
             });
 
-            for(int i = 0; i < labelArrayList.size(); i++) {
+            for (int i = 0; i < labelArrayList.size(); i++) {
                 gridPane.add(labelArrayList.get(i), 1, i);
                 gridPane.add(txtFieldArray.get(i), 2, i);
             }
@@ -405,7 +393,7 @@ public class GUIMain extends Application {
             labelArrayList.add(lblSeats);
             Label lblLocation = new Label("Location:");
             labelArrayList.add(lblLocation);
-            
+
             TextField txtSeat = new TextField();
             txtArrayList.add(txtSeat);
             TextField txtLocation = new TextField();
@@ -418,29 +406,27 @@ public class GUIMain extends Application {
             gridpane.setHgap(20);
             gridpane.setVgap(20);
 
-            for(int i = 0; i < labelArrayList.size(); i++) {
+            for (int i = 0; i < labelArrayList.size(); i++) {
                 gridpane.add(labelArrayList.get(i), 1, i);
                 gridpane.add(txtArrayList.get(i), 2, i);
             }
             gridpane.add(btnSubmit, 3, labelArrayList.size() + 1);
 
             btnSubmit.setOnAction(e -> {
-                if(!(txtSeat.getText().isEmpty()) && !(txtLocation.getText().isEmpty())){
-                    try{
+                if (!(txtSeat.getText().isEmpty()) && !(txtLocation.getText().isEmpty())) {
+                    try {
                         Integer.parseInt(txtSeat.getText());
                         System.out.println(agenda.getClassrooms().size());
-                        Classroom newClassroom = new Classroom(agenda.getClassrooms().size() +1, Integer.parseInt(txtSeat.getText()), txtLocation.getText(), true, true);
+                        Classroom newClassroom = new Classroom(agenda.getClassrooms().size() + 1, Integer.parseInt(txtSeat.getText()), txtLocation.getText(), true, true);
                         agenda.addClassroom(newClassroom);
                         gui.addClassroomGrid();
                         createLesson.update();
                         createViewWindow.close();
-                    }
-                    catch (Exception exception){
+                    } catch (Exception exception) {
                         createErrorStage(new Label("Capacity has to be a numeric value"));
                         this.errorStage.show();
                     }
-                }
-                else {
+                } else {
                     createErrorStage(new Label("Enter classroom and/or capacity"));
                     this.errorStage.show();
                 }
@@ -456,7 +442,7 @@ public class GUIMain extends Application {
             ArrayList<Label> labelArrayList = new ArrayList<>();
 
             ChoiceBox choiceBox = new ChoiceBox();
-            for(Classroom classroom : agenda.getClassrooms()) {
+            for (Classroom classroom : agenda.getClassrooms()) {
                 choiceBox.getItems().add(classroom);
             }
             choiceBox.setValue(choiceBox.getItems().get(0));
@@ -483,7 +469,7 @@ public class GUIMain extends Application {
             gridpane.setHgap(20);
             gridpane.setVgap(20);
 
-            for(int i = 0; i < labelArrayList.size(); i++) {
+            for (int i = 0; i < labelArrayList.size(); i++) {
                 gridpane.add(labelArrayList.get(i), 1, i);
             }
             gridpane.add(txtSeat, 2, 0);
@@ -493,36 +479,34 @@ public class GUIMain extends Application {
 
             btnChange.setOnAction(e -> {
                 ArrayList<Interval> intervals = agenda.getIntervals();
-                for(Interval interval : intervals) {
-                    if(!selectedClassroom.isAvailable(interval)) {
+                for (Interval interval : intervals) {
+                    if (!selectedClassroom.isAvailable(interval)) {
                         classHasLessons = true;
                         break;
                     }
                 }
 
-                if(classHasLessons) {
+                if (classHasLessons) {
                     classHasLessons = false;
                     createErrorStage(new Label("This classroom has lessons planned."));
                     errorStage.show();
                 } else {
-                    if(!(txtSeat.getText().isEmpty())){
-                        try{
+                    if (!(txtSeat.getText().isEmpty())) {
+                        try {
                             int counter = 0;
                             Integer.parseInt(txtSeat.getText());
                             System.out.println(agenda.getClassrooms().size());
-                            Classroom newClassroom = new Classroom(agenda.getClassrooms().size() +1, Integer.parseInt(txtSeat.getText()), lblLocation.getText(), true, true);
+                            Classroom newClassroom = new Classroom(agenda.getClassrooms().size() + 1, Integer.parseInt(txtSeat.getText()), lblLocation.getText(), true, true);
                             agenda.getClassrooms().remove(selectedClassroom);
                             agenda.getClassrooms().add(counter, newClassroom);
                             gui.addClassroomGrid();
                             createLesson.update();
                             createViewWindow.close();
-                        }
-                        catch (Exception exception){
+                        } catch (Exception exception) {
                             createErrorStage(new Label("Capacity has to be a numeric value"));
                             this.errorStage.show();
                         }
-                    }
-                    else {
+                    } else {
                         createErrorStage(new Label("Enter classroom and/or capacity"));
                         this.errorStage.show();
                     }
@@ -545,19 +529,18 @@ public class GUIMain extends Application {
             gridpane.setHgap(20);
             gridpane.setVgap(20);
 
-            gridpane.add(subjectLable,1,0);
-            gridpane.add(subjectTextField,2,0);
+            gridpane.add(subjectLable, 1, 0);
+            gridpane.add(subjectTextField, 2, 0);
             gridpane.add(btnSubmit, 3, 0);
 
             btnSubmit.setOnAction(e -> {
 
-                if(!(subjectTextField.getText().isEmpty())) {
+                if (!(subjectTextField.getText().isEmpty())) {
                     Subject newSubject = new Subject(subjectTextField.getText());
                     agenda.addSubject(newSubject);
                     createLesson.update();
                     createViewWindow.close();
-                }
-                else{
+                } else {
                     Label errorLabel = new Label("You can not create an empty subject");
                     createErrorStage(errorLabel);
                     this.errorStage.show();
@@ -577,7 +560,7 @@ public class GUIMain extends Application {
             Button btnRemove = new Button("Remove");
             ChoiceBox choiceBox = new ChoiceBox();
 
-            for(Subject subject : agenda.getSubjects()) {
+            for (Subject subject : agenda.getSubjects()) {
                 choiceBox.getItems().add(subject);
             }
             choiceBox.setValue(choiceBox.getItems().get(0));
@@ -634,7 +617,7 @@ public class GUIMain extends Application {
             createTeacherWindowStage.close();
             update();
             System.out.println(getSelectedTeachers(this.agenda));
-            for(Classroom classroom: agenda.getClassrooms()){
+            for (Classroom classroom : agenda.getClassrooms()) {
                 System.out.println(classroom.getNumber());
             }
         });
@@ -676,36 +659,35 @@ public class GUIMain extends Application {
             int start = lesson.getInterval().getStart().getHourOfDay();
             switch (start) {
                 case 9:
-                    gui.drawLessonBlock(1, lesson.getClassroom().getNumber(), duration,lesson);
+                    gui.drawLessonBlock(1, lesson.getClassroom().getNumber(), duration, lesson);
                     break;
                 case 10:
-                    gui.drawLessonBlock(2, lesson.getClassroom().getNumber(), duration,lesson);
+                    gui.drawLessonBlock(2, lesson.getClassroom().getNumber(), duration, lesson);
                     break;
                 case 11:
-                    gui.drawLessonBlock(3, lesson.getClassroom().getNumber(), duration,lesson);
+                    gui.drawLessonBlock(3, lesson.getClassroom().getNumber(), duration, lesson);
                     break;
                 case 12:
-                    gui.drawLessonBlock(4, lesson.getClassroom().getNumber(), duration,lesson);
+                    gui.drawLessonBlock(4, lesson.getClassroom().getNumber(), duration, lesson);
                     break;
                 case 13:
-                    gui.drawLessonBlock(5, lesson.getClassroom().getNumber(), duration,lesson);
+                    gui.drawLessonBlock(5, lesson.getClassroom().getNumber(), duration, lesson);
                     break;
                 case 14:
-                    gui.drawLessonBlock(6, lesson.getClassroom().getNumber(), duration,lesson);
+                    gui.drawLessonBlock(6, lesson.getClassroom().getNumber(), duration, lesson);
                     break;
                 case 15:
-                    gui.drawLessonBlock(7, lesson.getClassroom().getNumber(), duration,lesson);
+                    gui.drawLessonBlock(7, lesson.getClassroom().getNumber(), duration, lesson);
                     break;
                 case 16:
-                    gui.drawLessonBlock(8, lesson.getClassroom().getNumber(), duration,lesson);
+                    gui.drawLessonBlock(8, lesson.getClassroom().getNumber(), duration, lesson);
                     break;
                 case 17:
-                    gui.drawLessonBlock(9, lesson.getClassroom().getNumber(), duration,lesson);
+                    gui.drawLessonBlock(9, lesson.getClassroom().getNumber(), duration, lesson);
                     break;
             }
         });
     }
-
 
 
     public void createErrorStage(Label label) {

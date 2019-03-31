@@ -45,8 +45,7 @@ public class PathFinder extends JPanel {
         Queue<Point> points = new LinkedList<>();
         double currentDistance;
         points.offer(current);
-        if (distanceMap.get(current) != null)
-            currentDistance = distanceMap.get(current);
+        if (distanceMap.get(current) != null) currentDistance = distanceMap.get(current);
         else currentDistance = 0;
         path = new ArrayList<>();
         path.add(current);
@@ -81,7 +80,7 @@ public class PathFinder extends JPanel {
         List<Point> a = new ArrayList<>();
         for (int x = 0; x < 99; x++) {
             for (int y = 0; y < 99; y++) {
-                if (this.collision.get(y * 100 + x) ==1873) {
+                if (this.collision.get(y * 100 + x) == 1873) {
                     a.add(new Point(x, y));
                 }
             }

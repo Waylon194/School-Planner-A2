@@ -104,30 +104,30 @@ public class Tileset {
     }
 
 
-    public void getRoomData(){
+    public void getRoomData() {
         JSONArray rooms = (JSONArray) jsonObject.get("rooms");
         Iterator i = rooms.iterator();
 
         while (i.hasNext()) {
             JSONObject room = (JSONObject) i.next();
             JSONArray data = (JSONArray) room.get("objects");
-            String name = (String)room.get("name");
+            String name = (String) room.get("name");
             Iterator dataIterator = data.iterator();
-            while (dataIterator.hasNext()){
+            while (dataIterator.hasNext()) {
                 JSONObject rooom = (JSONObject) dataIterator.next();
-                boolean visible = (boolean)rooom.get("visible");
-                long id = (long)rooom.get("id");
-                double width = (double)rooom.get("width");
-                double height = (double)rooom.get("height");
-                double x = (double)rooom.get("x");
-                double y = (double)rooom.get("y");
+                boolean visible = (boolean) rooom.get("visible");
+                long id = (long) rooom.get("id");
+                double width = (double) rooom.get("width");
+                double height = (double) rooom.get("height");
+                double x = (double) rooom.get("x");
+                double y = (double) rooom.get("y");
 
-                this.spaces.add(new Space(name,x,y,width,height));
+                this.spaces.add(new Space(name, x, y, width, height));
             }
         }
     }
 
-    public ArrayList<Space> getSpaces(){
+    public ArrayList<Space> getSpaces() {
         return this.spaces;
     }
 
