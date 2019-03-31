@@ -152,10 +152,10 @@ public class Simulation extends Application {
         }
 
           //debug
-        walls.forEach(e->{
-            graphics.setColor(Color.BLACK);
-            graphics.fill(e);
-        });
+//        walls.forEach(e->{
+//            graphics.setColor(Color.BLACK);
+//            graphics.fill(e);
+//        });
 
     }
 
@@ -171,8 +171,10 @@ public class Simulation extends Application {
 
         this.canvas.setHeight(stage.getHeight());
         this.canvas.setWidth(stage.getWidth());
-        for (Visitor visitor : visitors)
-            visitor.update(visitors, deltaTime);
+        for (Visitor visitor : this.visitors) {
+            visitor.setSpeedFactor(speedFactor);
+            visitor.update(this.visitors, deltaTime);
+        }
     }
 
     public ArrayList<Visitor> getVisitors() {
