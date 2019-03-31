@@ -12,7 +12,7 @@ import java.util.Queue;
 
 public class Visitor {
     private Point2D position;
-    private double random = Math.random()/2;
+    private double random = Math.random() / 2;
     private double angle;
     private int c = 32;
     private double size = 1;
@@ -95,14 +95,14 @@ public class Visitor {
 
         //implementation of the pathing
         target = new Point2D.Double(current.getX() * c, current.getY() * c);
-        if (position.distance(target) < 16 + simSpeed)
+        if (position.distance(target) < 16) {
             if (path.isEmpty())
                 speed = 0;
             else current = path.poll();
-        else speed = sValue;
+        } else speed = sValue;
 
         // switches animation frame and calculates new position
-        if (currentFrame < 3&&speed!= 0) {
+        if (currentFrame < 3 && speed != 0) {
             currentFrame++;
         } else currentFrame = 0;
         Point2D newPosition = new Point2D.Double(
@@ -122,11 +122,6 @@ public class Visitor {
         for (Visitor visitor : visitors) {
             if (visitor != this && visitor.hasCollision(newPosition)) {
                 hasCollision = true;
-                while (visitor.hasCollision(this.position))
-                    this.position = new Point2D.Double(
-                            this.position.getX(),
-
-                            this.position.getY() + 1);
                 break;
             }
         }
@@ -137,8 +132,8 @@ public class Visitor {
                 this.angle += turn;
             else
                 this.angle -= turn;
-            if (wallPos != null)
-                WallCorrection(stuckSolver(wallPos));
+            if (wallPos != null) ;
+            target = new Point2D.Double(target.getX() + position.getX() - target.getX() + 32, target.getY() + position.getY() - target.getY());
         }
 
         Point2D diff = new Point2D.Double(target.getX() - this.position.getX(), target.getY() - this.position.getY());
@@ -168,8 +163,8 @@ public class Visitor {
 
     public void draw(Graphics2D g) {
         AffineTransform tx = new AffineTransform();
-        tx.translate(position.getX() - 24*size, position.getY() - 24*size);
-        tx.scale(size,size);
+        tx.translate(position.getX() - 24 * size, position.getY() - 24 * size);
+        tx.scale(size, size);
 
         if (angle < 0) {
             tx.rotate(angle - Math.PI / 2, 24, 24);
@@ -181,17 +176,10 @@ public class Visitor {
         }
 
         //debug
-        g.setColor(Color.RED);
-        g.fill(new Ellipse2D.Double(target.getX(), target.getY(), 10, 10));
+//        g.setColor(Color.RED);
+//        g.fill(new Ellipse2D.Double(target.getX(), target.getY(), 10, 10));
     }
-
-    private Point2D stuckSolver(Point2D wallPos) {
-        if (wallPos != null)
-            return new Point2D.Double(
-                    wallPos.getX() - (wallPos.getX() + position.getX()),
-                    wallPos.getY() - (wallPos.getY() + position.getY()));
-        else return this.position;
-    }
+    
 
     public boolean wallCollision(Point2D newPos, Area v) {
         Area a = v;
@@ -201,7 +189,7 @@ public class Visitor {
 
 
     public boolean hasCollision(Point2D otherPosition) {
-        return otherPosition.distance(position) < 24*size;
+        return otherPosition.distance(position) < 24 * size;
     }
 
     public void setMainTarget(Point2D mainTarget) {
@@ -209,10 +197,8 @@ public class Visitor {
         path = p.createPath(this.position, mainTarget);
     }
 
-    public void WallCorrection(Point2D target) {
-        this.target = target;
-    }
-    public void setSpeedFactor(int speedFactor){
+
+    public void setSpeedFactor(int speedFactor) {
         this.simSpeed = speedFactor;
     }
 
