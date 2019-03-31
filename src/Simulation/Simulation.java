@@ -136,7 +136,7 @@ public class Simulation extends Application {
 
 
     public void draw(FXGraphics2D graphics) {
-        graphics.setBackground(Color.pink);
+        graphics.setBackground(Color.BLACK);
         graphics.clearRect(0, 0, (int) stage.getWidth(), (int) stage.getHeight());
         this.map.draw(graphics);
         for (Visitor visitor : visitors) {
