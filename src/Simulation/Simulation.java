@@ -195,7 +195,7 @@ public class Simulation extends Application {
             }
         };
         this.timer = new Timer("Timer");
-        this.timer.scheduleAtFixedRate(task, 0, (1000L) / speedFactor);
+        this.timer.scheduleAtFixedRate(task, 0, (2000L) / speedFactor);
         this.animationTimer.start();
     }
 
@@ -322,21 +322,24 @@ public class Simulation extends Application {
         double xConst = 0.1;
         double yConst = 0.9;
         for (Lesson lesson : agenda.getLessons()) {
-            if (this.hours + 1 == lesson.getInterval().getStart().getHourOfDay()) {
-                for (Space space : this.spaces) {
-                    if (space.getName().equals(lesson.getClassroom().getLocation())) {
-                        for (int i = 0; i < agenda.getAmountOfTeachers(); i++) {
-                            if (lesson.getTeachers().contains(agenda.getTeachers().get(i))) {
-                                this.teachers.get(i).setMainTarget(new Point2D.Double(space.getX() + xConst * space.getWidht(), space.getY() + 0.2 * space.getHeight()));
 
-                            } else
-                                this.teachers.get(i).setMainTarget(new Point2D.Double(spaces.get(4).getX() + xConst * spaces.get(4).getWidht(), spaces.get(4).getY() + yConst * spaces.get(4).getHeight()));
-                            xConst += 0.15;
-                            //yConst+=0.1;
+
+                if (this.hours + 1 == lesson.getInterval().getStart().getHourOfDay()) {
+                    for (Space space : this.spaces) {
+                        if (space.getName().equals(lesson.getClassroom().getLocation())) {
+                            for (int i = 0; i < agenda.getAmountOfTeachers(); i++) {
+                                if (lesson.getTeachers().contains(agenda.getTeachers().get(i))) {
+                                    this.teachers.get(i).setMainTarget(new Point2D.Double(space.getX() + xConst * space.getWidht(), space.getY() + 0.2 * space.getHeight()));
+
+                                } else
+                                    this.teachers.get(i).setMainTarget(new Point2D.Double(spaces.get(4).getX() + xConst * spaces.get(4).getWidht(), spaces.get(4).getY() + yConst * spaces.get(4).getHeight()));
+                                xConst += 0.15;
+                                //yConst+=0.1;
+                            }
                         }
                     }
                 }
-            }
+
         }
 
         xConst = 0.1;

@@ -42,12 +42,9 @@ public class GUIMain extends Application {
     private Subject selectedSubject;
     private boolean teachHasLessons = false;
     private boolean classHasLessons = false;
-    private boolean subjectUsed = false;
     private Stage primaryStage;
     private Simulation sim;
 
-
-    FileChooser fileChooser = new FileChooser();
 
     public GUIMain() throws Exception {
     }
