@@ -3,11 +3,8 @@ package Data;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 
-
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 public class Agenda implements Serializable {
     private ArrayList<Teacher> teachers;
@@ -21,7 +18,7 @@ public class Agenda implements Serializable {
     private ArrayList<DateTime> times;
 
     public Agenda() {
-        this.subjects=  new ArrayList<>();
+        this.subjects = new ArrayList<>();
         this.teachers = new ArrayList<>();
         this.classes = new ArrayList<>();
         this.classrooms = new ArrayList<>();
@@ -31,7 +28,6 @@ public class Agenda implements Serializable {
         this.subjects = new ArrayList<>();
         this.times = new ArrayList<>();
         this.students = new ArrayList<>();
-
 
 
         final DateTime NINE = new DateTime(2019, 1, 1, 9, 0, 0);
@@ -97,13 +93,16 @@ public class Agenda implements Serializable {
         Teacher jessica = new Teacher("Jessica", "van der", "Heijden", 42, 0, 0, "160");
         Teacher peter = new Teacher("Peter", "", "Kailuhu", 50, 0, 0, "170");
 
-        Group a2 = new Group(studentRandomizer('a'), "A2", maurice);
-        Group b1 = new Group(studentRandomizer('b'), "B1", pieter);
+        Group A2 = new Group(studentRandomizer('a'), "A2", maurice);
+        Group B1 = new Group(studentRandomizer('b'), "B1", pieter);
+        Group C1 = new Group(studentRandomizer('a'), "C1", etienne);
+
+        this.groups.add(C1);
 
         Classroom classroom = new Classroom(1, 20, "LA201", false, false);
         Classroom classroom1 = new Classroom(2, 20, "LA302", false, false);
         Classroom classroom2 = new Classroom(3, 20, "LA115", false, false);
-        Classroom classroom3 = new Classroom(4, 20, "LX401b", false, false);
+        Classroom classroom3 = new Classroom(4, 20, "LX401B", false, false);
         Classroom classroom4 = new Classroom(5, 20, "LD221", false, false);
         Classroom classroom5 = new Classroom(6, 20, "LD406", false, false);
         Classroom classroom6 = new Classroom(7, 20, "LA226", false, false);
@@ -121,8 +120,8 @@ public class Agenda implements Serializable {
         this.teachers.add(peter);
 
         //groups of
-        this.groups.add(a2);
-        this.groups.add(b1);
+        this.groups.add(A2);
+        this.groups.add(B1);
 
         //class with 2 groups or more
         this.classes.add(classe);
@@ -158,7 +157,7 @@ public class Agenda implements Serializable {
 
 
     public void addTeacher(Teacher teacher) {
-      this.teachers.add(teacher);
+        this.teachers.add(teacher);
     }
 
     public void addClass(Class schoolClass) {
@@ -172,7 +171,6 @@ public class Agenda implements Serializable {
     public void addLesson(Lesson lesson) {
         this.lessons.add(lesson);
     }
-
 
 
     // TODO: 17-02-19 fix student array
@@ -239,34 +237,32 @@ public class Agenda implements Serializable {
     }
 
     //TODO Redo the method!
-    public int getAmountOfTeachers(){
+    public int getAmountOfTeachers() {
         return this.teachers.size();
     }
 
-    public ArrayList<Student> studentRandomizer(char a){
+    public ArrayList<Student> studentRandomizer(char a) {
         ArrayList<Student> klass = new ArrayList<>();
-        if (a == 'a'){
-            for(int i = 0; i < students.size(); i++){
-                if(i % 3 == 0) {
+        if (a == 'a') {
+            for (int i = 0; i < students.size(); i++) {
+                if (i % 3 == 0) {
                     klass.add(students.get(i));
                 }
             }
             return klass;
-        }
-        else if (a == 'b'){
-            for(int i = 0; i < students.size(); i++){
-                if(i % 2 == 0) {
+        } else if (a == 'b') {
+            for (int i = 0; i < students.size(); i++) {
+                if (i % 2 == 0) {
                     klass.add(students.get(i));
                 }
             }
             return klass;
-        }
-        else {
+        } else {
             return klass;
         }
     }
 
-    public ArrayList<Group> groupRandomizer(char a){
+    public ArrayList<Group> groupRandomizer(char a) {
         ArrayList<Group> classs = new ArrayList<>();
         classs.add(groups.get(0));
         return classs;

@@ -5,8 +5,8 @@ import Data.Teacher;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.layout.VBox;
+
 import java.util.ArrayList;
-import java.util.Map;
 
 public class CreateTeacherWindow extends VBox {
     private ArrayList<Teacher> selectedTeachers;
@@ -15,7 +15,7 @@ public class CreateTeacherWindow extends VBox {
     private ArrayList<CheckBox> checkBoxes;
     private Agenda agenda;
 
-    public CreateTeacherWindow(Agenda agenda){
+    public CreateTeacherWindow(Agenda agenda) {
         vBox = new VBox();
         saveTeachers = new Button("Save Teacher(s)");
         checkBoxes = new ArrayList<>();
@@ -26,12 +26,10 @@ public class CreateTeacherWindow extends VBox {
     }
 
 
-
     public void update() {
         vBox.getChildren().clear();
         checkBoxes.clear();
-        for(Teacher teacher: agenda.getTeachers()){
-            System.out.println(teacher);
+        for (Teacher teacher : agenda.getTeachers()) {
             CheckBox checkBox = new CheckBox(" " + teacher.toString());
             checkBoxes.add(checkBox);
             vBox.getChildren().add(checkBox);
@@ -39,11 +37,12 @@ public class CreateTeacherWindow extends VBox {
         vBox.getChildren().add(saveTeachers);
         vBox.setSpacing(10);
     }
-    public Button getSaveTeachersButton(){
+
+    public Button getSaveTeachersButton() {
         return this.saveTeachers;
     }
 
-    public ArrayList<CheckBox> getCheckBoxes(){
+    public ArrayList<CheckBox> getCheckBoxes() {
         return this.checkBoxes;
     }
 }

@@ -1,6 +1,8 @@
 package GUI.Components;
 
-import Data.*;
+import Data.Agenda;
+import Data.Group;
+import Data.Teacher;
 import GUI.GUIMain;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -15,14 +17,10 @@ public class CreateView extends GridPane {
         if (agenda.amountOfLessons() > 0) {
             for (int amountLessons = 0; amountLessons < agenda.amountOfLessons(); amountLessons++) {
                 String teachers = "";
-                for(Teacher teacher: agenda.getLessons().get(amountLessons).getTeachers()){
-                    teachers+=" "+teacher.getTeacherNumber();
+                for (Teacher teacher : agenda.getLessons().get(amountLessons).getTeachers()) {
+                    teachers += " " + teacher.getTeacherNumber();
                 }
-                Label label = new Label(agenda.getLessons().get(amountLessons).getSubject().toString()
-                        + " " + agenda.getLessons().get(amountLessons).getClassroom().getLocation()
-                        + " " + teachers
-                        + " " + agenda.getLessons().get(amountLessons).getGroupsAsString()
-                );
+                Label label = new Label(agenda.getLessons().get(amountLessons).getSubject().toString() + " " + agenda.getLessons().get(amountLessons).getClassroom().getLocation() + " " + teachers + " " + agenda.getLessons().get(amountLessons).getGroupsAsString());
 
                 Button button = new Button("Delete");
                 final int i = amountLessons;
@@ -30,7 +28,7 @@ public class CreateView extends GridPane {
                 ArrayList<Group> groupsToMakeAvailable = agenda.getLessons().get(amountLessons).getGroups();
 
                 button.setOnAction(event -> {
-                    System.out.println(agenda.amountOfLessons());
+
                     teachersToMakeAvailable.forEach(teacher -> {
                         teacher.makeAvailable(i);
                     });
@@ -39,7 +37,7 @@ public class CreateView extends GridPane {
                     });
                     agenda.getLessons().get(i).getClassroom().makeAvailable(i);
                     agenda.deleteLesson(i);
-                    System.out.println(agenda.amountOfLessons());
+
 
 
                     guiMain.updateScene();
@@ -54,10 +52,9 @@ public class CreateView extends GridPane {
             gridPane.setVgap(10);
             gridPane.setHgap(10);
             getChildren().add(gridPane);
-        }
-        else{
+        } else {
             Label label = new Label("There are no lessons planned");
-            gridPane.add(label,0,0);
+            gridPane.add(label, 0, 0);
             getChildren().add(gridPane);
         }
     }

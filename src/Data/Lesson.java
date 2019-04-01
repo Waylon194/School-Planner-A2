@@ -1,15 +1,14 @@
 package Data;
 
 import org.joda.time.Interval;
+
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 public class Lesson implements Serializable {
     private ArrayList<Teacher> teachers;
     private Classroom classroom;
-    private ArrayList <Group> studentClass;
+    private ArrayList<Group> studentClass;
     private Subject subject;
     private Interval interval;
     private double popularity;
@@ -23,72 +22,66 @@ public class Lesson implements Serializable {
         this.popularity = popularity;
     }
 
-    public Interval getInterval(){
-       return this.interval;
+    public Interval getInterval() {
+        return this.interval;
     }
 
     public double getPopularity() {
         return popularity;
     }
 
-    public ArrayList<Teacher> getTeachers () {
+    public ArrayList<Teacher> getTeachers() {
         return teachers;
     }
 
 
-    public Classroom getClassroom () {
-      return classroom;
-   }
+    public Classroom getClassroom() {
+        return classroom;
+    }
 
-   public Subject getSubject () {
-      return subject;
-   }
+    public Subject getSubject() {
+        return subject;
+    }
 
-   @Override
-   public String toString () {
-      return ("\n Subject: " + this.subject +
-              "\n Teachers: " + teachers +
-              "\n Classroom: " + classroom + studentClass +
-              "\n Time: " + returnLessonTimeAsString() +
-              "\n Popularity: " + getPopularity());
-   }
+    @Override
+    public String toString() {
+        return ("\n Subject: " + this.subject + "\n Teachers: " + teachers + "\n Classroom: " + classroom + studentClass + "\n Time: " + returnLessonTimeAsString() + "\n Popularity: " + getPopularity());
+    }
 
-    public String returnBeginTimeAsString(){
+    public String returnBeginTimeAsString() {
         int hour = this.interval.toInterval().getStart().getHourOfDay();
         int intMinute = this.interval.toInterval().getStart().getMinuteOfHour();
         String minute = "";
-        if (intMinute < 10){
+        if (intMinute < 10) {
             minute += "0" + intMinute;
-        }
-        else{
+        } else {
             minute = String.valueOf(intMinute);
         }
         return hour + ":" + minute;
     }
 
-    public String returnEndTimeAsString(){
+    public String returnEndTimeAsString() {
         int hour = this.interval.toInterval().getEnd().getHourOfDay();
         int intMinute = this.interval.toInterval().getEnd().getMinuteOfHour();
         String minute = "";
-        if (intMinute < 10){
+        if (intMinute < 10) {
             minute += "0" + intMinute;
-        }
-        else{
+        } else {
             minute = String.valueOf(intMinute);
         }
         return hour + ":" + minute;
     }
 
-    public String returnLessonTimeAsString(){
-       return returnBeginTimeAsString() + "-" + returnEndTimeAsString();
+    public String returnLessonTimeAsString() {
+        return returnBeginTimeAsString() + "-" + returnEndTimeAsString();
     }
 
-    public ArrayList<Group> getGroups(){
-       return this.studentClass;
+    public ArrayList<Group> getGroups() {
+        return this.studentClass;
     }
 
-    public String getGroupsAsString(){
-       String groups = "";
+    public String getGroupsAsString() {
+        String groups = "";
         for (Group group : getGroups()) {
             groups += group.getGroupName();
 

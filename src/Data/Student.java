@@ -15,8 +15,7 @@ public class Student extends Person implements Serializable {
     }
 
     @Override
-    public String toString () {
-        return  (getFirstName() + " " + getAdditive() + " " + getLastName() +
-                ", Student Number: " + studentNumber).replace('[',' ').replace(']',' ');
+    public String toString() {
+        return (getFirstName() + " " + getAdditive() + " " + getLastName() + ", Student Number: " + studentNumber).replace('[', ' ').replace(']', ' ');
     }
 }

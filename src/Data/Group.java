@@ -1,6 +1,7 @@
 package Data;
 
 import org.joda.time.Interval;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -21,20 +22,18 @@ public class Group implements Serializable, Availability {
         return groupName;
     }
 
-    public void addStudent(Student s){
+    public void addStudent(Student s) {
         students.add(s);
     }
 
     @Override
-    public String toString () {
-        return  ("\n Group name: " + groupName +
-                "\n Students: " + students +
-                "\n Mentor: " + mentor).replace('[',' ').replace(']',' ');
+    public String toString() {
+        return ("\n Group name: " + groupName + "\n Students: " + students + "\n Mentor: " + mentor).replace('[', ' ').replace(']', ' ');
     }
 
     @Override
     public boolean isAvailable(Interval at) {
-        for(Interval interval: unavailable) {
+        for (Interval interval : unavailable) {
             if (at.overlaps(interval)) {
                 return false;
             }
@@ -47,7 +46,7 @@ public class Group implements Serializable, Availability {
         this.unavailable.add(interval);
     }
 
-    public int getGroupSize(){
+    public int getGroupSize() {
         return this.students.size();
     }
 
